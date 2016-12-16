@@ -1,0 +1,145 @@
+/*
+ * Pins.h
+ *
+ * Created: 2015-09-16 14:15:56
+ *  Author: Madman
+ */ 
+
+#ifndef PINS_H_
+#define PINS_H_
+
+//#define TEST_10
+
+#define GLUE(a, b)     a##b
+
+/* single-bit macros, used for control bits */
+#define OUT_PIN_(p, m) GLUE(DDR, p) |= (1<<(m))
+#define PIN_OUT(x) OUT_PIN_(x)
+#define IN_PIN_(p, m) GLUE(DDR, p) &= ~(1<<(m))
+#define PIN_IN(x)	IN_PIN_(x)
+#define SET_(p, m) GLUE(PORT, p) |= (1 << (m))
+#define SET(x) SET_(x)
+#define CLR_(p, m) GLUE(PORT, p) &= ~(1 << (m))
+#define CLR(x) CLR_(x)
+#define TOGGLE_(p, m) GLUE(PORT, p) ^= (1 << (m))
+/*fastest way of TOGGLE*/
+/* #define TOGGLE_(p, m) GLUE(PIN, p) ^= (1 << (m))*/
+ #define TOGGLE(x) TOGGLE_(x)
+#define GET_(p, m) GLUE(PIN, p) & (1 << (m))
+#define GET(x) GET_(x)
+#define NOT_GET_(p, m) (!(GLUE(PIN, p) & (1 << (m))))
+#define NOT_GET(x) NOT_GET_(x)
+
+#define LED0_PIN			B, 6
+#define LED0_PIN_HIGH		SET(LED0_PIN)
+#define LED0_PIN_LOW		CLR(LED0_PIN)
+#define LED0_PIN_TOG		TOGGLE(LED0_PIN)
+
+#define EXT0_PWM_PIN			L, 4
+#define EXT0_PWM_PIN_HIGH		SET(EXT0_PWM_PIN)
+#define EXT0_PWM_PIN_LOW		CLR(EXT0_PWM_PIN)
+#define EXT0_PWM_PIN_TOG		TOGGLE(EXT0_PWM_PIN)
+
+#define EXT1_PWM_PIN			L, 5
+#define EXT1_PWM_PIN_HIGH		SET(EXT1_PWM_PIN)
+#define EXT1_PWM_PIN_LOW		CLR(EXT1_PWM_PIN)
+#define EXT1_PWM_PIN_TOG		TOGGLE(EXT1_PWM_PIN)
+
+#define EXT0_FAN_PWM_PIN			J, 7
+#define EXT0_FAN_PWM_PIN_HIGH		SET(EXT0_FAN_PWM_PIN)
+#define EXT0_FAN_PWM_PIN_LOW		CLR(EXT0_FAN_PWM_PIN)
+#define EXT0_FAN_PWM_PIN_TOG		TOGGLE(EXT0_FAN_PWM_PIN)
+
+#define EXT1_FAN_PWM_PIN			B, 7
+#define EXT1_FAN_PWM_PIN_HIGH		SET(EXT1_FAN_PWM_PIN)
+#define EXT1_FAN_PWM_PIN_LOW		CLR(EXT1_FAN_PWM_PIN)
+#define EXT1_FAN_PWM_PIN_TOG		TOGGLE(EXT1_FAN_PWM_PIN)
+
+#define BED0_PWM_PIN			E, 4
+#define BED0_PWM_PIN_HIGH		SET(BED0_PWM_PIN)
+#define BED0_PWM_PIN_LOW		CLR(BED0_PWM_PIN)
+#define BED0_PWM_PIN_TOG		TOGGLE(BED0_PWM_PIN)
+
+#define BED1_PWM_PIN			E, 3
+#define BED1_PWM_PIN_HIGH		SET(BED1_PWM_PIN)
+#define BED1_PWM_PIN_LOW		CLR(BED1_PWM_PIN)
+#define BED1_PWM_PIN_TOG		TOGGLE(BED1_PWM_PIN)
+
+#define BED2_PWM_PIN			G, 5
+#define BED2_PWM_PIN_HIGH		SET(BED2_PWM_PIN)
+#define BED2_PWM_PIN_LOW		CLR(BED2_PWM_PIN)
+#define BED2_PWM_PIN_TOG		TOGGLE(BED2_PWM_PIN)
+
+#define BED3_PWM_PIN			L, 3
+#define BED3_PWM_PIN_HIGH		SET(BED3_PWM_PIN)
+#define BED3_PWM_PIN_LOW		CLR(BED3_PWM_PIN)
+#define BED3_PWM_PIN_TOG		TOGGLE(BED3_PWM_PIN)
+
+
+#define MOTUP0_PIN			A, 2
+#define MOTUP0_PIN_HIGH		SET(MOTUP0_PIN)
+#define MOTUP0_PIN_LOW		CLR(MOTUP0_PIN)
+#define MOTUP0_PIN_TOG		TOGGLE(MOTUP0_PIN)
+
+#define MOTDWN0_PIN			A, 3
+#define MOTDWN0_PIN_HIGH		SET(MOTDWN0_PIN)
+#define MOTDWN0_PIN_LOW		CLR(MOTDWN0_PIN)
+#define MOTDWN0_PIN_TOG		TOGGLE(MOTDWN0_PIN)
+
+#define MOTUP1_PIN			A, 4
+#define MOTUP1_PIN_HIGH		SET(MOTUP1_PIN)
+#define MOTUP1_PIN_LOW		CLR(MOTUP1_PIN)
+#define MOTUP1_PIN_TOG		TOGGLE(MOTUP1_PIN)
+
+#define MOTDWN1_PIN			A, 5
+#define MOTDWN1_PIN_HIGH		SET(MOTDWN1_PIN)
+#define MOTDWN1_PIN_LOW		CLR(MOTDWN1_PIN)
+#define MOTDWN1_PIN_TOG		TOGGLE(MOTDWN1_PIN)
+
+#define MOTPWM0_PIN			A, 0
+#define MOTPWM0_PIN_HIGH		SET(MOTPWM0_PIN)
+#define MOTPWM0_PIN_LOW		CLR(MOTPWM0_PIN)
+#define MOTPWM0_PIN_TOG		TOGGLE(MOTPWM0_PIN)
+
+#define MOTPWM1_PIN			A, 1
+#define MOTPWM1_PIN_HIGH		SET(MOTPWM1_PIN)
+#define MOTPWM1_PIN_LOW		CLR(MOTPWM1_PIN)
+#define MOTPWM1_PIN_TOG		TOGGLE(MOTPWM1_PIN)
+
+// #define MAX	65000
+// #define INT_60s	60000/INTERWAL_TIMER
+// #define INT_30s	30000/INTERWAL_TIMER
+// #define INT_20s	20000/INTERWAL_TIMER
+// #define INT_15s 15000/INTERWAL_TIMER
+// #define INT_10s	10000/INTERWAL_TIMER
+// #define INT_5s	5000/INTERWAL_TIMER
+// #define INT_3s	3000/INTERWAL_TIMER
+// #define INT_2s	2000/INTERWAL_TIMER
+// #define INT_1s	1000/INTERWAL_TIMER
+// #define INT_500ms 500/INTERWAL_TIMER
+// #define INT_250ms 250/INTERWAL_TIMER
+// #define INT_100ms 100/INTERWAL_TIMER
+
+// ADS PINS
+#define ADS_A0_PIN		K, 5
+#define ADS_A0_HIGH		SET(ADS_A0_PIN)
+#define ADS_A0_LOW		CLR(ADS_A0_PIN)
+#define ADS_A0_TOG		TOGGLE(ADS_A0_PIN)
+
+#define ADS_PDWN_PIN		K, 2
+#define ADS_PDWN_HIGH		SET(ADS_PDWN_PIN)
+#define ADS_PDWN_LOW		CLR(ADS_PDWN_PIN)
+#define ADS_PDWN_TOG		TOGGLE(ADS_PDWN_PIN)
+
+#define ADS_DRDY_PIN		K, 4
+#define ADS_DRDY_LOW		CLR(ADS_DRDY_PIN)
+#define ADS_DRDY_IF_HI		GET(ADS_DRDY_PIN)
+#define ADS_DRDY_IF_LOW		NOT_GET(ADS_DRDY_PIN)
+
+#define ADS_SCLK_PIN		K, 3
+#define ADS_SCLK_HIGH		SET(ADS_SCLK_PIN)
+#define ADS_SCLK_LOW		CLR(ADS_SCLK_PIN)
+#define ADS_SCLK_TOG		TOGGLE(ADS_SCLK_PIN)
+// ADS PINS
+
+#endif /* PINS_H_ */
