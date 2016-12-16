@@ -15,7 +15,7 @@
 
 void eprSetuint8_t(unsigned int pos,uint8_t value)
 {
-	eeprom_write_uint8_t((unsigned char *)(EEPROM_OFFSET + pos), value);
+	eeprom_write_byte((unsigned char *)(EEPROM_OFFSET + pos), value);
 }
 void eprSetInt16(unsigned int pos,int16_t value)
 {
@@ -31,7 +31,7 @@ void eprSetFloat(unsigned int pos,float value)
 }
 uint8_t eprGetuint8_t(unsigned int pos)
 {
-	return eeprom_read_uint8_t ((unsigned char *)(EEPROM_OFFSET + pos));
+	return eeprom_read_byte ((unsigned char *)(EEPROM_OFFSET + pos));
 }
 int16_t eprGetInt16(unsigned int pos)
 {

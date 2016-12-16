@@ -46,11 +46,11 @@
 #define SPI_CS_0_DDR	DDRA
 #define SPI_CS_0_PORT	PORTA
 #define SPI_CS_0		PA1
-#define SPI_CS_0_RESET	PA0
+#define SPI_0_RESET		PA0
 
 #define SPI_CS_1_DDR	DDRA
 #define SPI_CS_1_PORT	PORTA
 #define SPI_CS_1		PA3
-#define SPI_CS_1_RESET	PA2
+#define SPI_1_RESET		PA2
 
 #endif

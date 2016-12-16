@@ -26,6 +26,7 @@
 
 void mfrc522_init()
 {
+	spi_init();
 	uint8_t byte;
 	mfrc522_reset();
 	

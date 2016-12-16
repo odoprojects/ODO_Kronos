@@ -12,7 +12,10 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 
-#define PROGMEM
+//#ifdef PROGMEM
+//	#undef PROGMEM
+//#endif	
+//#define PROGMEM
 #define PGM_P const char *
 typedef char prog_char;
 //#undef PSTR
@@ -33,6 +36,10 @@ typedef char prog_char;
 //#define pgm_read_dword(addr) (*(const unsigned long *)(addr))
 #undef pgm_read_dword_near
 #define pgm_read_dword_near(addr) pgm_read_dword(addr)
+
+#ifdef _BV
+	#undef _BV
+#endif
 #define _BV(x) (1 << (x))
 
 //*************************************************************************
