@@ -1,0 +1,122 @@
+object Form1: TForm1
+  Left = 280
+  Height = 315
+  Top = 136
+  Width = 423
+  Caption = '1'
+  ClientHeight = 315
+  ClientWidth = 423
+  LCLVersion = '1.6.2.0'
+  object ButtonConnect: TButton
+    Left = 16
+    Height = 25
+    Top = 16
+    Width = 96
+    Caption = 'Connect'
+    OnClick = ButtonConnectClick
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 15
+    Top = 104
+    Width = 48
+    Caption = 'Wyslano:'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 15
+    Top = 136
+    Width = 56
+    Caption = 'Odebrano:'
+    ParentColor = False
+  end
+  object ButtonTest: TButton
+    Left = 16
+    Height = 25
+    Top = 56
+    Width = 96
+    Caption = 'SEND'
+    OnClick = ButtonTestClick
+    TabOrder = 1
+  end
+  object PortEdit: TEdit
+    Left = 144
+    Height = 23
+    Top = 18
+    Width = 56
+    TabOrder = 2
+    Text = 'COM19'
+  end
+  object TxtEdit: TEdit
+    Left = 144
+    Height = 23
+    Top = 58
+    Width = 136
+    TabOrder = 3
+    Text = 'A580@1000 B360@1000'
+  end
+  object Label3: TLabel
+    Left = 16
+    Height = 15
+    Top = 160
+    Width = 8
+    Caption = 'A'
+    ParentColor = False
+  end
+  object ProgressBar1: TProgressBar
+    Left = 224
+    Height = 120
+    Top = 112
+    Width = 32
+    Max = 1000
+    Orientation = pbVertical
+    Smooth = True
+    Step = 1
+    TabOrder = 4
+  end
+  object ProgressBar2: TProgressBar
+    Left = 328
+    Height = 120
+    Top = 112
+    Width = 32
+    Max = 1000
+    Orientation = pbVertical
+    TabOrder = 5
+  end
+  object Label4: TLabel
+    Left = 16
+    Height = 15
+    Top = 184
+    Width = 7
+    Caption = 'B'
+    ParentColor = False
+  end
+  object Label5: TLabel
+    Left = 16
+    Height = 15
+    Top = 216
+    Width = 34
+    Caption = 'Label5'
+    ParentColor = False
+  end
+  object Serial1: TLazSerial
+    Active = False
+    BaudRate = br__9600
+    DataBits = db8bits
+    Parity = pNone
+    FlowControl = fcNone
+    StopBits = sbOne
+    Device = 'COM19'
+    RcvLineCRLF = False
+    left = 344
+    top = 16
+  end
+  object Timer1: TTimer
+    Interval = 100
+    OnTimer = Timer1Timer
+    left = 296
+    top = 16
+  end
+end
