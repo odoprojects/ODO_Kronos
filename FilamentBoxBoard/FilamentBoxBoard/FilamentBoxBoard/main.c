@@ -17,10 +17,10 @@
 #include "Configuration.h"
 #include "tensometer.h"
 #include "softSPI.h"
-
+/*
 #include "RFID_RC522.h"
 #include "spi.h"
-
+*/
 //volatile uint8_t x = 0;
 
 volatile uint32_t t1 = 0;
@@ -80,23 +80,23 @@ int main(void)
 	tempController[BED3].pidDGain = BED_D;
 */
 	//modbus_puts_s("Witaj");
-	
+	/*
 	spi_init();
 	PCD_Init();
 	
-	
+	*/
 	offset_calibration();
     Filament_measure_timer = 1000;
 	
 	while (1) 
-    {		
+    {		/*
 		if (PICC_IsNewCardPresent()){
 			Filament_measure_timer;
 		}
 
 		if (PICC_ReadCardSerial()){
 			Filament_measure_timer;
-		}
+		}*/
 		
 		
 		UART_RX_STR_EVENT(bufor) ;	// zdarzenie odbiorcze MODBUS UART3

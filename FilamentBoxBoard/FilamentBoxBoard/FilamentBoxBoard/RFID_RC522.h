@@ -72,9 +72,10 @@
  * 		Pages 42-43 Authentication configuration
  * 		Pages 44-47 Authentication key 
  */
-#ifndef MFRC522_h
-#define MFRC522_h
+#ifndef RFID_RC522_h
+#define RFID_RC522_h
 #include <avr/io.h>
+
 #define RFID_0	0
 #define RFID_1	1
 
