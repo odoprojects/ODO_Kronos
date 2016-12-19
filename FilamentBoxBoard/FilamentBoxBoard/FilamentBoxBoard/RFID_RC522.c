@@ -4,6 +4,7 @@
 #include "spi.h"
 #include "avr/delay.h"
 
+
 // Firmware data for self-test
 // Reference values based on firmware version
 // Hint: if needed, you can remove unused self-test data to save flash memory
@@ -56,11 +57,28 @@ const uint8_t FM17522_firmware_reference[] PROGMEM = {
 	0x51, 0x64, 0xAB, 0x3E, 0xE9, 0x15, 0xB5, 0xAB,
 	0x56, 0x9A, 0x98, 0x82, 0x26, 0xEA, 0x2A, 0x62
 };
+
+
+const uint8_t FILAMENT_KEY[]    = {
+	0x01, 0x06, 0x54, 0x25,
+	0x25, 0x11, 0xFF, 0x07,
+	0x80, 0x69, 0xFF, 0xFF,
+	0xFF, 0xFF, 0xFF, 0xFF
+};
+
+const uint8_t DEFAULT_KEY[]    = {
+	0xFF, 0xFF, 0xFF, 0xFF,0xFF, 0xFF
+};
+
 #define NULL ( (void *) 0)
 
 
+volatile uint8_t chip_id = 0;
+
 uint8_t ID;
  //Member variables
+Uid uid0;
+Uid uid1;	
 Uid uid;								// Used by PICC_ReadCardSerial().
 MIFARE_Key key;
  //Size of the MFRC522 FIFO
@@ -68,25 +86,37 @@ static const uint8_t FIFO_SIZE = 64;		// The FIFO is 64 uint8_ts.
 uint8_t _chipSelectPin;		// Arduino pin connected to MFRC522's SPI slave select input (Pin 24, NSS, active low)
 uint8_t _resetPowerDownPin;	// Arduino pin connected to MFRC522's reset and power down input (Pin 6, NRSTPD, active low)
 
-// A struct used for passing the UID of a PICC.
+static void (*rfid_event_callback)();
 
+void register_manage_rfid_event_callback(void (*callback)()) {
+	rfid_event_callback = callback;
+}
 
- //A struct used for passing a MIFARE Crypto1 key
-
-
-void handleMFRC522(){
-	if (PICC_IsNewCardPresent()){
-		if (PICC_ReadCardSerial()){
-			enum PICC_Type piccType = PICC_GetType(uid.sak);
-		}
+void MANAGE_RFID_EVENT() {
+	if( rfid_event_callback ) {
+		(*rfid_event_callback)();
 	}
+}
+
+void check_buffer(uint8_t *buf){
+	uint8_t tmp=0;
+	for(int i=0;i<16;i++){
+		tmp=buf[i];
+	}
+}
+uint8_t handleRFID(){
+	if (!PICC_IsNewCardPresent())
+		return 0;
+	if (!PICC_ReadCardSerial())
+		return 0;
+	enum PICC_Type piccType = PICC_GetType(uid.sak);
 	uint8_t sector         = 1;
 	uint8_t blockAddr      = 4;
 	uint8_t dataBlock[]    = {
-		0x01, 0x02, 0x03, 0x04, //  1,  2,   3,  4,
-		0x05, 0x06, 0x07, 0x08, //  5,  6,   7,  8,
-		0x08, 0x09, 0xff, 0x0b, //  9, 10, 255, 12,
-		0x0c, 0x0d, 0x0e, 0x0f  // 13, 14,  15, 16
+		0x80, 0x80, 0x80, 0x80, 
+		0x80, 0x80, 0x80, 0x80, 
+		0x80, 0x80, 0x80, 0x80,
+		0x80, 0x80, 0x80, 0x80
 	};
 	uint8_t trailerBlock   = 7;
 	enum StatusCode status;
@@ -94,45 +124,76 @@ void handleMFRC522(){
 	uint8_t size = sizeof(buffer);
 	status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &key, &(uid));
 	if (status != STATUS_OK) {
-		
-		return;
+		return 0;
 	}
-	PICC_DumpMifareClassicSectorToSerial(&(uid), &key, sector);
+	//PICC_DumpMifareClassicSectorToSerial(&(uid), &key, sector);
+	//status = MIFARE_Read(blockAddr, buffer, &size);
 	status = MIFARE_Read(blockAddr, buffer, &size);
-	if (status == STATUS_OK) {
-		status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_B, trailerBlock, &key, &(uid));
-		if (status != STATUS_OK) {
-			
-			return;
-		}
-		status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_B, trailerBlock, &key, &(uid));
-		if (status != STATUS_OK) {
+	if (status != STATUS_OK) {
+		return 0;
+	}
+	//write_new_A_key(FILAMENT_KEY_BLOCK);
+	status = MIFARE_Write(blockAddr, dataBlock, 16);
+	if (status != STATUS_OK) {
+		return 0;
+	}
+	
+	status = MIFARE_Read(blockAddr, buffer, &size);
+	if (status != STATUS_OK) {
+		return 0;
+	}
+	
+	PICC_HaltA();
+	PCD_StopCrypto1();
+	check_buffer(buffer);
+	return 1;	
+}
 
-			return;
-		}
-		status = MIFARE_Read(blockAddr, buffer, &size);
-		if (status != STATUS_OK) {
-			
-		}
+void manageRFID(){
+	chip_id = 0;
+	if(!handleRFID()){
+	
+	}
+	chip_id = 1;
+	if(!handleRFID()){
+		
 	}
 }
 
+void enableChip(){
+	if (chip_id)
+		ENABLE_CHIP_1();
+	else
+		ENABLE_CHIP_0();
+}
+
+void disableChip(){
+	if (chip_id)
+		DISABLE_CHIP_1();
+	else
+		DISABLE_CHIP_0();
+}
+
  void initMFRC522() {
- 	spi_init();
-	PCD_Init();
-	for (uint8_t i = 0; i < 6; i++) {
-		key.keyuint8_t[i] = 0xFF;
-	}
- } 
+	 spi_init();
+	 chip_id = 0;
+	 PCD_Init();
+	 chip_id = 1;
+	 PCD_Init();
+	 for (uint8_t i = 0; i < 6; i++) {
+		 key.keyuint8_t[i] = FILAMENT_KEY[i];//0x00;//
+	 }
+ }
  void PCD_WriteRegister(	uint8_t reg,		///< The register to write to. One of the PCD_Register enums.
  									uint8_t value		///< The value to write.
  								) {
  
- 	ENABLE_CHIP();
- 	spi_transmit(reg&0x7E);
+ 	//ENABLE_CHIP();
+ 	enableChip();
+	spi_transmit(reg&0x7E);
  	spi_transmit(value);
- 	DISABLE_CHIP();
- 	
+ 	//DISABLE_CHIP();
+ 	disableChip();
  	
  } 
  void PCD_WriteRegisters(uint8_t reg,		///< The register to write to. One of the PCD_Register enums.
@@ -140,12 +201,14 @@ void handleMFRC522(){
  									uint8_t *values	///< The values to write. uint8_t array.
  								) {
  	
- 	ENABLE_CHIP();
+ 	//ENABLE_CHIP();
+ 	enableChip();
  	spi_transmit(reg&0x7E);
  	for (uint8_t index = 0; index < count; index++) {
  		spi_transmit(values[index]);
  	}
- 	DISABLE_CHIP();
+ 	//DISABLE_CHIP();
+ 	disableChip();
  	
  } 
  uint8_t PCD_ReadRegister(uint8_t reg	///< The register to read from. One of the PCD_Register enums.
@@ -153,10 +216,12 @@ void handleMFRC522(){
  	uint8_t value;
  	
  	
- 	ENABLE_CHIP();
+ 	//ENABLE_CHIP();
+ 	enableChip();
  	spi_transmit(0x80 | (reg & 0x7E));
  	value = spi_transmit(0x00);
- 	DISABLE_CHIP();
+ 	//DISABLE_CHIP();
+ 	disableChip();
  	
  	return value;
  } // End PCD_ReadRegister()
@@ -172,7 +237,8 @@ void handleMFRC522(){
  	}
  	uint8_t address = 0x80 | (reg & 0x7E);		// MSB == 1 is for reading. LSB is not used in address. Datasheet section 8.1.2.3.
  	uint8_t index = 0;
- 	ENABLE_CHIP();
+ 	//ENABLE_CHIP();
+ 	enableChip();
  	count--;
  	spi_transmit(address);
  	while (index < count) {
@@ -194,8 +260,10 @@ void handleMFRC522(){
  	}
  		
  	values[index] = spi_transmit(0);
- 	DISABLE_CHIP();	
+ 	//DISABLE_CHIP();
+ 	disableChip();
  } 
+ 
  
  
  void PCD_SetRegisterBitMask(	uint8_t reg,	///< The register to update. One of the PCD_Register enums.
@@ -254,12 +322,22 @@ void handleMFRC522(){
 // /////////////////////////////////////////////////////////////////////////////////////
 // 
 // 
+
+void initReset(){
+	if(chip_id){
+		SPI_CS_1_DDR |=(1<<SPI_1_RESET);
+		SPI_CS_1_PORT |=(1<<SPI_1_RESET);
+	}else{
+		SPI_CS_0_DDR |=(1<<SPI_0_RESET);
+		SPI_CS_0_PORT |=(1<<SPI_0_RESET);
+	}	
+}
  void PCD_Init() {
- 	DISABLE_CHIP();
- 	SPI_CS_0_DDR |=(1<<SPI_0_RESET);
- 	SPI_CS_0_PORT |=(1<<SPI_0_RESET); 
+	 
+ 	disableChip();
+	initReset();
+	
 	PCD_Reset(); 
- 	//SPI_CS_0_PORT &= (~(1<<SPI_0_RESET));
  	// When communicating with a PICC we need a timeout if something goes wrong.
  	// f_timer = 13.56 MHz / (2*TPreScaler+1) where TPreScaler = [TPrescaler_Hi:TPrescaler_Lo].
  	// TPrescaler_Hi are the four low bits in TModeReg. TPrescaler_Lo is TPrescalerReg.
@@ -275,7 +353,7 @@ void handleMFRC522(){
 // 
 // 
   //void PCD_Init(	uint8_t resetPowerDownPin	///< Arduino pin connected to MFRC522's reset and power down input (Pin 6, NRSTPD, active low)
-  					//) {
+  					//) {F
   	//PCD_Init( SS, resetPowerDownPin); // SS is defined in pins_arduino.h
   //} // End PCD_Init()
 // 
@@ -291,7 +369,7 @@ void handleMFRC522(){
 // 
  
  void PCD_Reset() {
- 	PCD_WriteRegister(CommandReg, PCD_SoftReset);	// Issue the SoftReset command.
+ 	PCD_WriteRegister(CommandReg, PCD_SoftReset);	// IsFsue the SoftReset command.
  	// The datasheet does not mention how long the SoftRest command takes to complete.
  	// But the MFRC522 might have been in soft power-down mode (triggered by bit 4 of CommandReg) 
  	// Section 8.8.2 in the datasheet says the oscillator start-up time is the start up time of the crystal + 37,74?s. Let us be generous: 50ms.
@@ -1840,6 +1918,19 @@ void handleMFRC522(){
   * @return uint8_t
   */
  uint8_t PICC_ReadCardSerial() {
- 	enum StatusCode result = PICC_Select(&uid,0);
+	enum StatusCode result;
+ 	/*if(RC522_ID){
+		 result = PICC_Select(&uid1,0); 
+	 }else{
+		 result = PICC_Select(&uid0,0);
+	 }*/
+	result = PICC_Select(&uid,0);
  	return (result == STATUS_OK);
  } // End 
+
+void write_new_A_key(uint8_t keyBlock){
+	enum StatusCode status = MIFARE_Write(keyBlock, FILAMENT_KEY, 16);
+	if (status != STATUS_OK) {
+		return 0;
+	}
+}

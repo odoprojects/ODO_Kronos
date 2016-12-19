@@ -119,7 +119,9 @@ PrzetworzonaRamka   0x12              mkuart.o
 _chipSelectPin      0x1               RFID_RC522.o
 osAnalogInputValues
                     0xe               hardware.o
+uid1                0xc               RFID_RC522.o
 UART_TxTail         0x1               mkuart.o
+uid0                0xc               RFID_RC522.o
 key                 0x6               RFID_RC522.o
 bufor               0x40              modbus.o
 osAnalogInputBuildup
@@ -204,9 +206,9 @@ Discarded input sections
  .text.mfrc522_init
                 0x00000000       0x6c mfrc522.o
  .text.mfrc522_write
-                0x00000000       0x54 mfrc522.o
+                0x00000000       0x38 mfrc522.o
  .text.mfrc522_read
-                0x00000000       0x58 mfrc522.o
+                0x00000000       0x3c mfrc522.o
  .text.mfrc522_reset
                 0x00000000       0x16 mfrc522.o
  .text.mfrc522_request
@@ -215,14 +217,14 @@ Discarded input sections
                 0x00000000      0x2ac mfrc522.o
  .text.mfrc522_get_card_serial
                 0x00000000       0xba mfrc522.o
- .debug_info    0x00000000      0x2ac mfrc522.o
- .debug_abbrev  0x00000000       0xfc mfrc522.o
+ .debug_info    0x00000000      0x2f0 mfrc522.o
+ .debug_abbrev  0x00000000      0x125 mfrc522.o
  .debug_loc     0x00000000      0x236 mfrc522.o
  .debug_aranges
                 0x00000000       0x50 mfrc522.o
  .debug_ranges  0x00000000       0x40 mfrc522.o
  .debug_line    0x00000000      0x3a6 mfrc522.o
- .debug_str     0x00000000      0x299 mfrc522.o
+ .debug_str     0x00000000      0x2b2 mfrc522.o
  .comment       0x00000000       0x31 mfrc522.o
  .debug_frame   0x00000000      0x118 mfrc522.o
  .text          0x00000000        0x0 mkuart.o
@@ -262,6 +264,8 @@ Discarded input sections
                 0x00000000       0x40 RFID_RC522.o
  .progmem.data.FM17522_firmware_reference
                 0x00000000       0x40 RFID_RC522.o
+ .rodata.DEFAULT_KEY
+                0x00000000        0x6 RFID_RC522.o
  .rodata.FIFO_SIZE
                 0x00000000        0x1 RFID_RC522.o
  .text.PCD_AntennaOff
@@ -274,12 +278,6 @@ Discarded input sections
                 0x00000000       0xbe RFID_RC522.o
  .text.PICC_WakeupA
                 0x00000000       0x34 RFID_RC522.o
- .text.PICC_HaltA
-                0x00000000       0x88 RFID_RC522.o
- .text.PCD_StopCrypto1
-                0x00000000       0x16 RFID_RC522.o
- .text.MIFARE_Write
-                0x00000000       0x7a RFID_RC522.o
  .text.MIFARE_Ultralight_Write
                 0x00000000       0x76 RFID_RC522.o
  .text.MIFARE_Decrement
@@ -298,12 +296,12 @@ Discarded input sections
                 0x00000000       0xc4 RFID_RC522.o
  .text.PCD_NTAG216_AUTH
                 0x00000000      0x10a RFID_RC522.o
- .text.PCD_MIFARE_Transceive
-                0x00000000      0x110 RFID_RC522.o
  .text.GetStatusCodeName
                 0x00000000       0xc0 RFID_RC522.o
  .text.PICC_DumpMifareClassicToSerial
                 0x00000000       0x8e RFID_RC522.o
+ .text.PICC_DumpMifareClassicSectorToSerial
+                0x00000000      0x394 RFID_RC522.o
  .text.PICC_DumpMifareUltralightToSerial
                 0x00000000       0x8e RFID_RC522.o
  .text.MIFARE_SetAccessBits
@@ -314,6 +312,8 @@ Discarded input sections
                 0x00000000      0x17c RFID_RC522.o
  .text.MIFARE_UnbrickUidSector
                 0x00000000       0x5c RFID_RC522.o
+ .text.write_new_A_key
+                0x00000000       0x2e RFID_RC522.o
  .text          0x00000000        0x0 softSPI.o
  .data          0x00000000        0x0 softSPI.o
  .bss           0x00000000        0x0 softSPI.o
@@ -491,6 +491,8 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodhi4.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodhi4.o)
+ .text.libgcc.div
+                0x00000000       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodhi4.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodhi4.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodhi4.o)
@@ -624,6 +626,8 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodhi4.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.div
+                0x00000000       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodhi4.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodhi4.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodhi4.o)
@@ -650,8 +654,6 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
- .text.avr-libc
-                0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
@@ -848,7 +850,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x7234
+.text           0x00000000     0x7188
  *(.vectors)
  .vectors       0x00000000       0xe4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
                 0x00000000                __vector_default
@@ -1027,261 +1029,287 @@ END GROUP
  .text.__vector_29
                 0x00000d10      0x1b6 hardware.o
                 0x00000d10                __vector_29
- .text.main     0x00000ec6       0x5c main.o
+ .text.main     0x00000ec6       0x58 main.o
                 0x00000ec6                main
  .text.register_uart_str_rx_event_callback
-                0x00000f22       0x26 mkuart.o
-                0x00000f22                register_uart_str_rx_event_callback
+                0x00000f1e       0x26 mkuart.o
+                0x00000f1e                register_uart_str_rx_event_callback
  .text.UART_RX_STR_EVENT
-                0x00000f48       0x4e mkuart.o
-                0x00000f48                UART_RX_STR_EVENT
+                0x00000f44       0x4e mkuart.o
+                0x00000f44                UART_RX_STR_EVENT
  .text.ascii_to_int
-                0x00000f96       0x42 mkuart.o
-                0x00000f96                ascii_to_int
+                0x00000f92       0x42 mkuart.o
+                0x00000f92                ascii_to_int
  .text.int_to_ascii
-                0x00000fd8       0x36 mkuart.o
-                0x00000fd8                int_to_ascii
+                0x00000fd4       0x36 mkuart.o
+                0x00000fd4                int_to_ascii
  .text.USARTX_Init
-                0x0000100e       0x86 mkuart.o
-                0x0000100e                USARTX_Init
+                0x0000100a       0x86 mkuart.o
+                0x0000100a                USARTX_Init
  .text.uart_putc
-                0x00001094       0x56 mkuart.o
-                0x00001094                uart_putc
+                0x00001090       0x56 mkuart.o
+                0x00001090                uart_putc
  .text.__vector_52
-                0x000010ea       0x8c mkuart.o
-                0x000010ea                __vector_52
+                0x000010e6       0x8c mkuart.o
+                0x000010e6                __vector_52
  .text.uart_getc
-                0x00001176       0x40 mkuart.o
-                0x00001176                uart_getc
+                0x00001172       0x40 mkuart.o
+                0x00001172                uart_getc
  .text.uart_get_str
-                0x000011b6       0xce mkuart.o
-                0x000011b6                uart_get_str
+                0x000011b2       0xce mkuart.o
+                0x000011b2                uart_get_str
  .text.__vector_51
-                0x00001284       0xa0 mkuart.o
-                0x00001284                __vector_51
+                0x00001280       0xa0 mkuart.o
+                0x00001280                __vector_51
  .text.calculate_LRC
-                0x00001324       0x56 modbus.o
-                0x00001324                calculate_LRC
+                0x00001320       0x56 modbus.o
+                0x00001320                calculate_LRC
  .text.delay_transmision
-                0x0000137a       0x70 modbus.o
-                0x0000137a                delay_transmision
+                0x00001376       0x70 modbus.o
+                0x00001376                delay_transmision
  .text.mod_send_ascii
-                0x000013ea       0x44 modbus.o
-                0x000013ea                mod_send_ascii
+                0x000013e6       0x44 modbus.o
+                0x000013e6                mod_send_ascii
  .text.modbus_puts
-                0x0000142e       0x60 modbus.o
-                0x0000142e                modbus_puts
+                0x0000142a       0x60 modbus.o
+                0x0000142a                modbus_puts
  .text.mod_write_single_register
-                0x0000148e      0xdc6 modbus.o
-                0x0000148e                mod_write_single_register
+                0x0000148a      0xdc6 modbus.o
+                0x0000148a                mod_write_single_register
  .text.mod_write_multiple_registers
-                0x00002254      0x2b4 modbus.o
-                0x00002254                mod_write_multiple_registers
+                0x00002250      0x2b4 modbus.o
+                0x00002250                mod_write_multiple_registers
  .text.get_int16_t_data
-                0x00002508       0x8c modbus.o
-                0x00002508                get_int16_t_data
+                0x00002504       0x8c modbus.o
+                0x00002504                get_int16_t_data
  .text.mod_read_input_register
-                0x00002594     0x1612 modbus.o
-                0x00002594                mod_read_input_register
+                0x00002590     0x1612 modbus.o
+                0x00002590                mod_read_input_register
  .text.parse_uart_data
-                0x00003ba6       0xc8 modbus.o
-                0x00003ba6                parse_uart_data
- .text.handleMFRC522
-                0x00003c6e       0xe2 RFID_RC522.o
-                0x00003c6e                handleMFRC522
+                0x00003ba2       0xc8 modbus.o
+                0x00003ba2                parse_uart_data
+ .text.register_manage_rfid_event_callback
+                0x00003c6a       0x26 RFID_RC522.o
+                0x00003c6a                register_manage_rfid_event_callback
+ .text.MANAGE_RFID_EVENT
+                0x00003c90       0x26 RFID_RC522.o
+                0x00003c90                MANAGE_RFID_EVENT
+ .text.check_buffer
+                0x00003cb6       0x4e RFID_RC522.o
+                0x00003cb6                check_buffer
+ .text.handleRFID
+                0x00003d04       0xe6 RFID_RC522.o
+                0x00003d04                handleRFID
+ .text.manageRFID
+                0x00003dea       0x1c RFID_RC522.o
+                0x00003dea                manageRFID
+ .text.enableChip
+                0x00003e06       0x3c RFID_RC522.o
+                0x00003e06                enableChip
+ .text.disableChip
+                0x00003e42       0x3c RFID_RC522.o
+                0x00003e42                disableChip
  .text.initMFRC522
-                0x00003d50       0x38 RFID_RC522.o
-                0x00003d50                initMFRC522
+                0x00003e7e       0x50 RFID_RC522.o
+                0x00003e7e                initMFRC522
  .text.PCD_WriteRegister
-                0x00003d88       0x4c RFID_RC522.o
-                0x00003d88                PCD_WriteRegister
+                0x00003ece       0x2c RFID_RC522.o
+                0x00003ece                PCD_WriteRegister
  .text.PCD_WriteRegisters
-                0x00003dd4       0x7a RFID_RC522.o
-                0x00003dd4                PCD_WriteRegisters
+                0x00003efa       0x5a RFID_RC522.o
+                0x00003efa                PCD_WriteRegisters
  .text.PCD_ReadRegister
-                0x00003e4e       0x50 RFID_RC522.o
-                0x00003e4e                PCD_ReadRegister
+                0x00003f54       0x30 RFID_RC522.o
+                0x00003f54                PCD_ReadRegister
  .text.PCD_ReadRegisters
-                0x00003e9e      0x132 RFID_RC522.o
-                0x00003e9e                PCD_ReadRegisters
+                0x00003f84      0x112 RFID_RC522.o
+                0x00003f84                PCD_ReadRegisters
  .text.PCD_SetRegisterBitMask
-                0x00003fd0       0x2c RFID_RC522.o
-                0x00003fd0                PCD_SetRegisterBitMask
+                0x00004096       0x2c RFID_RC522.o
+                0x00004096                PCD_SetRegisterBitMask
  .text.PCD_ClearRegisterBitMask
-                0x00003ffc       0x30 RFID_RC522.o
-                0x00003ffc                PCD_ClearRegisterBitMask
+                0x000040c2       0x30 RFID_RC522.o
+                0x000040c2                PCD_ClearRegisterBitMask
  .text.PCD_CalculateCRC
-                0x0000402c       0xbc RFID_RC522.o
-                0x0000402c                PCD_CalculateCRC
+                0x000040f2       0xbc RFID_RC522.o
+                0x000040f2                PCD_CalculateCRC
+ .text.initReset
+                0x000041ae       0x60 RFID_RC522.o
+                0x000041ae                initReset
  .text.PCD_Init
-                0x000040e8       0x6c RFID_RC522.o
-                0x000040e8                PCD_Init
+                0x0000420e       0x3a RFID_RC522.o
+                0x0000420e                PCD_Init
  .text.PCD_Reset
-                0x00004154      0x122 RFID_RC522.o
-                0x00004154                PCD_Reset
+                0x00004248      0x122 RFID_RC522.o
+                0x00004248                PCD_Reset
  .text.PCD_AntennaOn
-                0x00004276       0x30 RFID_RC522.o
-                0x00004276                PCD_AntennaOn
+                0x0000436a       0x30 RFID_RC522.o
+                0x0000436a                PCD_AntennaOn
  .text.PCD_TransceiveData
-                0x000042a6       0x84 RFID_RC522.o
-                0x000042a6                PCD_TransceiveData
+                0x0000439a       0x84 RFID_RC522.o
+                0x0000439a                PCD_TransceiveData
  .text.PCD_CommunicateWithPICC
-                0x0000432a      0x238 RFID_RC522.o
-                0x0000432a                PCD_CommunicateWithPICC
+                0x0000441e      0x238 RFID_RC522.o
+                0x0000441e                PCD_CommunicateWithPICC
  .text.PICC_RequestA
-                0x00004562       0x32 RFID_RC522.o
-                0x00004562                PICC_RequestA
+                0x00004656       0x32 RFID_RC522.o
+                0x00004656                PICC_RequestA
  .text.PICC_REQA_or_WUPA
-                0x00004594       0xa2 RFID_RC522.o
-                0x00004594                PICC_REQA_or_WUPA
+                0x00004688       0xa2 RFID_RC522.o
+                0x00004688                PICC_REQA_or_WUPA
  .text.PICC_Select
-                0x00004636      0x48a RFID_RC522.o
-                0x00004636                PICC_Select
+                0x0000472a      0x48a RFID_RC522.o
+                0x0000472a                PICC_Select
+ .text.PICC_HaltA
+                0x00004bb4       0x84 RFID_RC522.o
+                0x00004bb4                PICC_HaltA
  .text.PCD_Authenticate
-                0x00004ac0      0x104 RFID_RC522.o
-                0x00004ac0                PCD_Authenticate
+                0x00004c38      0x104 RFID_RC522.o
+                0x00004c38                PCD_Authenticate
+ .text.PCD_StopCrypto1
+                0x00004d3c       0x14 RFID_RC522.o
+                0x00004d3c                PCD_StopCrypto1
  .text.MIFARE_Read
-                0x00004bc4       0xa0 RFID_RC522.o
-                0x00004bc4                MIFARE_Read
+                0x00004d50       0xa0 RFID_RC522.o
+                0x00004d50                MIFARE_Read
+ .text.MIFARE_Write
+                0x00004df0       0x76 RFID_RC522.o
+                0x00004df0                MIFARE_Write
+ .text.PCD_MIFARE_Transceive
+                0x00004e66      0x10c RFID_RC522.o
+                0x00004e66                PCD_MIFARE_Transceive
  .text.PICC_GetType
-                0x00004c64       0x6e RFID_RC522.o
-                0x00004c64                PICC_GetType
- .text.PICC_DumpMifareClassicSectorToSerial
-                0x00004cd2      0x390 RFID_RC522.o
-                0x00004cd2                PICC_DumpMifareClassicSectorToSerial
+                0x00004f72       0x6e RFID_RC522.o
+                0x00004f72                PICC_GetType
  .text.PICC_IsNewCardPresent
-                0x00005062       0x44 RFID_RC522.o
-                0x00005062                PICC_IsNewCardPresent
+                0x00004fe0       0x44 RFID_RC522.o
+                0x00004fe0                PICC_IsNewCardPresent
  .text.PICC_ReadCardSerial
-                0x000050a6       0x26 RFID_RC522.o
-                0x000050a6                PICC_ReadCardSerial
+                0x00005024       0x26 RFID_RC522.o
+                0x00005024                PICC_ReadCardSerial
  .text.spi_init
-                0x000050cc       0x44 spi.o
-                0x000050cc                spi_init
+                0x0000504a       0x56 spi.o
+                0x0000504a                spi_init
  .text.spi_transmit
-                0x00005110       0x34 spi.o
-                0x00005110                spi_transmit
+                0x000050a0       0x34 spi.o
+                0x000050a0                spi_transmit
  .text.MANAGE_TEMPETATURE_EVENT
-                0x00005144       0x26 temperature_control.o
-                0x00005144                MANAGE_TEMPETATURE_EVENT
+                0x000050d4       0x26 temperature_control.o
+                0x000050d4                MANAGE_TEMPETATURE_EVENT
  .text.disableAllHeater
-                0x0000516a       0x8a temperature_control.o
-                0x0000516a                disableAllHeater
+                0x000050fa       0x8a temperature_control.o
+                0x000050fa                disableAllHeater
  .text.setTargetTemperature
-                0x000051f4      0x572 temperature_control.o
-                0x000051f4                setTargetTemperature
+                0x00005184      0x572 temperature_control.o
+                0x00005184                setTargetTemperature
  .text.initTensometer
-                0x00005766      0x274 tensometer.o
-                0x00005766                initTensometer
+                0x000056f6      0x274 tensometer.o
+                0x000056f6                initTensometer
  .text.offset_calibration
-                0x000059da      0x5f8 tensometer.o
-                0x000059da                offset_calibration
+                0x0000596a      0x5f8 tensometer.o
+                0x0000596a                offset_calibration
  .text.make_tensometer_measure
-                0x00005fd2      0xcca tensometer.o
-                0x00005fd2                make_tensometer_measure
+                0x00005f62      0xcca tensometer.o
+                0x00005f62                make_tensometer_measure
  .text.get_roll_weight
-                0x00006c9c       0x34 tensometer.o
-                0x00006c9c                get_roll_weight
+                0x00006c2c       0x34 tensometer.o
+                0x00006c2c                get_roll_weight
  .text.avr-libc.fplib
-                0x00006cd0        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3.o)
-                0x00006cd0                __subsf3
-                0x00006cd2                __addsf3
+                0x00006c60        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3.o)
+                0x00006c60                __subsf3
+                0x00006c62                __addsf3
  .text.avr-libc.fplib
-                0x00006cda       0xc0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3x.o)
-                0x00006cf4                __addsf3x
+                0x00006c6a       0xc0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+                0x00006c84                __addsf3x
  .text.avr-libc.fplib
-                0x00006d9a        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
-                0x00006d9a                __nesf2
-                0x00006d9a                __eqsf2
-                0x00006d9a                __cmpsf2
-                0x00006d9a                __ltsf2
-                0x00006d9a                __lesf2
+                0x00006d2a        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+                0x00006d2a                __nesf2
+                0x00006d2a                __eqsf2
+                0x00006d2a                __cmpsf2
+                0x00006d2a                __ltsf2
+                0x00006d2a                __lesf2
  .text.avr-libc.fplib
-                0x00006da2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3.o)
-                0x00006da2                __divsf3
+                0x00006d32        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3.o)
+                0x00006d32                __divsf3
  .text.avr-libc.fplib
-                0x00006da6       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3x.o)
-                0x00006dbc                __divsf3x
-                0x00006dc0                __divsf3_pse
+                0x00006d36       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                0x00006d4c                __divsf3x
+                0x00006d50                __divsf3_pse
  .text.avr-libc.fplib
-                0x00006e72        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
-                0x00006e72                __fixsfsi
+                0x00006e02        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+                0x00006e02                __fixsfsi
  .text.avr-libc.fplib
-                0x00006e7c       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
-                0x00006e7c                __fixunssfsi
+                0x00006e0c       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+                0x00006e0c                __fixunssfsi
  .text.avr-libc.fplib
-                0x00006ed4       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(floatsisf.o)
-                0x00006ed4                __floatunsisf
-                0x00006ed8                __floatsisf
+                0x00006e64       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+                0x00006e64                __floatunsisf
+                0x00006e68                __floatsisf
  .text.avr-libc.fplib
-                0x00006f4e       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
-                0x00006f4e                __fp_cmp
+                0x00006ede       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+                0x00006ede                __fp_cmp
  .text.avr-libc.fplib
-                0x00006f96        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_inf.o)
-                0x00006f96                __fp_inf
+                0x00006f26        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+                0x00006f26                __fp_inf
  .text.avr-libc.fplib
-                0x00006fa2        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_nan.o)
-                0x00006fa2                __fp_nan
+                0x00006f32        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+                0x00006f32                __fp_nan
  .text.avr-libc.fplib
-                0x00006fa8        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
-                0x00006fa8                __fp_pscA
+                0x00006f38        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+                0x00006f38                __fp_pscA
  .text.avr-libc.fplib
-                0x00006fb6        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
-                0x00006fb6                __fp_pscB
+                0x00006f46        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+                0x00006f46                __fp_pscB
  .text.avr-libc.fplib
-                0x00006fc4       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_round.o)
-                0x00006fc4                __fp_round
+                0x00006f54       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_round.o)
+                0x00006f54                __fp_round
  .text.avr-libc.fplib
-                0x00006fe6       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_split3.o)
-                0x00006fe6                __fp_split3
-                0x00006ff6                __fp_splitA
+                0x00006f76       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+                0x00006f76                __fp_split3
+                0x00006f86                __fp_splitA
  .text.avr-libc.fplib
-                0x0000702a        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_zero.o)
-                0x0000702a                __fp_zero
-                0x0000702c                __fp_szero
+                0x00006fba        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+                0x00006fba                __fp_zero
+                0x00006fbc                __fp_szero
  .text.avr-libc.fplib
-                0x00007038        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(gesf2.o)
-                0x00007038                __gesf2
-                0x00007038                __gtsf2
+                0x00006fc8        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(gesf2.o)
+                0x00006fc8                __gesf2
+                0x00006fc8                __gtsf2
  .text.avr-libc.fplib
-                0x00007040        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3.o)
-                0x00007040                __mulsf3
+                0x00006fd0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+                0x00006fd0                __mulsf3
  .text.avr-libc.fplib
-                0x00007044       0xc2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
-                0x00007058                __mulsf3x
-                0x0000705c                __mulsf3_pse
+                0x00006fd4       0xc2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                0x00006fe8                __mulsf3x
+                0x00006fec                __mulsf3_pse
  .text.libgcc.mul
-                0x00007106       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_mulsi3.o)
-                0x00007106                __mulsi3
+                0x00007096       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_mulsi3.o)
+                0x00007096                __mulsi3
  .text.libgcc.div
-                0x00007124       0x26 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodhi4.o)
-                0x00007124                _div
-                0x00007124                __divmodhi4
+                0x000070b4       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodsi4.o)
+                0x000070b4                __udivmodsi4
  .text.libgcc.div
-                0x0000714a       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodsi4.o)
-                0x0000714a                __udivmodsi4
+                0x000070f8       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodsi4.o)
+                0x000070f8                __divmodsi4
  .text.libgcc.div
-                0x0000718e       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodsi4.o)
-                0x0000718e                __divmodsi4
- .text.libgcc.div
-                0x000071b6       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_negsi2.o)
-                0x000071b6                __negsi2
- .text.libgcc   0x000071c6       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_tablejump2.o)
-                0x000071c6                __tablejump2__
+                0x00007120       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_negsi2.o)
+                0x00007120                __negsi2
+ .text.libgcc   0x00007130       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_tablejump2.o)
+                0x00007130                __tablejump2__
  .text.libgcc.mul
-                0x000071d6       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_muluhisi3.o)
-                0x000071d6                __muluhisi3
- .text.libgcc.div
-                0x000071ea       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodhi4.o)
-                0x000071ea                __udivmodhi4
+                0x00007140       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_muluhisi3.o)
+                0x00007140                __muluhisi3
  .text.libgcc.mul
-                0x00007212       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_umulhisi3.o)
-                0x00007212                __umulhisi3
-                0x00007230                . = ALIGN (0x2)
+                0x00007154       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_umulhisi3.o)
+                0x00007154                __umulhisi3
+ .text.avr-libc
+                0x00007172       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
+                0x00007172                memcpy
+                0x00007184                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00007230        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
-                0x00007230                _exit
-                0x00007230                exit
+ .fini9         0x00007184        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
+                0x00007184                _exit
+                0x00007184                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1300,11 +1328,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00007230        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
+ .fini0         0x00007184        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
  *(.fini0)
-                0x00007234                _etext = .
+                0x00007188                _etext = .
 
-.data           0x00800200      0x122 load address 0x00007234
+.data           0x00800200      0x132 load address 0x00007188
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -1317,91 +1345,100 @@ END GROUP
  *(.rodata)
  .rodata        0x00800205      0x11d RFID_RC522.o
  *(.rodata*)
+ .rodata.FILAMENT_KEY
+                0x00800322       0x10 RFID_RC522.o
+                0x00800322                FILAMENT_KEY
  *(.gnu.linkonce.d*)
-                0x00800322                . = ALIGN (0x2)
-                0x00800322                _edata = .
-                0x00800322                PROVIDE (__data_end, .)
+                0x00800332                . = ALIGN (0x2)
+                0x00800332                _edata = .
+                0x00800332                PROVIDE (__data_end, .)
 
-.bss            0x00800322      0x3f1
-                0x00800322                PROVIDE (__bss_start, .)
+.bss            0x00800332      0x40c
+                0x00800332                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.millis    0x00800322        0x4 hardware.o
-                0x00800322                millis
+ .bss.millis    0x00800332        0x4 hardware.o
+                0x00800332                millis
  .bss.Door_move_timer
-                0x00800326        0x2 hardware.o
-                0x00800326                Door_move_timer
- .bss.Door_delay_timer
-                0x00800328        0x2 hardware.o
-                0x00800328                Door_delay_timer
- .bss.Filament_measure_timer
-                0x0080032a        0x2 hardware.o
-                0x0080032a                Filament_measure_timer
- .bss.door_status
-                0x0080032c        0x1 hardware.o
-                0x0080032c                door_status
- .bss.osAnalogInputPos
-                0x0080032d        0x1 hardware.o
-                0x0080032d                osAnalogInputPos
- .bss.pwm_count_heater.1739
-                0x0080032e        0x1 hardware.o
- .bss.pwm_pos_set.1740
-                0x0080032f        0x6 hardware.o
- .bss.pwm_count_cooler.1738
-                0x00800335        0x1 hardware.o
- .bss.pwm_cooler_pos_set.1741
                 0x00800336        0x2 hardware.o
+                0x00800336                Door_move_timer
+ .bss.Door_delay_timer
+                0x00800338        0x2 hardware.o
+                0x00800338                Door_delay_timer
+ .bss.Filament_measure_timer
+                0x0080033a        0x2 hardware.o
+                0x0080033a                Filament_measure_timer
+ .bss.door_status
+                0x0080033c        0x1 hardware.o
+                0x0080033c                door_status
+ .bss.osAnalogInputPos
+                0x0080033d        0x1 hardware.o
+                0x0080033d                osAnalogInputPos
+ .bss.pwm_count_heater.1739
+                0x0080033e        0x1 hardware.o
+ .bss.pwm_pos_set.1740
+                0x0080033f        0x6 hardware.o
+ .bss.pwm_count_cooler.1738
+                0x00800345        0x1 hardware.o
+ .bss.pwm_cooler_pos_set.1741
+                0x00800346        0x2 hardware.o
  .bss.uart_rx_str_event_callback
-                0x00800338        0x2 mkuart.o
- .bss.autotune  0x0080033a        0x1 modbus.o
-                0x0080033a                autotune
+                0x00800348        0x2 mkuart.o
+ .bss.autotune  0x0080034a        0x1 modbus.o
+                0x0080034a                autotune
+ .bss.chip_id   0x0080034b        0x1 RFID_RC522.o
+                0x0080034b                chip_id
+ .bss.rfid_event_callback
+                0x0080034c        0x2 RFID_RC522.o
  .bss.PIDTune_status
-                0x0080033b        0x2 temperature_control.o
-                0x0080033b                PIDTune_status
+                0x0080034e        0x2 temperature_control.o
+                0x0080034e                PIDTune_status
  .bss.temperature_event_callback
-                0x0080033d        0x2 temperature_control.o
+                0x00800350        0x2 temperature_control.o
  .bss.input_mux.1644
-                0x0080033f        0x1 tensometer.o
+                0x00800352        0x1 tensometer.o
  *(COMMON)
- COMMON         0x00800340        0x7 Configuration.o
-                0x00800340                pwm_pos
- COMMON         0x00800347       0x23 hardware.o
-                0x00800347                osAnalogInputCounter
-                0x0080034e                osAnalogInputValues
-                0x0080035c                osAnalogInputBuildup
- COMMON         0x0080036a       0xd7 mkuart.o
-                0x0080036a                UART_TxHead
-                0x0080036b                new_line
-                0x0080036c                PrzetworzonaRamka
-                0x0080037e                UART_TxTail
-                0x0080037f                UART_TxBuf
-                0x008003ff                UART_RxHead
-                0x00800400                UART_RxTail
-                0x00800401                UART_RxBuf
- COMMON         0x00800441       0x40 modbus.o
-                0x00800441                bufor
- COMMON         0x00800481       0x15 RFID_RC522.o
-                0x00800481                uid
-                0x0080048d                ID
-                0x0080048e                _chipSelectPin
-                0x0080048f                key
-                0x00800495                _resetPowerDownPin
- COMMON         0x00800496      0x25f temperature_control.o
-                0x00800496                tempController
-                0x00800664                fan
-                0x0080066a                temptable_generic1
-                0x008006ee                autotunepidtable
- COMMON         0x008006f5       0x1e tensometer.o
-                0x008006f5                tensometer
-                0x00800713                PROVIDE (__bss_end, .)
-                0x00007234                __data_load_start = LOADADDR (.data)
-                0x00007356                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00800353        0x7 Configuration.o
+                0x00800353                pwm_pos
+ COMMON         0x0080035a       0x23 hardware.o
+                0x0080035a                osAnalogInputCounter
+                0x00800361                osAnalogInputValues
+                0x0080036f                osAnalogInputBuildup
+ COMMON         0x0080037d       0xd7 mkuart.o
+                0x0080037d                UART_TxHead
+                0x0080037e                new_line
+                0x0080037f                PrzetworzonaRamka
+                0x00800391                UART_TxTail
+                0x00800392                UART_TxBuf
+                0x00800412                UART_RxHead
+                0x00800413                UART_RxTail
+                0x00800414                UART_RxBuf
+ COMMON         0x00800454       0x40 modbus.o
+                0x00800454                bufor
+ COMMON         0x00800494       0x2d RFID_RC522.o
+                0x00800494                uid
+                0x008004a0                ID
+                0x008004a1                _chipSelectPin
+                0x008004a2                uid1
+                0x008004ae                uid0
+                0x008004ba                key
+                0x008004c0                _resetPowerDownPin
+ COMMON         0x008004c1      0x25f temperature_control.o
+                0x008004c1                tempController
+                0x0080068f                fan
+                0x00800695                temptable_generic1
+                0x00800719                autotunepidtable
+ COMMON         0x00800720       0x1e tensometer.o
+                0x00800720                tensometer
+                0x0080073e                PROVIDE (__bss_end, .)
+                0x00007188                __data_load_start = LOADADDR (.data)
+                0x000072ba                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800713        0x0
+.noinit         0x0080073e        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800713                _end = .
+                0x0080073e                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -1474,7 +1511,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x408
+.debug_aranges  0x00000000      0x448
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 Configuration.o
@@ -1487,97 +1524,97 @@ END GROUP
  .debug_aranges
                 0x00000128       0x78 modbus.o
  .debug_aranges
-                0x000001a0      0x198 RFID_RC522.o
+                0x000001a0      0x1d8 RFID_RC522.o
  .debug_aranges
-                0x00000338       0x28 spi.o
+                0x00000378       0x28 spi.o
  .debug_aranges
-                0x00000360       0x70 temperature_control.o
+                0x000003a0       0x70 temperature_control.o
  .debug_aranges
-                0x000003d0       0x38 tensometer.o
+                0x00000410       0x38 tensometer.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x4a06
+.debug_info     0x00000000     0x4b61
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000       0xda Configuration.o
  .debug_info    0x000000da      0x4df hardware.o
- .debug_info    0x000005b9      0x1ce main.o
- .debug_info    0x00000787      0x643 mkuart.o
- .debug_info    0x00000dca      0x7e3 modbus.o
- .debug_info    0x000015ad     0x1a7a RFID_RC522.o
- .debug_info    0x00003027       0xab spi.o
- .debug_info    0x000030d2      0xff8 temperature_control.o
- .debug_info    0x000040ca      0x93c tensometer.o
+ .debug_info    0x000005b9      0x180 main.o
+ .debug_info    0x00000739      0x643 mkuart.o
+ .debug_info    0x00000d7c      0x7e3 modbus.o
+ .debug_info    0x0000155f     0x1c23 RFID_RC522.o
+ .debug_info    0x00003182       0xab spi.o
+ .debug_info    0x0000322d      0xff8 temperature_control.o
+ .debug_info    0x00004225      0x93c tensometer.o
 
-.debug_abbrev   0x00000000      0xe7c
+.debug_abbrev   0x00000000      0xecc
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x9b Configuration.o
  .debug_abbrev  0x0000009b      0x130 hardware.o
- .debug_abbrev  0x000001cb      0x131 main.o
- .debug_abbrev  0x000002fc      0x1df mkuart.o
- .debug_abbrev  0x000004db      0x1dd modbus.o
- .debug_abbrev  0x000006b8      0x357 RFID_RC522.o
- .debug_abbrev  0x00000a0f       0x78 spi.o
- .debug_abbrev  0x00000a87      0x258 temperature_control.o
- .debug_abbrev  0x00000cdf      0x19d tensometer.o
+ .debug_abbrev  0x000001cb       0xfd main.o
+ .debug_abbrev  0x000002c8      0x1df mkuart.o
+ .debug_abbrev  0x000004a7      0x1dd modbus.o
+ .debug_abbrev  0x00000684      0x3db RFID_RC522.o
+ .debug_abbrev  0x00000a5f       0x78 spi.o
+ .debug_abbrev  0x00000ad7      0x258 temperature_control.o
+ .debug_abbrev  0x00000d2f      0x19d tensometer.o
 
-.debug_line     0x00000000     0x42bb
+.debug_line     0x00000000     0x4457
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000       0xfb Configuration.o
  .debug_line    0x000000fb      0x467 hardware.o
- .debug_line    0x00000562      0x127 main.o
- .debug_line    0x00000689      0x523 mkuart.o
- .debug_line    0x00000bac      0xd30 modbus.o
- .debug_line    0x000018dc     0x1701 RFID_RC522.o
- .debug_line    0x00002fdd       0xe6 spi.o
- .debug_line    0x000030c3      0xad6 temperature_control.o
- .debug_line    0x00003b99      0x722 tensometer.o
+ .debug_line    0x00000562      0x12d main.o
+ .debug_line    0x0000068f      0x523 mkuart.o
+ .debug_line    0x00000bb2      0xd30 modbus.o
+ .debug_line    0x000018e2     0x1891 RFID_RC522.o
+ .debug_line    0x00003173       0xec spi.o
+ .debug_line    0x0000325f      0xad6 temperature_control.o
+ .debug_line    0x00003d35      0x722 tensometer.o
 
-.debug_frame    0x00000000     0x1138
+.debug_frame    0x00000000     0x1238
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 Configuration.o
  .debug_frame   0x00000034      0x190 hardware.o
  .debug_frame   0x000001c4       0x34 main.o
  .debug_frame   0x000001f8      0x280 mkuart.o
  .debug_frame   0x00000478      0x1c4 modbus.o
- .debug_frame   0x0000063c      0x760 RFID_RC522.o
- .debug_frame   0x00000d9c       0x54 spi.o
- .debug_frame   0x00000df0      0x29c temperature_control.o
- .debug_frame   0x0000108c       0xac tensometer.o
+ .debug_frame   0x0000063c      0x860 RFID_RC522.o
+ .debug_frame   0x00000e9c       0x54 spi.o
+ .debug_frame   0x00000ef0      0x29c temperature_control.o
+ .debug_frame   0x0000118c       0xac tensometer.o
 
-.debug_str      0x00000000     0x1910
+.debug_str      0x00000000     0x19c0
  *(.debug_str)
  .debug_str     0x00000000      0x185 Configuration.o
                                 0x1d1 (size before relaxing)
  .debug_str     0x00000185      0x2e3 hardware.o
                                 0x4ae (size before relaxing)
- .debug_str     0x00000468       0x58 main.o
-                                0x22e (size before relaxing)
- .debug_str     0x000004c0      0x20f mkuart.o
+ .debug_str     0x00000468       0x75 main.o
+                                0x246 (size before relaxing)
+ .debug_str     0x000004dd      0x20f mkuart.o
                                 0x3d2 (size before relaxing)
- .debug_str     0x000006cf      0x257 modbus.o
+ .debug_str     0x000006ec      0x257 modbus.o
                                 0x5cf (size before relaxing)
- .debug_str     0x00000926      0xc86 RFID_RC522.o
-                                0xec0 (size before relaxing)
- .debug_str     0x000015ac       0x21 spi.o
+ .debug_str     0x00000943      0xd19 RFID_RC522.o
+                                0xf8d (size before relaxing)
+ .debug_str     0x0000165c       0x21 spi.o
                                 0x1a9 (size before relaxing)
- .debug_str     0x000015cd      0x2c8 temperature_control.o
+ .debug_str     0x0000167d      0x2c8 temperature_control.o
                                 0x6ec (size before relaxing)
- .debug_str     0x00001895       0x7b tensometer.o
+ .debug_str     0x00001945       0x7b tensometer.o
                                 0x2ee (size before relaxing)
 
-.debug_loc      0x00000000     0x252e
+.debug_loc      0x00000000     0x2721
  *(.debug_loc)
  .debug_loc     0x00000000       0x3b Configuration.o
  .debug_loc     0x0000003b      0x337 hardware.o
- .debug_loc     0x00000372       0x47 main.o
- .debug_loc     0x000003b9      0x55e mkuart.o
- .debug_loc     0x00000917      0x3c4 modbus.o
- .debug_loc     0x00000cdb     0x1083 RFID_RC522.o
- .debug_loc     0x00001d5e       0x83 spi.o
- .debug_loc     0x00001de1      0x5fa temperature_control.o
- .debug_loc     0x000023db      0x153 tensometer.o
+ .debug_loc     0x00000372       0x3b main.o
+ .debug_loc     0x000003ad      0x55e mkuart.o
+ .debug_loc     0x0000090b      0x3c4 modbus.o
+ .debug_loc     0x00000ccf     0x1282 RFID_RC522.o
+ .debug_loc     0x00001f51       0x83 spi.o
+ .debug_loc     0x00001fd4      0x5fa temperature_control.o
+ .debug_loc     0x000025ce      0x153 tensometer.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1597,17 +1634,17 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x378
+.debug_ranges   0x00000000      0x3b8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 Configuration.o
  .debug_ranges  0x00000010       0x48 hardware.o
  .debug_ranges  0x00000058       0x10 main.o
  .debug_ranges  0x00000068       0x80 mkuart.o
  .debug_ranges  0x000000e8       0x68 modbus.o
- .debug_ranges  0x00000150      0x188 RFID_RC522.o
- .debug_ranges  0x000002d8       0x18 spi.o
- .debug_ranges  0x000002f0       0x60 temperature_control.o
- .debug_ranges  0x00000350       0x28 tensometer.o
+ .debug_ranges  0x00000150      0x1c8 RFID_RC522.o
+ .debug_ranges  0x00000318       0x18 spi.o
+ .debug_ranges  0x00000330       0x60 temperature_control.o
+ .debug_ranges  0x00000390       0x28 tensometer.o
 
 .debug_macro
  *(.debug_macro)

@@ -35,6 +35,7 @@ int main(void)
 	
 	uint32_t tempData;
 	register_uart_str_rx_event_callback( parse_uart_data );
+	register_manage_rfid_event_callback(manageRFID);
 	//register_manage_temperature_event_callback( manageTemperatures );
 	
 	init();
@@ -89,21 +90,18 @@ int main(void)
 	offset_calibration();
     Filament_measure_timer = 1000;
 	
-	Uid uid;
+	//Uid uid;
 	
 	while (1) 
     {		
-		handleMFRC522();	
+		//handleMFRC522();	
 		UART_RX_STR_EVENT(bufor) ;	// zdarzenie odbiorcze MODBUS UART3
 		MANAGE_TEMPETATURE_EVENT();
-		
+		MANAGE_RFID_EVENT();
 		if (!Filament_measure_timer)	// wstawic Filament_measure_timer
-		{
-			
-			
+		{		
 			make_tensometer_measure();
-			Filament_measure_timer = TENSOMETER_MEASURE_INTERVAL;
-			
+			Filament_measure_timer = TENSOMETER_MEASURE_INTERVAL;		
 			//ADS_SCLK_TOG;
 		}
 		//handleRFID(byte,str);

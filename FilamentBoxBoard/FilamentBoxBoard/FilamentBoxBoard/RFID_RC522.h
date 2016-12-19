@@ -77,14 +77,23 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 
-#define RFID_0	0
-#define RFID_1	1
+#define ID_RC522_0		0
+#define ID_RC522_1		1
+
+#define FILAMENT_SECTOR_RFID	1
+#define FILAMENT_BLOCK_ADRR		4
+
+#define FILAMENT_WEIGHT_MSB_POS			0x00			
+#define FILAMENT_WEIGHT_LSB_POS			0x01
+#define FILAMENT_ROLL_WEIGHT_MSB_POS	0x02
+#define FILAMENT_ROLL_WEIGHT_LSB_POS	0x03
+
+#define FILAMENT_KEY_BLOCK				7		
+#define BLOCK_LENGHT					16
 
 
 
 
-
- 
  // MFRC522 registers. Described in chapter 9 of the datasheet.
  // When using SPI all addresses are shifted one bit left in the "SPI address uint8_t" (section 8.1.2.3)
  enum PCD_Register {
@@ -265,7 +274,7 @@ typedef struct {
 
 
 void initMFRC522();
-	
+void manageRFID();
 /////////////////////////////////////////////////////////////////////////////////////
 // Basic interface functions for communicating with the MFRC522
 /////////////////////////////////////////////////////////////////////////////////////

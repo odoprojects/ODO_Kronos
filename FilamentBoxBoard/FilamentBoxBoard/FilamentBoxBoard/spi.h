@@ -29,8 +29,10 @@
 void spi_init();
 uint8_t spi_transmit(uint8_t data);
 
-#define ENABLE_CHIP() (SPI_CS_0_PORT &= (~(1<<SPI_CS_0)))
-#define DISABLE_CHIP() (SPI_CS_0_PORT |= (1<<SPI_CS_0))
+#define ENABLE_CHIP_0() (SPI_CS_0_PORT &= (~(1<<SPI_CS_0)))
+#define DISABLE_CHIP_0() (SPI_CS_0_PORT |= (1<<SPI_CS_0))
 
+#define ENABLE_CHIP_1() (SPI_CS_1_PORT &= (~(1<<SPI_CS_1)))
+#define DISABLE_CHIP_1() (SPI_CS_1_PORT |= (1<<SPI_CS_1))
 
 #endif
