@@ -460,7 +460,7 @@ void setTargetTemperature(struct TemperatureController *temperatureCont, uint16_
 			    type = 8;
 		    }
 		    type--;
-			uint8_t num = pgm_read_uint8_t(&temptables_num[type])<<1;
+			uint8_t num = pgm_read_byte(&temptables_num[type])<<1;
 			uint8_t i=2;
 			const short *temptable = (const short *)pgm_read_word(&temptables[type]); //pgm_read_word(&temptables[type]);
 			short oldraw = pgm_read_word(&temptable[0]);
@@ -487,7 +487,7 @@ void setTargetTemperature(struct TemperatureController *temperatureCont, uint16_
 		case 52:
 		{
 			type-=46;
-			uint8_t num = pgm_read_uint8_t(&temptables_num[type])<<1;
+			uint8_t num = pgm_read_byte(&temptables_num[type])<<1;
 			uint8_t i=2;
 			const short *temptable = (const short *)pgm_read_word(&temptables[type]); //pgm_read_word(&temptables[type]);
 			short oldraw = pgm_read_word(&temptable[0]);
@@ -627,7 +627,7 @@ int8_t updateCurrentTemperature(struct TemperatureController *temperatureCont){
 				type = 8;
 			}				
 		    type--;
-		    uint8_t num = pgm_read_uint8_t(&temptables_num[type])<<1;
+		    uint8_t num = pgm_read_byte(&temptables_num[type])<<1;
 		    uint8_t i=2;
 		    const int16_t *temptable = (const int16_t *)pgm_read_word(&temptables[type]); //pgm_read_word_near(&temptables[type]);
 			//const short *temptable = (const short *)pgm_read_word(&temptables[type]);

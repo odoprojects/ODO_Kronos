@@ -27,26 +27,12 @@ void init(){
 	Pin_init();
 	Timer0_init();
 	Timer1_init();
-//	readDataFromEEPROM();
+	readDataFromEEPROM();
 	
 	//initBaudrate();
-	USARTX_Init(baudrate);
+	USARTX_Init(BAUDRATE);
 	initTensometer();
-	sei();
-//	ADC_init();
-	
-//***************************************
-//	Init software
-//***************************************
-	//	load_default_variables();
-
- //  init_temperature_control();
-	
-
-
-	
- 
-	 
+	sei();	 
 }
 
 

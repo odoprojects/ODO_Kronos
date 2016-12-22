@@ -15,7 +15,8 @@ hardware.d hardware.o: .././hardware.c \
  .././hardware.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h \
- .././Pins.h .././Configuration.h .././temperature_control.h
+ .././Pins.h .././Configuration.h .././temperature_control.h \
+ .././Drivers.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -54,3 +55,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 .././Configuration.h:
 
 .././temperature_control.h:
+
+.././Drivers.h:

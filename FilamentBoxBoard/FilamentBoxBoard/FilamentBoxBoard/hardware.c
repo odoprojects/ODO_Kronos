@@ -12,14 +12,14 @@
 #include "Pins.h"
 #include "Configuration.h"
 #include "temperature_control.h"
-
+#include "Drivers.h"
 
 volatile uint32_t millis = 0;
 
 volatile uint16_t Door_move_timer = 0;
 volatile uint16_t Door_delay_timer = 0;
 volatile uint16_t Filament_measure_timer = 0;
-
+volatile uint16_t modbus_transmission_blocade_timer;
 uint8_t door_status = 0; 
 uint8_t door_setup = 0;
 //*************************************************************************
@@ -145,49 +145,53 @@ ISR(TIMER1_COMPA_vect){
 	if (n) Door_delay_timer = --n;
 	n = Filament_measure_timer;
 	if (n) Filament_measure_timer = --n;
-	
+	n = modbus_transmission_blocade_timer;
+	if (n) modbus_transmission_blocade_timer = --n;
 }
 
 
 
-ISR(PWM_TIMER_VECTOR){
-	static uint8_t pwm_count_cooler = 0;
-	static uint8_t pwm_count_heater = 0;
-	static uint8_t pwm_pos_set[NUM_PWM];
+ISR(STEPPER_MOTOR_TIMER_VECTOR){
+	static uint8_t driver0_step = 0;
+	static uint8_t driver1_step = 0;
+	static uint32_t driver0_delay = 0;	
+	static uint32_t driver1_delay = 0;
 	
-	static uint8_t pwm_cooler_pos_set[NUM_EXTRUDER];
-
-
-	OCR0A += 64;
-
-	if(pwm_count_heater==0)
+	
+	if (driver0_enabled)
 	{
-		if((pwm_pos_set[0] = (pwm_pos[0] & HEATER_PWM_MASK)) > 0) EXT0_PWM_PIN_HIGH;
-		if((pwm_pos_set[1] = (pwm_pos[1] & HEATER_PWM_MASK)) > 0) EXT1_PWM_PIN_HIGH;
-		if((pwm_pos_set[2] = (pwm_pos[2] & HEATER_PWM_MASK)) > 0) BED0_PWM_PIN_HIGH;
-		if((pwm_pos_set[3] = (pwm_pos[3] & HEATER_PWM_MASK)) > 0) BED1_PWM_PIN_HIGH;
-		if((pwm_pos_set[4] = (pwm_pos[4] & HEATER_PWM_MASK)) > 0) BED2_PWM_PIN_HIGH;
-		if((pwm_pos_set[5] = (pwm_pos[5] & HEATER_PWM_MASK)) > 0) BED3_PWM_PIN_HIGH;
+		if (!driver0_delay)
+		{
+			if (driver0_step%2){
+				DRIVER0_STEP_PIN_HIGH;
+				driver0_delay = DRIVER_COSNTANT_DELAY;
+			}else{
+				DRIVER0_STEP_PIN_LOW;
+				driver0_delay = driver_speed;
+			}
+			driver0_step++;
+		}else{
+			driver0_delay--;
+		}
 	}
-	if(pwm_count_cooler == 0 )
-	{   
-		if((pwm_cooler_pos_set[0] = (fan[0].coolerPWM & COOLER_PWM_MASK)) > 0) EXT0_FAN_PWM_PIN_HIGH;
-		if((pwm_cooler_pos_set[1] = (fan[1].coolerPWM & COOLER_PWM_MASK)) > 0) EXT1_FAN_PWM_PIN_HIGH;
+	
+	if(driver1_enabled){
+		if (!driver1_delay)
+		{
+			if (driver1_step%2){
+				DRIVER1_STEP_PIN_HIGH;
+				driver1_delay = DRIVER_COSNTANT_DELAY;
+			}else{
+				DRIVER1_STEP_PIN_LOW;
+				driver1_delay = driver_speed;
+			}
+			driver1_step++;
+		}else{
+			driver1_delay--;
+		}
 	}
+	
 		
-	if(pwm_pos_set[0] == pwm_count_heater && pwm_pos_set[0] != HEATER_PWM_MASK) EXT0_PWM_PIN_LOW;
-	if(pwm_cooler_pos_set[0] == pwm_count_cooler && pwm_cooler_pos_set[0] != COOLER_PWM_MASK) EXT0_FAN_PWM_PIN_LOW;
-	
-	if(pwm_pos_set[1] == pwm_count_heater && pwm_pos_set[1] != HEATER_PWM_MASK) EXT1_PWM_PIN_LOW;
-	if(pwm_cooler_pos_set[1] == pwm_count_cooler && pwm_cooler_pos_set[1] != COOLER_PWM_MASK) EXT1_FAN_PWM_PIN_LOW;
-
-	if(pwm_pos_set[2] == pwm_count_heater && pwm_pos_set[2] != HEATER_PWM_MASK) BED0_PWM_PIN_LOW;
-	if(pwm_pos_set[3] == pwm_count_heater && pwm_pos_set[3] != HEATER_PWM_MASK) BED1_PWM_PIN_LOW;
-	if(pwm_pos_set[4] == pwm_count_heater && pwm_pos_set[4] != HEATER_PWM_MASK) BED2_PWM_PIN_LOW;
-	if(pwm_pos_set[5] == pwm_count_heater && pwm_pos_set[5] != HEATER_PWM_MASK) BED3_PWM_PIN_LOW;
-	
-	pwm_count_cooler += COOLER_PWM_STEP;
-	pwm_count_heater += HEATER_PWM_STEP;
 	
 }
 

@@ -25,14 +25,14 @@
 #define MODBUS_FRAME_BASE_NUM	6
 #define FRAME_START				0x3A
 
-#define SLAVE_ADDRESS			0x64 //Adres naszego slave-a
+#define SLAVE_ADDRESS			0x65 //Adres naszego slave-a
 #define ALL_SLAVES_ADR			0x00
 
 #define CR						0x0D
 #define LF						0x0A
 
 
-
+#define MODBUS_BLOCADE_TRANSMISSION_TIMEOUT_MS	500
 ////znane i niezmienne pozycje znaków w ramce MODBUS
 //#define ADDRESS_POS		0
 //#define CMD_POS			1

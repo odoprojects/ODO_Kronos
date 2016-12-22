@@ -17,7 +17,7 @@
 #include "Configuration.h"
 #include "tensometer.h"
 #include "softSPI.h"
-
+#include "Drivers.h"
 #include "RFID_RC522.h"
 
 //volatile uint8_t x = 0;
@@ -35,9 +35,8 @@ int main(void)
 	
 	uint32_t tempData;
 	register_uart_str_rx_event_callback( parse_uart_data );
-	register_manage_rfid_event_callback(manageRFID);
-	//register_manage_temperature_event_callback( manageTemperatures );
-	
+	register_manage_tensometer_event_callback(manageTensometer);
+	register_filament_drivers_event_callback(manageFilamentDrivers);
 	init();
 	
 // 	uint8_t byte;
@@ -80,31 +79,25 @@ int main(void)
 	tempController[BED3].pidDGain = BED_D;
 */
 	//modbus_puts_s("Witaj");
-	/*
-	spi_init();
-	PCD_Init();
-	*/
 	
-	initMFRC522();
+	//initMFRC522();
 	
+	initializeDrivers();
 	offset_calibration();
     Filament_measure_timer = 1000;
 	
-	//Uid uid;
-	
 	while (1) 
     {		
-		//handleMFRC522();	
 		UART_RX_STR_EVENT(bufor) ;	// zdarzenie odbiorcze MODBUS UART3
-		MANAGE_TEMPETATURE_EVENT();
-		MANAGE_RFID_EVENT();
-		if (!Filament_measure_timer)	// wstawic Filament_measure_timer
+		MANAGE_TENSOMETER_EVENT();
+		FILAMENT_DRIVERS_EVENT();
+		//MANAGE_RFID_EVENT();
+	/*	if (!Filament_measure_timer)	// wstawic Filament_measure_timer
 		{		
 			make_tensometer_measure();
 			Filament_measure_timer = TENSOMETER_MEASURE_INTERVAL;		
 			//ADS_SCLK_TOG;
-		}
-		//handleRFID(byte,str);
+		}*/
 /*		
 		if (autotune)
 		{

@@ -15,7 +15,7 @@
 #include "modbus.h"
 
 volatile uint8_t new_line;
-
+uint8_t block_modbus_transmission = 0;
 volatile TRamka PrzetworzonaRamka;
 
 // bufor UART_RxBuf
@@ -134,7 +134,7 @@ void uart_putint(int value, int radix)	// wysy³a na port szeregowy tekst
 
 void uart_printNumber(uint32_t n) 
 {
-	char buf[11]; // Assumes 8-bit chars plus zero uint8_t.
+	char buf[11]; // Assumes 8-bit chars plus zero byte.
 	char *str = &buf[10];
 	*str = '\0';
 	do {
@@ -315,7 +315,13 @@ ISR( DEF_USARTX_RX_VECT ) {
    		switch( data ) {
     			case 0:					// ignorujemy bajt = 0
     			case 10: break;			// ignorujemy znak LF
-    			case 13: new_line++;	// sygnalizujemy obecnoœæ kolejnej linii w buforze
+    			case 13: 	// sygnalizujemy obecnoœæ kolejnej linii w buforze
+						UART_RxHead = tmp_head;
+						UART_RxBuf[tmp_head] = data;
+						new_line++;
+						block_modbus_transmission = 0;
+						break;
+				case 58: block_modbus_transmission = 1;	//zmienna blokuj¹ca transmisje
     			default : UART_RxHead = tmp_head; UART_RxBuf[tmp_head] = data;
     		}
     }	

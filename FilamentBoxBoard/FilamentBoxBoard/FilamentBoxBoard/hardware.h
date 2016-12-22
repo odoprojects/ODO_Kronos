@@ -12,18 +12,15 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 
-//#ifdef PROGMEM
-//	#undef PROGMEM
-//#endif	
-//#define PROGMEM
+#define PROGMEM
 #define PGM_P const char *
 typedef char prog_char;
 //#undef PSTR
 //#define PSTR(s) s
-#undef pgm_read_uint8_t_near
-#define pgm_read_uint8_t_near(x) (*(int8_t*)x)
-#undef pgm_read_uint8_t
-#define pgm_read_uint8_t(x) (*(int8_t*)x)
+#undef pgm_read_byte_near
+#define pgm_read_byte_near(x) (*(int8_t*)x)
+#undef pgm_read_byte
+#define pgm_read_byte(x) (*(int8_t*)x)
 #undef pgm_read_float
 #define pgm_read_float(addr) (*(const float *)(addr))
 #undef pgm_read_word
@@ -36,10 +33,6 @@ typedef char prog_char;
 //#define pgm_read_dword(addr) (*(const unsigned long *)(addr))
 #undef pgm_read_dword_near
 #define pgm_read_dword_near(addr) pgm_read_dword(addr)
-
-#ifdef _BV
-	#undef _BV
-#endif
 #define _BV(x) (1 << (x))
 
 //*************************************************************************
@@ -121,6 +114,7 @@ void Timer1_init();
 extern volatile uint32_t millis;
 extern volatile uint16_t Door_move_timer;
 extern volatile uint16_t Door_delay_timer;
+extern volatile uint16_t modbus_transmission_blocade_timer;
 extern volatile uint16_t Filament_measure_timer;
 
 extern uint8_t door_status;
@@ -134,7 +128,7 @@ extern uint8_t door_setup;
 #define DOOR_CLOSE_MASK 0x40
 
 
-#define PWM_TIMER_VECTOR		TIMER0_COMPA_vect
+#define STEPPER_MOTOR_TIMER_VECTOR		TIMER0_COMPA_vect
 
 
 //*************************************************************************

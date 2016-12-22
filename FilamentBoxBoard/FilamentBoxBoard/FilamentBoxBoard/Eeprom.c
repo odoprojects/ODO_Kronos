@@ -9,6 +9,7 @@
 #include "hardware.h"
 #include "temperature_control.h"
 #include "Configuration.h"
+#include "tensometer.h"
 
 //extern struct TemperatureController tempController[ANALOG_INPUTS];
 
@@ -83,79 +84,14 @@ void storeDataIntoEEPROM(){
 	eprSetuint8_t(EPR_VERSION, EEPROM_PROTOCOL_VERSION);
 	eprSetInt32(EPR_BAUDRATE,baudrate);
 	
-	eprSetuint8_t(EPR_EXT0_HEAT_MANAGER, tempController[EXT0].heatManager );
-	eprSetuint8_t(EPR_EXT0_ANALOG_PIN, tempController[EXT0].sensorPin);
-	eprSetuint8_t(EPR_EXT0_DRIVE_MAX, tempController[EXT0].pidDriveMax );
-	eprSetFloat(EPR_EXT0_PID_PGAIN, tempController[EXT0].pidPGain );
-	eprSetFloat(EPR_EXT0_PID_IGAIN, tempController[EXT0].pidIGain );
-	eprSetFloat(EPR_EXT0_PID_DGAIN, tempController[EXT0].pidDGain );
-	eprSetuint8_t(EPR_EXT0_PID_MAX, tempController[EXT0].pidMax );
-	eprSetuint8_t(EPR_EXT0_DRIVE_MIN, tempController[EXT0].pidDriveMin );
-	eprSetuint8_t(EPR_EXT0_TYPE_SENSOR, tempController[EXT0].sensorType );
-	eprSetuint8_t(EPR_EXT0_COOLER_SPEED, fan[EXT0].coolerSpeed );
+	eprSetInt16(EPR_TENS0_CONSTATNT, tensometer[TENSOMETER_0].constantCalibrationValue );
+	eprSetInt32(EPR_TENS0_ZERO_SCALE_MASS, tensometer[TENSOMETER_0].zeroScaleMass );
+	eprSetInt16(EPR_TENS0_ROLL_WEIGHT, tensometer[TENSOMETER_0].rollWeight );
 	
-	eprSetuint8_t(EPR_EXT1_HEAT_MANAGER, tempController[EXT1].heatManager );
-	eprSetuint8_t(EPR_EXT1_ANALOG_PIN, tempController[EXT1].sensorPin);
-	eprSetuint8_t(EPR_EXT1_DRIVE_MAX, tempController[EXT1].pidDriveMax );
-	eprSetFloat(EPR_EXT1_PID_PGAIN, tempController[EXT1].pidPGain );
-	eprSetFloat(EPR_EXT1_PID_IGAIN, tempController[EXT1].pidIGain );
-	eprSetFloat(EPR_EXT1_PID_DGAIN, tempController[EXT1].pidDGain );
-	eprSetuint8_t(EPR_EXT1_PID_MAX, tempController[EXT1].pidMax );
-	eprSetuint8_t(EPR_EXT1_DRIVE_MIN, tempController[EXT1].pidDriveMin );
-	eprSetuint8_t(EPR_EXT1_TYPE_SENSOR, tempController[EXT1].sensorType );
-	eprSetuint8_t(EPR_EXT1_COOLER_SPEED, fan[EXT1].coolerSpeed );
+	eprSetInt16(EPR_TENS1_CONSTATNT, tensometer[TENSOMETER_1].constantCalibrationValue );
+	eprSetInt32(EPR_TENS1_ZERO_SCALE_MASS, tensometer[TENSOMETER_1].zeroScaleMass );
+	eprSetInt16(EPR_TENS1_ROLL_WEIGHT, tensometer[TENSOMETER_1].rollWeight );
 	
-	eprSetuint8_t(EPR_BED0_HEAT_MANAGER, tempController[BED0].heatManager );
-	eprSetuint8_t(EPR_BED0_ANALOG_PIN, tempController[BED0].sensorPin);
-	eprSetuint8_t(EPR_BED0_DRIVE_MAX, tempController[BED0].pidDriveMax );
-	eprSetFloat(EPR_BED0_PID_PGAIN, tempController[BED0].pidPGain );
-	eprSetFloat(EPR_BED0_PID_IGAIN, tempController[BED0].pidIGain );
-	eprSetFloat(EPR_BED0_PID_DGAIN, tempController[BED0].pidDGain );
-	eprSetuint8_t(EPR_BED0_PID_MAX, tempController[BED0].pidMax );
-	eprSetuint8_t(EPR_BED0_DRIVE_MIN, tempController[BED0].pidDriveMin );	
-	eprSetuint8_t(EPR_BED0_TYPE_SENSOR, tempController[BED0].sensorType );
-	
-	eprSetuint8_t(EPR_BED1_HEAT_MANAGER, tempController[BED1].heatManager );
-	eprSetuint8_t(EPR_BED1_ANALOG_PIN, tempController[BED1].sensorPin);
-	eprSetuint8_t(EPR_BED1_DRIVE_MAX, tempController[BED1].pidDriveMax );
-	eprSetFloat(EPR_BED1_PID_PGAIN, tempController[BED1].pidPGain );
-	eprSetFloat(EPR_BED1_PID_IGAIN, tempController[BED1].pidIGain );
-	eprSetFloat(EPR_BED1_PID_DGAIN, tempController[BED1].pidDGain );
-	eprSetuint8_t(EPR_BED1_PID_MAX, tempController[BED1].pidMax );
-	eprSetuint8_t(EPR_BED1_DRIVE_MIN, tempController[BED1].pidDriveMin );
-	eprSetuint8_t(EPR_BED1_TYPE_SENSOR, tempController[BED1].sensorType );
-	
-	eprSetuint8_t(EPR_BED2_HEAT_MANAGER, tempController[BED2].heatManager );
-	eprSetuint8_t(EPR_BED2_ANALOG_PIN, tempController[BED2].sensorPin);
-	eprSetuint8_t(EPR_BED2_DRIVE_MAX, tempController[BED2].pidDriveMax );
-	eprSetFloat(EPR_BED2_PID_PGAIN, tempController[BED2].pidPGain );
-	eprSetFloat(EPR_BED2_PID_IGAIN, tempController[BED2].pidIGain );
-	eprSetFloat(EPR_BED2_PID_DGAIN, tempController[BED2].pidDGain );
-	eprSetuint8_t(EPR_BED2_PID_MAX, tempController[BED2].pidMax );
-	eprSetuint8_t(EPR_BED2_DRIVE_MIN, tempController[BED2].pidDriveMin );
-	eprSetuint8_t(EPR_BED2_TYPE_SENSOR, tempController[BED2].sensorType );
-
-	eprSetuint8_t(EPR_BED3_HEAT_MANAGER, tempController[BED3].heatManager );
-	eprSetuint8_t(EPR_BED3_ANALOG_PIN, tempController[BED3].sensorPin);
-	eprSetuint8_t(EPR_BED3_DRIVE_MAX, tempController[BED3].pidDriveMax );
-	eprSetFloat(EPR_BED3_PID_PGAIN, tempController[BED3].pidPGain );
-	eprSetFloat(EPR_BED3_PID_IGAIN, tempController[BED3].pidIGain );
-	eprSetFloat(EPR_BED3_PID_DGAIN, tempController[BED3].pidDGain );
-	eprSetuint8_t(EPR_BED3_PID_MAX, tempController[BED3].pidMax );
-	eprSetuint8_t(EPR_BED3_DRIVE_MIN, tempController[BED3].pidDriveMin );
-	eprSetuint8_t(EPR_BED3_TYPE_SENSOR, tempController[BED3].sensorType );
-
-	eprSetuint8_t(EPR_CHAMB0_HEAT_MANAGER, tempController[CHAMB0].heatManager );
-	eprSetuint8_t(EPR_CHAMB0_ANALOG_PIN, tempController[CHAMB0].sensorPin);
-	eprSetuint8_t(EPR_CHAMB0_DRIVE_MAX, tempController[CHAMB0].pidDriveMax );
-	eprSetFloat(EPR_CHAMB0_PID_PGAIN, tempController[CHAMB0].pidPGain );
-	eprSetFloat(EPR_CHAMB0_PID_IGAIN, tempController[CHAMB0].pidIGain );
-	eprSetFloat(EPR_CHAMB0_PID_DGAIN, tempController[CHAMB0].pidDGain );
-	eprSetuint8_t(EPR_CHAMB0_PID_MAX, tempController[CHAMB0].pidMax );
-	eprSetuint8_t(EPR_CHAMB0_DRIVE_MIN, tempController[CHAMB0].pidDriveMin );	
-	eprSetuint8_t(EPR_CHAMB0_TYPE_SENSOR, tempController[CHAMB0].sensorType );
-	eprSetuint8_t(EPR_CHAMB0_COOLER_SPEED, fan[CHAMB0_FAN_COUNT].coolerSpeed );
-		
 	eprSetuint8_t(EPR_INTEGRITY_uint8_t, computeChecksum());
 	
 }
@@ -175,80 +111,15 @@ void readDataFromEEPROM()
 	if(EEPROM_PROTOCOL_VERSION != get_epr_version())
 		restoreEEPROMSettingsFromConfiguration();
 	
-	baudrate = eprGetInt32(EPR_BAUDRATE);
+	//baudrate = eprGetInt32(EPR_BAUDRATE);
 	
-	tempController[EXT0].heatManager = eprGetuint8_t(EPR_EXT0_HEAT_MANAGER);
-	tempController[EXT0].sensorPin = eprGetuint8_t(EPR_EXT0_ANALOG_PIN);
-	tempController[EXT0].pidDriveMax = eprGetuint8_t(EPR_EXT0_DRIVE_MAX);
-	tempController[EXT0].pidPGain = eprGetFloat(EPR_EXT0_PID_PGAIN);
-	tempController[EXT0].pidIGain = eprGetFloat(EPR_EXT0_PID_IGAIN);
-	tempController[EXT0].pidDGain = eprGetFloat(EPR_EXT0_PID_DGAIN);
-	tempController[EXT0].pidMax = eprGetuint8_t(EPR_EXT0_PID_MAX);
-	tempController[EXT0].pidDriveMin = eprGetuint8_t(EPR_EXT0_DRIVE_MIN);
-	tempController[EXT0].sensorType = eprGetuint8_t(EPR_EXT0_TYPE_SENSOR);
-	fan[EXT0].coolerSpeed = eprGetuint8_t(EPR_EXT0_COOLER_SPEED);
-		
-	tempController[EXT1].heatManager = eprGetuint8_t(EPR_EXT1_HEAT_MANAGER);
-	tempController[EXT1].sensorPin = eprGetuint8_t(EPR_EXT1_ANALOG_PIN);
-	tempController[EXT1].pidDriveMax = eprGetuint8_t(EPR_EXT1_HEAT_MANAGER);
-	tempController[EXT1].pidPGain = eprGetFloat(EPR_EXT1_HEAT_MANAGER);
-	tempController[EXT1].pidIGain = eprGetFloat(EPR_EXT1_HEAT_MANAGER);
-	tempController[EXT1].pidDGain = eprGetFloat(EPR_EXT1_HEAT_MANAGER);
-	tempController[EXT1].pidMax = eprGetuint8_t(EPR_EXT1_HEAT_MANAGER);
-	tempController[EXT1].pidDriveMin = eprGetuint8_t(EPR_EXT1_HEAT_MANAGER);
-	tempController[EXT1].sensorType = eprGetuint8_t(EPR_EXT1_TYPE_SENSOR);
-	fan[EXT1].coolerSpeed = eprGetuint8_t(EPR_EXT1_COOLER_SPEED);
+	tensometer[TENSOMETER_0].constantCalibrationValue = eprGetInt16(EPR_TENS0_CONSTATNT);
+	tensometer[TENSOMETER_0].zeroScaleMass = eprGetInt32(EPR_TENS0_ZERO_SCALE_MASS);
+	tensometer[TENSOMETER_0].rollWeight = eprGetInt16(EPR_TENS0_ROLL_WEIGHT);
 	
-	tempController[BED0].heatManager = eprGetuint8_t(EPR_BED0_HEAT_MANAGER);
-	tempController[BED0].sensorPin = eprGetuint8_t(EPR_BED0_ANALOG_PIN);
-	tempController[BED0].pidDriveMax = eprGetuint8_t(EPR_BED0_DRIVE_MAX);
-	tempController[BED0].pidPGain = eprGetFloat(EPR_BED0_PID_PGAIN);
-	tempController[BED0].pidIGain = eprGetFloat(EPR_BED0_PID_IGAIN);
-	tempController[BED0].pidDGain = eprGetFloat(EPR_BED0_PID_DGAIN);
-	tempController[BED0].pidMax = eprGetuint8_t(EPR_BED0_PID_MAX);
-	tempController[BED0].pidDriveMin = eprGetuint8_t(EPR_BED0_DRIVE_MIN);
-	tempController[BED0].sensorType = eprGetuint8_t(EPR_BED0_TYPE_SENSOR);
-	
-	tempController[BED1].heatManager = eprGetuint8_t(EPR_BED1_HEAT_MANAGER);
-	tempController[BED1].sensorPin = eprGetuint8_t(EPR_BED1_ANALOG_PIN);
-	tempController[BED1].pidDriveMax = eprGetuint8_t(EPR_BED1_DRIVE_MAX);
-	tempController[BED1].pidPGain = eprGetFloat(EPR_BED1_PID_PGAIN);
-	tempController[BED1].pidIGain = eprGetFloat(EPR_BED1_PID_IGAIN);
-	tempController[BED1].pidDGain = eprGetFloat(EPR_BED1_PID_DGAIN);
-	tempController[BED1].pidMax = eprGetuint8_t(EPR_BED1_PID_MAX);
-	tempController[BED1].pidDriveMin = eprGetuint8_t(EPR_BED1_DRIVE_MIN);
-	tempController[BED1].sensorType = eprGetuint8_t(EPR_BED1_TYPE_SENSOR);
-	
-	tempController[BED2].heatManager = eprGetuint8_t(EPR_BED2_HEAT_MANAGER);
-	tempController[BED2].sensorPin = eprGetuint8_t(EPR_BED2_ANALOG_PIN);
-	tempController[BED2].pidDriveMax = eprGetuint8_t(EPR_BED2_DRIVE_MAX);
-	tempController[BED2].pidPGain = eprGetFloat(EPR_BED2_PID_PGAIN);
-	tempController[BED2].pidIGain = eprGetFloat(EPR_BED2_PID_IGAIN);
-	tempController[BED2].pidDGain = eprGetFloat(EPR_BED2_PID_DGAIN);
-	tempController[BED2].pidMax = eprGetuint8_t(EPR_BED2_PID_MAX);
-	tempController[BED2].pidDriveMin = eprGetuint8_t(EPR_BED2_DRIVE_MIN);
-	tempController[BED2].sensorType = eprGetuint8_t(EPR_BED2_TYPE_SENSOR);
-	
-	tempController[BED3].heatManager = eprGetuint8_t(EPR_BED3_HEAT_MANAGER);
-	tempController[BED3].sensorPin = eprGetuint8_t(EPR_BED3_ANALOG_PIN);
-	tempController[BED3].pidDriveMax = eprGetuint8_t(EPR_BED3_DRIVE_MAX);
-	tempController[BED3].pidPGain = eprGetFloat(EPR_BED3_PID_PGAIN);
-	tempController[BED3].pidIGain = eprGetFloat(EPR_BED3_PID_IGAIN);
-	tempController[BED3].pidDGain = eprGetFloat(EPR_BED3_PID_DGAIN);
-	tempController[BED3].pidMax = eprGetuint8_t(EPR_BED3_PID_MAX);
-	tempController[BED3].pidDriveMin = eprGetuint8_t(EPR_BED3_DRIVE_MIN);
-	tempController[BED3].sensorType = eprGetuint8_t(EPR_BED3_TYPE_SENSOR);
-	
-	tempController[CHAMB0].heatManager = eprGetuint8_t(EPR_CHAMB0_HEAT_MANAGER);
-	tempController[CHAMB0].sensorPin = eprGetuint8_t(EPR_CHAMB0_ANALOG_PIN);
-	tempController[CHAMB0].pidDriveMax = eprGetuint8_t(EPR_CHAMB0_DRIVE_MAX);
-	tempController[CHAMB0].pidPGain = eprGetFloat(EPR_CHAMB0_PID_PGAIN);
-	tempController[CHAMB0].pidIGain = eprGetFloat(EPR_CHAMB0_PID_IGAIN);
-	tempController[CHAMB0].pidDGain = eprGetFloat(EPR_CHAMB0_PID_DGAIN);
-	tempController[CHAMB0].pidMax = eprGetuint8_t(EPR_CHAMB0_PID_MAX);
-	tempController[CHAMB0].pidDriveMin = eprGetuint8_t(EPR_CHAMB0_DRIVE_MIN);
-	tempController[CHAMB0].sensorType = eprGetuint8_t(EPR_CHAMB0_TYPE_SENSOR);
-	fan[CHAMB0].coolerSpeed = eprGetuint8_t(EPR_CHAMB0_COOLER_SPEED);
+	tensometer[TENSOMETER_1].constantCalibrationValue = eprGetInt16(EPR_TENS1_CONSTATNT);
+	tensometer[TENSOMETER_1].zeroScaleMass = eprGetInt32(EPR_TENS1_ZERO_SCALE_MASS);
+	tensometer[TENSOMETER_1].rollWeight = eprGetInt16(EPR_TENS1_ROLL_WEIGHT);
 }
 
 uint8_t get_epr_version(){

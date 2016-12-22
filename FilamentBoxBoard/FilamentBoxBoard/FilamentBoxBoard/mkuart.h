@@ -39,7 +39,7 @@
 
 
 extern volatile uint8_t new_line;
-
+extern uint8_t block_modbus_transmission;
 typedef struct ramka{
 //	uint8_t adres;
 	uint8_t funkcja;

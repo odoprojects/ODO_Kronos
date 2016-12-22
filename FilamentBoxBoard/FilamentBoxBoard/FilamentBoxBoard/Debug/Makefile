@@ -38,6 +38,7 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Configuration.c \
+../Drivers.c \
 ../Eeprom.c \
 ../hardware.c \
 ../main.c \
@@ -59,6 +60,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 Configuration.o \
+Drivers.o \
 Eeprom.o \
 hardware.o \
 main.o \
@@ -73,6 +75,7 @@ tensometer.o
 
 OBJS_AS_ARGS +=  \
 Configuration.o \
+Drivers.o \
 Eeprom.o \
 hardware.o \
 main.o \
@@ -87,6 +90,7 @@ tensometer.o
 
 C_DEPS +=  \
 Configuration.d \
+Drivers.d \
 Eeprom.d \
 hardware.d \
 main.d \
@@ -101,6 +105,7 @@ tensometer.d
 
 C_DEPS_AS_ARGS +=  \
 Configuration.d \
+Drivers.d \
 Eeprom.d \
 hardware.d \
 main.d \
@@ -127,6 +132,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

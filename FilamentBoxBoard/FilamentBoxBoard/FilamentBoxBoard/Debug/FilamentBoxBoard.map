@@ -71,7 +71,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_clear_bss.o)
                               Configuration.o (__do_clear_bss)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_muluhisi3.o)
-                              c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_mulsi3.o) (__muluhisi3)
+                              tensometer.o (__muluhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodhi4.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodhi4.o) (__udivmodhi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_umulhisi3.o)
@@ -106,12 +106,14 @@ C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/a
 Allocating common symbols
 Common symbol       size              file
 
+modbus_transmission_blocade_timer
+                    0x2               hardware.o
 tempController      0x1ce             temperature_control.o
 uid                 0xc               RFID_RC522.o
 UART_TxHead         0x1               mkuart.o
 ID                  0x1               RFID_RC522.o
 fan                 0x6               temperature_control.o
-tensometer          0x1e              tensometer.o
+tensometer          0x2e              tensometer.o
 new_line            0x1               mkuart.o
 osAnalogInputCounter
                     0x7               hardware.o
@@ -142,54 +144,33 @@ Discarded input sections
  .text          0x00000000        0x0 Configuration.o
  .data          0x00000000        0x0 Configuration.o
  .bss           0x00000000        0x0 Configuration.o
+ .text          0x00000000        0x0 Drivers.o
+ .data          0x00000000        0x0 Drivers.o
+ .bss           0x00000000        0x0 Drivers.o
+ .bss.filament_driver_status
+                0x00000000        0x1 Drivers.o
+ .text.disable_driver
+                0x00000000       0x54 Drivers.o
+ .text.enable_driver
+                0x00000000       0x58 Drivers.o
+ .text.set_dir_driver
+                0x00000000       0x94 Drivers.o
  .text          0x00000000        0x0 Eeprom.o
  .data          0x00000000        0x0 Eeprom.o
  .bss           0x00000000        0x0 Eeprom.o
- .text.eprSetuint8_t
-                0x00000000       0x26 Eeprom.o
- .text.eprSetInt16
-                0x00000000       0x30 Eeprom.o
- .text.eprSetInt32
-                0x00000000       0x40 Eeprom.o
  .text.eprSetFloat
                 0x00000000       0x3c Eeprom.o
- .text.eprGetuint8_t
-                0x00000000       0x22 Eeprom.o
- .text.eprGetInt16
-                0x00000000       0x22 Eeprom.o
- .text.eprGetInt32
-                0x00000000       0x2a Eeprom.o
  .text.eprGetFloat
                 0x00000000       0x40 Eeprom.o
- .text.computeChecksum
-                0x00000000       0x4e Eeprom.o
  .text.updateChecksum
                 0x00000000       0x32 Eeprom.o
  .text.initBaudrate
                 0x00000000       0x4e Eeprom.o
- .text.storeDataIntoEEPROM
-                0x00000000      0x504 Eeprom.o
- .text.restoreEEPROMSettingsFromConfiguration
-                0x00000000       0x16 Eeprom.o
- .text.readDataFromEEPROM
-                0x00000000      0x4c6 Eeprom.o
- .text.get_epr_version
-                0x00000000       0x16 Eeprom.o
- .text.load_default_variables
-                0x00000000      0x30c Eeprom.o
- .debug_info    0x00000000      0x544 Eeprom.o
- .debug_abbrev  0x00000000      0x193 Eeprom.o
- .debug_loc     0x00000000      0x43f Eeprom.o
- .debug_aranges
-                0x00000000       0x98 Eeprom.o
- .debug_ranges  0x00000000       0x88 Eeprom.o
- .debug_line    0x00000000      0x7a0 Eeprom.o
- .debug_str     0x00000000      0x472 Eeprom.o
- .comment       0x00000000       0x31 Eeprom.o
- .debug_frame   0x00000000      0x214 Eeprom.o
  .text          0x00000000        0x0 hardware.o
  .data          0x00000000        0x0 hardware.o
  .bss           0x00000000        0x0 hardware.o
+ .bss.door_status
+                0x00000000        0x1 hardware.o
  .bss.door_setup
                 0x00000000        0x1 hardware.o
  .data.osAnalogInputChannels
@@ -230,29 +211,21 @@ Discarded input sections
  .text          0x00000000        0x0 mkuart.o
  .data          0x00000000        0x0 mkuart.o
  .bss           0x00000000        0x0 mkuart.o
- .text.uart_puts
-                0x00000000       0x3c mkuart.o
- .text.uart_putint
-                0x00000000       0x4c mkuart.o
  .text.uart_printNumber
                 0x00000000       0xb6 mkuart.o
  .text.uart_putFloat
                 0x00000000      0x222 mkuart.o
  .text.uart_puta
                 0x00000000       0x86 mkuart.o
- .progmem.data.__c.1932
+ .rodata.__c.1935
                 0x00000000        0x4 mkuart.o
- .progmem.data.__c.1935
+ .rodata.__c.1938
                 0x00000000        0x4 mkuart.o
  .text          0x00000000        0x0 modbus.o
  .data          0x00000000        0x0 modbus.o
  .bss           0x00000000        0x0 modbus.o
- .text.modbus_puts_s
-                0x00000000       0x42 modbus.o
- .text.modbus_puts_var_int
-                0x00000000       0x56 modbus.o
  .text.modbus_puts_var_float
-                0x00000000       0x6e modbus.o
+                0x00000000       0x72 modbus.o
  .text          0x00000000        0x0 RFID_RC522.o
  .data          0x00000000        0x0 RFID_RC522.o
  .bss           0x00000000        0x0 RFID_RC522.o
@@ -264,10 +237,54 @@ Discarded input sections
                 0x00000000       0x40 RFID_RC522.o
  .progmem.data.FM17522_firmware_reference
                 0x00000000       0x40 RFID_RC522.o
+ .rodata.FILAMENT_KEY
+                0x00000000       0x10 RFID_RC522.o
  .rodata.DEFAULT_KEY
                 0x00000000        0x6 RFID_RC522.o
+ .bss.chip_id   0x00000000        0x1 RFID_RC522.o
  .rodata.FIFO_SIZE
                 0x00000000        0x1 RFID_RC522.o
+ .bss.rfid_event_callback
+                0x00000000        0x2 RFID_RC522.o
+ .text.register_manage_rfid_event_callback
+                0x00000000       0x26 RFID_RC522.o
+ .text.MANAGE_RFID_EVENT
+                0x00000000       0x26 RFID_RC522.o
+ .text.check_buffer
+                0x00000000       0x4e RFID_RC522.o
+ .rodata        0x00000000      0x11d RFID_RC522.o
+ .text.handleRFID
+                0x00000000       0xf2 RFID_RC522.o
+ .text.manageRFID
+                0x00000000       0x20 RFID_RC522.o
+ .text.enableChip
+                0x00000000       0x3c RFID_RC522.o
+ .text.disableChip
+                0x00000000       0x3c RFID_RC522.o
+ .text.initMFRC522
+                0x00000000       0x54 RFID_RC522.o
+ .text.PCD_WriteRegister
+                0x00000000       0x30 RFID_RC522.o
+ .text.PCD_WriteRegisters
+                0x00000000       0x5e RFID_RC522.o
+ .text.PCD_ReadRegister
+                0x00000000       0x34 RFID_RC522.o
+ .text.PCD_ReadRegisters
+                0x00000000      0x116 RFID_RC522.o
+ .text.PCD_SetRegisterBitMask
+                0x00000000       0x30 RFID_RC522.o
+ .text.PCD_ClearRegisterBitMask
+                0x00000000       0x34 RFID_RC522.o
+ .text.PCD_CalculateCRC
+                0x00000000       0xce RFID_RC522.o
+ .text.initReset
+                0x00000000       0x60 RFID_RC522.o
+ .text.PCD_Init
+                0x00000000       0x4e RFID_RC522.o
+ .text.PCD_Reset
+                0x00000000      0x126 RFID_RC522.o
+ .text.PCD_AntennaOn
+                0x00000000       0x34 RFID_RC522.o
  .text.PCD_AntennaOff
                 0x00000000       0x16 RFID_RC522.o
  .text.PCD_GetAntennaGain
@@ -276,8 +293,28 @@ Discarded input sections
                 0x00000000       0x34 RFID_RC522.o
  .text.PCD_PerformSelfTest
                 0x00000000       0xbe RFID_RC522.o
+ .text.PCD_TransceiveData
+                0x00000000       0x86 RFID_RC522.o
+ .text.PCD_CommunicateWithPICC
+                0x00000000      0x252 RFID_RC522.o
+ .text.PICC_RequestA
+                0x00000000       0x34 RFID_RC522.o
  .text.PICC_WakeupA
                 0x00000000       0x34 RFID_RC522.o
+ .text.PICC_REQA_or_WUPA
+                0x00000000       0xa6 RFID_RC522.o
+ .text.PICC_Select
+                0x00000000      0x496 RFID_RC522.o
+ .text.PICC_HaltA
+                0x00000000       0x88 RFID_RC522.o
+ .text.PCD_Authenticate
+                0x00000000      0x106 RFID_RC522.o
+ .text.PCD_StopCrypto1
+                0x00000000       0x16 RFID_RC522.o
+ .text.MIFARE_Read
+                0x00000000       0xa4 RFID_RC522.o
+ .text.MIFARE_Write
+                0x00000000       0x7a RFID_RC522.o
  .text.MIFARE_Ultralight_Write
                 0x00000000       0x76 RFID_RC522.o
  .text.MIFARE_Decrement
@@ -296,8 +333,14 @@ Discarded input sections
                 0x00000000       0xc4 RFID_RC522.o
  .text.PCD_NTAG216_AUTH
                 0x00000000      0x10a RFID_RC522.o
+ .text.PCD_MIFARE_Transceive
+                0x00000000      0x110 RFID_RC522.o
  .text.GetStatusCodeName
                 0x00000000       0xc0 RFID_RC522.o
+ .text.PICC_GetType
+                0x00000000       0x6e RFID_RC522.o
+ .progmem.gcc_sw_table.PICC_GetType
+                0x00000000       0x82 RFID_RC522.o
  .text.PICC_DumpMifareClassicToSerial
                 0x00000000       0x8e RFID_RC522.o
  .text.PICC_DumpMifareClassicSectorToSerial
@@ -312,8 +355,23 @@ Discarded input sections
                 0x00000000      0x17c RFID_RC522.o
  .text.MIFARE_UnbrickUidSector
                 0x00000000       0x5c RFID_RC522.o
+ .text.PICC_IsNewCardPresent
+                0x00000000       0x46 RFID_RC522.o
+ .text.PICC_ReadCardSerial
+                0x00000000       0x28 RFID_RC522.o
  .text.write_new_A_key
                 0x00000000       0x2e RFID_RC522.o
+ .debug_info    0x00000000     0x1c23 RFID_RC522.o
+ .debug_abbrev  0x00000000      0x3db RFID_RC522.o
+ .debug_loc     0x00000000     0x1282 RFID_RC522.o
+ .debug_aranges
+                0x00000000      0x1d8 RFID_RC522.o
+ .debug_ranges  0x00000000      0x1c8 RFID_RC522.o
+ .debug_line    0x00000000     0x1891 RFID_RC522.o
+ .debug_str     0x00000000      0xf8d RFID_RC522.o
+ .comment       0x00000000       0x31 RFID_RC522.o
+ .debug_frame   0x00000000      0x860 RFID_RC522.o
+ COMMON         0x00000000       0x2d RFID_RC522.o
  .text          0x00000000        0x0 softSPI.o
  .data          0x00000000        0x0 softSPI.o
  .bss           0x00000000        0x0 softSPI.o
@@ -334,10 +392,30 @@ Discarded input sections
  .text          0x00000000        0x0 spi.o
  .data          0x00000000        0x0 spi.o
  .bss           0x00000000        0x0 spi.o
+ .text.spi_init
+                0x00000000       0x56 spi.o
+ .text.spi_transmit
+                0x00000000       0x34 spi.o
+ .debug_info    0x00000000       0xab spi.o
+ .debug_abbrev  0x00000000       0x78 spi.o
+ .debug_loc     0x00000000       0x83 spi.o
+ .debug_aranges
+                0x00000000       0x28 spi.o
+ .debug_ranges  0x00000000       0x18 spi.o
+ .debug_line    0x00000000       0xec spi.o
+ .debug_str     0x00000000      0x1a9 spi.o
+ .comment       0x00000000       0x31 spi.o
+ .debug_frame   0x00000000       0x54 spi.o
  .text          0x00000000        0x0 temperature_control.o
  .data          0x00000000        0x0 temperature_control.o
  .bss           0x00000000        0x0 temperature_control.o
+ .bss.PIDTune_status
+                0x00000000        0x2 temperature_control.o
+ .bss.temperature_event_callback
+                0x00000000        0x2 temperature_control.o
  .text.register_manage_temperature_event_callback
+                0x00000000       0x26 temperature_control.o
+ .text.MANAGE_TEMPETATURE_EVENT
                 0x00000000       0x26 temperature_control.o
  .text.constrain
                 0x00000000       0x9e temperature_control.o
@@ -353,27 +431,27 @@ Discarded input sections
                 0x00000000      0x758 temperature_control.o
  .text.manageTemperatures
                 0x00000000      0xb08 temperature_control.o
- .progmem.data.__c.1928
+ .rodata.__c.1929
                 0x00000000       0x19 temperature_control.o
- .progmem.data.__c.1949
+ .rodata.__c.1950
                 0x00000000        0x6 temperature_control.o
- .progmem.data.__c.1951
+ .rodata.__c.1952
                 0x00000000        0x6 temperature_control.o
- .progmem.data.__c.1953
+ .rodata.__c.1954
                 0x00000000        0x6 temperature_control.o
- .progmem.data.__c.1955
+ .rodata.__c.1956
                 0x00000000        0xa temperature_control.o
- .progmem.data.__c.1957
+ .rodata.__c.1958
                 0x00000000       0x2b temperature_control.o
- .progmem.data.__c.1959
+ .rodata.__c.1960
                 0x00000000       0x19 temperature_control.o
- .progmem.data.__c.1961
+ .rodata.__c.1962
                 0x00000000       0x1e temperature_control.o
- .progmem.data.__c.1963
+ .rodata.__c.1964
                 0x00000000       0x19 temperature_control.o
- .progmem.data.__c.1965
+ .rodata.__c.1966
                 0x00000000       0x11 temperature_control.o
- .bss.TempErrors.2125
+ .bss.TempErrors.2128
                 0x00000000        0x1 temperature_control.o
  .text          0x00000000        0x0 tensometer.o
  .data          0x00000000        0x0 tensometer.o
@@ -381,9 +459,13 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3.o)
+ .text.avr-libc.fplib
+                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3x.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3x.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3x.o)
+ .text.avr-libc.fplib
+                0x00000000       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3x.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
@@ -654,46 +736,32 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
+ .text.avr-libc
+                0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
- .text.avr-libc
-                0x00000000       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa_ncheck.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa_ncheck.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa_ncheck.o)
- .text.avr-libc
-                0x00000000       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa_ncheck.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(utoa_ncheck.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(utoa_ncheck.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(utoa_ncheck.o)
- .text.avr-libc
-                0x00000000       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(utoa_ncheck.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(strrev.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(strrev.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(strrev.o)
- .text.avr-libc
-                0x00000000       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(strrev.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_block.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_block.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_block.o)
- .text.avr-libc
-                0x00000000       0x20 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_block.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_byte.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_byte.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_byte.o)
- .text.avr-libc
-                0x00000000       0x10 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_byte.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_dword.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_dword.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_dword.o)
- .text.avr-libc
-                0x00000000        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_dword.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_word.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_word.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_word.o)
- .text.avr-libc
-                0x00000000        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_word.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_block.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_block.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_block.o)
@@ -702,18 +770,12 @@ Discarded input sections
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_byte.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_byte.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_byte.o)
- .text.avr-libc
-                0x00000000       0x1c C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_byte.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_dword.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_dword.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_dword.o)
- .text.avr-libc
-                0x00000000       0x10 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_dword.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_word.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_word.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_word.o)
- .text.avr-libc
-                0x00000000        0xa C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_word.o)
 
 Memory Configuration
 
@@ -732,6 +794,7 @@ Linker script and memory map
 Address of section .data set to 0x800200
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
 LOAD Configuration.o
+LOAD Drivers.o
 LOAD Eeprom.o
 LOAD hardware.o
 LOAD main.o
@@ -850,7 +913,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x7188
+.text           0x00000000     0x4968
  *(.vectors)
  .vectors       0x00000000       0xe4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
                 0x00000000                __vector_default
@@ -859,85 +922,44 @@ END GROUP
  *(.progmem.gcc*)
  .progmem.gcc_sw_table.parse_uart_data
                 0x000000e4       0x20 modbus.o
- .progmem.gcc_sw_table.PICC_GetType
-                0x00000104       0x82 RFID_RC522.o
-                0x00000186                . = ALIGN (0x2)
-                0x00000186                __trampolines_start = .
+                0x00000104                . = ALIGN (0x2)
+                0x00000104                __trampolines_start = .
  *(.trampolines)
- .trampolines   0x00000186        0x0 linker stubs
+ .trampolines   0x00000104        0x0 linker stubs
  *(.trampolines*)
-                0x00000186                __trampolines_end = .
+                0x00000104                __trampolines_end = .
  *libprintf_flt.a:*(.progmem.data)
  *libc.a:*(.progmem.data)
  *(.progmem*)
- .progmem.data.temptable_1
-                0x00000186       0x70 temperature_control.o
-                0x00000186                temptable_1
- .progmem.data.temptable_2
-                0x000001f6       0x54 temperature_control.o
-                0x000001f6                temptable_2
- .progmem.data.temptable_3
-                0x0000024a       0x70 temperature_control.o
-                0x0000024a                temptable_3
- .progmem.data.temptable_4
-                0x000002ba       0x50 temperature_control.o
-                0x000002ba                temptable_4
- .progmem.data.temptable_8
-                0x0000030a       0x88 temperature_control.o
-                0x0000030a                temptable_8
- .progmem.data.temptable_9
-                0x00000392      0x10c temperature_control.o
-                0x00000392                temptable_9
- .progmem.data.temptable_10
-                0x0000049e       0x50 temperature_control.o
-                0x0000049e                temptable_10
- .progmem.data.temptable_11
-                0x000004ee       0x7c temperature_control.o
-                0x000004ee                temptable_11
- .progmem.data.temptable_12
-                0x0000056a       0x7c temperature_control.o
-                0x0000056a                temptable_12
- .progmem.data.temptable_13
-                0x000005e6       0x4c temperature_control.o
-                0x000005e6                temptable_13
- .progmem.data.temptable_14
-                0x00000632       0xb8 temperature_control.o
-                0x00000632                temptable_14
- .progmem.data.temptables
-                0x000006ea       0x1c temperature_control.o
-                0x000006ea                temptables
- .progmem.data.temptables_num
-                0x00000706        0xe temperature_control.o
-                0x00000706                temptables_num
-                0x00000714                . = ALIGN (0x2)
+                0x00000104                . = ALIGN (0x2)
  *(.jumptables)
  *(.jumptables*)
  *(.lowtext)
  *(.lowtext*)
-                0x00000714                __ctors_start = .
+                0x00000104                __ctors_start = .
  *(.ctors)
-                0x00000714                __ctors_end = .
-                0x00000714                __dtors_start = .
+                0x00000104                __ctors_end = .
+                0x00000104                __dtors_start = .
  *(.dtors)
-                0x00000714                __dtors_end = .
+                0x00000104                __dtors_end = .
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x00000714        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
-                0x00000714                __init
+ .init0         0x00000104        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
+                0x00000104                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x00000714       0x10 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
+ .init2         0x00000104       0x10 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x00000724       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_copy_data.o)
-                0x00000724                __do_copy_data
- .init4         0x0000073e       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_clear_bss.o)
-                0x0000073e                __do_clear_bss
+ .init4         0x00000114       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_copy_data.o)
+                0x00000114                __do_copy_data
+ .init4         0x0000012e       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_clear_bss.o)
+                0x0000012e                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -948,368 +970,367 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x0000074e        0x6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
+ .init9         0x0000013e        0x6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
  *(.init9)
  *(.text)
- .text          0x00000754        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
-                0x00000754                __vector_38
-                0x00000754                __vector_22
-                0x00000754                __vector_28
-                0x00000754                __vector_1
-                0x00000754                __vector_32
-                0x00000754                __vector_34
-                0x00000754                __vector_24
-                0x00000754                __vector_12
-                0x00000754                __vector_55
-                0x00000754                __vector_46
-                0x00000754                __bad_interrupt
-                0x00000754                __vector_6
-                0x00000754                __vector_31
-                0x00000754                __vector_35
-                0x00000754                __vector_39
-                0x00000754                __vector_3
-                0x00000754                __vector_23
-                0x00000754                __vector_30
-                0x00000754                __vector_45
-                0x00000754                __vector_25
-                0x00000754                __vector_11
-                0x00000754                __vector_54
-                0x00000754                __vector_13
-                0x00000754                __vector_19
-                0x00000754                __vector_56
-                0x00000754                __vector_7
-                0x00000754                __vector_49
-                0x00000754                __vector_41
-                0x00000754                __vector_43
-                0x00000754                __vector_27
-                0x00000754                __vector_5
-                0x00000754                __vector_33
-                0x00000754                __vector_47
-                0x00000754                __vector_37
-                0x00000754                __vector_4
-                0x00000754                __vector_44
-                0x00000754                __vector_9
-                0x00000754                __vector_2
-                0x00000754                __vector_15
-                0x00000754                __vector_36
-                0x00000754                __vector_40
-                0x00000754                __vector_8
-                0x00000754                __vector_26
-                0x00000754                __vector_48
-                0x00000754                __vector_14
-                0x00000754                __vector_53
-                0x00000754                __vector_10
-                0x00000754                __vector_50
-                0x00000754                __vector_16
-                0x00000754                __vector_18
-                0x00000754                __vector_20
-                0x00000754                __vector_42
-                0x00000756                . = ALIGN (0x2)
+ .text          0x00000144        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6/crtatmega2560.o
+                0x00000144                __vector_38
+                0x00000144                __vector_22
+                0x00000144                __vector_28
+                0x00000144                __vector_1
+                0x00000144                __vector_32
+                0x00000144                __vector_34
+                0x00000144                __vector_24
+                0x00000144                __vector_12
+                0x00000144                __vector_55
+                0x00000144                __vector_46
+                0x00000144                __bad_interrupt
+                0x00000144                __vector_6
+                0x00000144                __vector_31
+                0x00000144                __vector_35
+                0x00000144                __vector_39
+                0x00000144                __vector_3
+                0x00000144                __vector_23
+                0x00000144                __vector_30
+                0x00000144                __vector_45
+                0x00000144                __vector_25
+                0x00000144                __vector_11
+                0x00000144                __vector_54
+                0x00000144                __vector_13
+                0x00000144                __vector_19
+                0x00000144                __vector_56
+                0x00000144                __vector_7
+                0x00000144                __vector_49
+                0x00000144                __vector_41
+                0x00000144                __vector_43
+                0x00000144                __vector_27
+                0x00000144                __vector_5
+                0x00000144                __vector_33
+                0x00000144                __vector_47
+                0x00000144                __vector_37
+                0x00000144                __vector_4
+                0x00000144                __vector_44
+                0x00000144                __vector_9
+                0x00000144                __vector_2
+                0x00000144                __vector_15
+                0x00000144                __vector_36
+                0x00000144                __vector_40
+                0x00000144                __vector_8
+                0x00000144                __vector_26
+                0x00000144                __vector_48
+                0x00000144                __vector_14
+                0x00000144                __vector_53
+                0x00000144                __vector_10
+                0x00000144                __vector_50
+                0x00000144                __vector_16
+                0x00000144                __vector_18
+                0x00000144                __vector_20
+                0x00000144                __vector_42
+                0x00000146                . = ALIGN (0x2)
  *(.text.*)
- .text.init     0x00000756       0x32 Configuration.o
-                0x00000756                init
+ .text.init     0x00000146       0x28 Configuration.o
+                0x00000146                init
+ .text.register_filament_drivers_event_callback
+                0x0000016e       0x26 Drivers.o
+                0x0000016e                register_filament_drivers_event_callback
+ .text.FILAMENT_DRIVERS_EVENT
+                0x00000194       0x26 Drivers.o
+                0x00000194                FILAMENT_DRIVERS_EVENT
+ .text.initializeDrivers
+                0x000001ba       0xfe Drivers.o
+                0x000001ba                initializeDrivers
+ .text.manageFilamentDrivers
+                0x000002b8        0xe Drivers.o
+                0x000002b8                manageFilamentDrivers
+ .text.eprSetuint8_t
+                0x000002c6       0x26 Eeprom.o
+                0x000002c6                eprSetuint8_t
+ .text.eprSetInt16
+                0x000002ec       0x30 Eeprom.o
+                0x000002ec                eprSetInt16
+ .text.eprSetInt32
+                0x0000031c       0x40 Eeprom.o
+                0x0000031c                eprSetInt32
+ .text.eprGetuint8_t
+                0x0000035c       0x22 Eeprom.o
+                0x0000035c                eprGetuint8_t
+ .text.eprGetInt16
+                0x0000037e       0x22 Eeprom.o
+                0x0000037e                eprGetInt16
+ .text.eprGetInt32
+                0x000003a0       0x2a Eeprom.o
+                0x000003a0                eprGetInt32
+ .text.computeChecksum
+                0x000003ca       0x4c Eeprom.o
+                0x000003ca                computeChecksum
+ .text.storeDataIntoEEPROM
+                0x00000416       0xae Eeprom.o
+                0x00000416                storeDataIntoEEPROM
+ .text.restoreEEPROMSettingsFromConfiguration
+                0x000004c4       0x12 Eeprom.o
+                0x000004c4                restoreEEPROMSettingsFromConfiguration
+ .text.readDataFromEEPROM
+                0x000004d6       0xa2 Eeprom.o
+                0x000004d6                readDataFromEEPROM
+ .text.get_epr_version
+                0x00000578       0x14 Eeprom.o
+                0x00000578                get_epr_version
+ .text.load_default_variables
+                0x0000058c      0x30c Eeprom.o
+                0x0000058c                load_default_variables
  .text.Pin_init
-                0x00000788        0xe hardware.o
-                0x00000788                Pin_init
+                0x00000898        0xe hardware.o
+                0x00000898                Pin_init
  .text.set_default_pins
-                0x00000796      0x142 hardware.o
-                0x00000796                set_default_pins
+                0x000008a6      0x142 hardware.o
+                0x000008a6                set_default_pins
  .text.Timer0_init
-                0x000008d8       0x4e hardware.o
-                0x000008d8                Timer0_init
+                0x000009e8       0x4e hardware.o
+                0x000009e8                Timer0_init
  .text.Timer1_init
-                0x00000926       0x4a hardware.o
-                0x00000926                Timer1_init
+                0x00000a36       0x4a hardware.o
+                0x00000a36                Timer1_init
  .text.__vector_17
-                0x00000970       0xe0 hardware.o
-                0x00000970                __vector_17
+                0x00000a80      0x10a hardware.o
+                0x00000a80                __vector_17
  .text.__vector_21
-                0x00000a50      0x2c0 hardware.o
-                0x00000a50                __vector_21
+                0x00000b8a      0x1c8 hardware.o
+                0x00000b8a                __vector_21
  .text.__vector_29
-                0x00000d10      0x1b6 hardware.o
-                0x00000d10                __vector_29
- .text.main     0x00000ec6       0x58 main.o
-                0x00000ec6                main
+                0x00000d52      0x1b6 hardware.o
+                0x00000d52                __vector_29
+ .text.main     0x00000f08       0x3e main.o
+                0x00000f08                main
  .text.register_uart_str_rx_event_callback
-                0x00000f1e       0x26 mkuart.o
-                0x00000f1e                register_uart_str_rx_event_callback
+                0x00000f46       0x26 mkuart.o
+                0x00000f46                register_uart_str_rx_event_callback
  .text.UART_RX_STR_EVENT
-                0x00000f44       0x4e mkuart.o
-                0x00000f44                UART_RX_STR_EVENT
+                0x00000f6c       0x4e mkuart.o
+                0x00000f6c                UART_RX_STR_EVENT
  .text.ascii_to_int
-                0x00000f92       0x42 mkuart.o
-                0x00000f92                ascii_to_int
+                0x00000fba       0x42 mkuart.o
+                0x00000fba                ascii_to_int
  .text.int_to_ascii
-                0x00000fd4       0x36 mkuart.o
-                0x00000fd4                int_to_ascii
+                0x00000ffc       0x36 mkuart.o
+                0x00000ffc                int_to_ascii
  .text.USARTX_Init
-                0x0000100a       0x86 mkuart.o
-                0x0000100a                USARTX_Init
+                0x00001032       0x86 mkuart.o
+                0x00001032                USARTX_Init
  .text.uart_putc
-                0x00001090       0x56 mkuart.o
-                0x00001090                uart_putc
+                0x000010b8       0x56 mkuart.o
+                0x000010b8                uart_putc
+ .text.uart_puts
+                0x0000110e       0x3a mkuart.o
+                0x0000110e                uart_puts
+ .text.uart_putint
+                0x00001148       0x4a mkuart.o
+                0x00001148                uart_putint
  .text.__vector_52
-                0x000010e6       0x8c mkuart.o
-                0x000010e6                __vector_52
+                0x00001192       0x8c mkuart.o
+                0x00001192                __vector_52
  .text.uart_getc
-                0x00001172       0x40 mkuart.o
-                0x00001172                uart_getc
+                0x0000121e       0x40 mkuart.o
+                0x0000121e                uart_getc
  .text.uart_get_str
-                0x000011b2       0xce mkuart.o
-                0x000011b2                uart_get_str
+                0x0000125e       0xce mkuart.o
+                0x0000125e                uart_get_str
  .text.__vector_51
-                0x00001280       0xa0 mkuart.o
-                0x00001280                __vector_51
+                0x0000132c       0xc8 mkuart.o
+                0x0000132c                __vector_51
  .text.calculate_LRC
-                0x00001320       0x56 modbus.o
-                0x00001320                calculate_LRC
+                0x000013f4       0x56 modbus.o
+                0x000013f4                calculate_LRC
  .text.delay_transmision
-                0x00001376       0x70 modbus.o
-                0x00001376                delay_transmision
+                0x0000144a       0x70 modbus.o
+                0x0000144a                delay_transmision
+ .text.check_modbus_blocade
+                0x000014ba       0x36 modbus.o
+                0x000014ba                check_modbus_blocade
  .text.mod_send_ascii
-                0x000013e6       0x44 modbus.o
-                0x000013e6                mod_send_ascii
+                0x000014f0       0x44 modbus.o
+                0x000014f0                mod_send_ascii
  .text.modbus_puts
-                0x0000142a       0x60 modbus.o
-                0x0000142a                modbus_puts
+                0x00001534       0x62 modbus.o
+                0x00001534                modbus_puts
+ .text.modbus_puts_s
+                0x00001596       0x38 modbus.o
+                0x00001596                modbus_puts_s
+ .text.modbus_puts_var_int
+                0x000015ce       0x4a modbus.o
+                0x000015ce                modbus_puts_var_int
  .text.mod_write_single_register
-                0x0000148a      0xdc6 modbus.o
-                0x0000148a                mod_write_single_register
+                0x00001618      0x25e modbus.o
+                0x00001618                mod_write_single_register
  .text.mod_write_multiple_registers
-                0x00002250      0x2b4 modbus.o
-                0x00002250                mod_write_multiple_registers
+                0x00001876      0x2b0 modbus.o
+                0x00001876                mod_write_multiple_registers
  .text.get_int16_t_data
-                0x00002504       0x8c modbus.o
-                0x00002504                get_int16_t_data
+                0x00001b26       0x8c modbus.o
+                0x00001b26                get_int16_t_data
  .text.mod_read_input_register
-                0x00002590     0x1612 modbus.o
-                0x00002590                mod_read_input_register
+                0x00001bb2      0x2fc modbus.o
+                0x00001bb2                mod_read_input_register
  .text.parse_uart_data
-                0x00003ba2       0xc8 modbus.o
-                0x00003ba2                parse_uart_data
- .text.register_manage_rfid_event_callback
-                0x00003c6a       0x26 RFID_RC522.o
-                0x00003c6a                register_manage_rfid_event_callback
- .text.MANAGE_RFID_EVENT
-                0x00003c90       0x26 RFID_RC522.o
-                0x00003c90                MANAGE_RFID_EVENT
- .text.check_buffer
-                0x00003cb6       0x4e RFID_RC522.o
-                0x00003cb6                check_buffer
- .text.handleRFID
-                0x00003d04       0xe6 RFID_RC522.o
-                0x00003d04                handleRFID
- .text.manageRFID
-                0x00003dea       0x1c RFID_RC522.o
-                0x00003dea                manageRFID
- .text.enableChip
-                0x00003e06       0x3c RFID_RC522.o
-                0x00003e06                enableChip
- .text.disableChip
-                0x00003e42       0x3c RFID_RC522.o
-                0x00003e42                disableChip
- .text.initMFRC522
-                0x00003e7e       0x50 RFID_RC522.o
-                0x00003e7e                initMFRC522
- .text.PCD_WriteRegister
-                0x00003ece       0x2c RFID_RC522.o
-                0x00003ece                PCD_WriteRegister
- .text.PCD_WriteRegisters
-                0x00003efa       0x5a RFID_RC522.o
-                0x00003efa                PCD_WriteRegisters
- .text.PCD_ReadRegister
-                0x00003f54       0x30 RFID_RC522.o
-                0x00003f54                PCD_ReadRegister
- .text.PCD_ReadRegisters
-                0x00003f84      0x112 RFID_RC522.o
-                0x00003f84                PCD_ReadRegisters
- .text.PCD_SetRegisterBitMask
-                0x00004096       0x2c RFID_RC522.o
-                0x00004096                PCD_SetRegisterBitMask
- .text.PCD_ClearRegisterBitMask
-                0x000040c2       0x30 RFID_RC522.o
-                0x000040c2                PCD_ClearRegisterBitMask
- .text.PCD_CalculateCRC
-                0x000040f2       0xbc RFID_RC522.o
-                0x000040f2                PCD_CalculateCRC
- .text.initReset
-                0x000041ae       0x60 RFID_RC522.o
-                0x000041ae                initReset
- .text.PCD_Init
-                0x0000420e       0x3a RFID_RC522.o
-                0x0000420e                PCD_Init
- .text.PCD_Reset
-                0x00004248      0x122 RFID_RC522.o
-                0x00004248                PCD_Reset
- .text.PCD_AntennaOn
-                0x0000436a       0x30 RFID_RC522.o
-                0x0000436a                PCD_AntennaOn
- .text.PCD_TransceiveData
-                0x0000439a       0x84 RFID_RC522.o
-                0x0000439a                PCD_TransceiveData
- .text.PCD_CommunicateWithPICC
-                0x0000441e      0x238 RFID_RC522.o
-                0x0000441e                PCD_CommunicateWithPICC
- .text.PICC_RequestA
-                0x00004656       0x32 RFID_RC522.o
-                0x00004656                PICC_RequestA
- .text.PICC_REQA_or_WUPA
-                0x00004688       0xa2 RFID_RC522.o
-                0x00004688                PICC_REQA_or_WUPA
- .text.PICC_Select
-                0x0000472a      0x48a RFID_RC522.o
-                0x0000472a                PICC_Select
- .text.PICC_HaltA
-                0x00004bb4       0x84 RFID_RC522.o
-                0x00004bb4                PICC_HaltA
- .text.PCD_Authenticate
-                0x00004c38      0x104 RFID_RC522.o
-                0x00004c38                PCD_Authenticate
- .text.PCD_StopCrypto1
-                0x00004d3c       0x14 RFID_RC522.o
-                0x00004d3c                PCD_StopCrypto1
- .text.MIFARE_Read
-                0x00004d50       0xa0 RFID_RC522.o
-                0x00004d50                MIFARE_Read
- .text.MIFARE_Write
-                0x00004df0       0x76 RFID_RC522.o
-                0x00004df0                MIFARE_Write
- .text.PCD_MIFARE_Transceive
-                0x00004e66      0x10c RFID_RC522.o
-                0x00004e66                PCD_MIFARE_Transceive
- .text.PICC_GetType
-                0x00004f72       0x6e RFID_RC522.o
-                0x00004f72                PICC_GetType
- .text.PICC_IsNewCardPresent
-                0x00004fe0       0x44 RFID_RC522.o
-                0x00004fe0                PICC_IsNewCardPresent
- .text.PICC_ReadCardSerial
-                0x00005024       0x26 RFID_RC522.o
-                0x00005024                PICC_ReadCardSerial
- .text.spi_init
-                0x0000504a       0x56 spi.o
-                0x0000504a                spi_init
- .text.spi_transmit
-                0x000050a0       0x34 spi.o
-                0x000050a0                spi_transmit
- .text.MANAGE_TEMPETATURE_EVENT
-                0x000050d4       0x26 temperature_control.o
-                0x000050d4                MANAGE_TEMPETATURE_EVENT
+                0x00001eae       0xd4 modbus.o
+                0x00001eae                parse_uart_data
  .text.disableAllHeater
-                0x000050fa       0x8a temperature_control.o
-                0x000050fa                disableAllHeater
+                0x00001f82       0x8a temperature_control.o
+                0x00001f82                disableAllHeater
  .text.setTargetTemperature
-                0x00005184      0x572 temperature_control.o
-                0x00005184                setTargetTemperature
+                0x0000200c      0x572 temperature_control.o
+                0x0000200c                setTargetTemperature
+ .text.register_manage_tensometer_event_callback
+                0x0000257e       0x26 tensometer.o
+                0x0000257e                register_manage_tensometer_event_callback
+ .text.MANAGE_TENSOMETER_EVENT
+                0x000025a4       0x26 tensometer.o
+                0x000025a4                MANAGE_TENSOMETER_EVENT
  .text.initTensometer
-                0x000056f6      0x274 tensometer.o
-                0x000056f6                initTensometer
+                0x000025ca      0x28e tensometer.o
+                0x000025ca                initTensometer
+ .text.calulate_calibration_constant
+                0x00002858      0x170 tensometer.o
+                0x00002858                calulate_calibration_constant
+ .text.calibration_sequence
+                0x000029c8      0x5b2 tensometer.o
+                0x000029c8                calibration_sequence
  .text.offset_calibration
-                0x0000596a      0x5f8 tensometer.o
-                0x0000596a                offset_calibration
+                0x00002f7a      0x5fa tensometer.o
+                0x00002f7a                offset_calibration
  .text.make_tensometer_measure
-                0x00005f62      0xcca tensometer.o
-                0x00005f62                make_tensometer_measure
+                0x00003574      0xe52 tensometer.o
+                0x00003574                make_tensometer_measure
  .text.get_roll_weight
-                0x00006c2c       0x34 tensometer.o
-                0x00006c2c                get_roll_weight
+                0x000043c6       0x34 tensometer.o
+                0x000043c6                get_roll_weight
+ .text.manageTensometer
+                0x000043fa       0x38 tensometer.o
+                0x000043fa                manageTensometer
  .text.avr-libc.fplib
-                0x00006c60        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3.o)
-                0x00006c60                __subsf3
-                0x00006c62                __addsf3
+                0x00004432        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
+                0x00004432                __nesf2
+                0x00004432                __eqsf2
+                0x00004432                __cmpsf2
+                0x00004432                __ltsf2
+                0x00004432                __lesf2
  .text.avr-libc.fplib
-                0x00006c6a       0xc0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(addsf3x.o)
-                0x00006c84                __addsf3x
+                0x0000443a        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3.o)
+                0x0000443a                __divsf3
  .text.avr-libc.fplib
-                0x00006d2a        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(cmpsf2.o)
-                0x00006d2a                __nesf2
-                0x00006d2a                __eqsf2
-                0x00006d2a                __cmpsf2
-                0x00006d2a                __ltsf2
-                0x00006d2a                __lesf2
+                0x0000443e       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3x.o)
+                0x00004454                __divsf3x
+                0x00004458                __divsf3_pse
  .text.avr-libc.fplib
-                0x00006d32        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3.o)
-                0x00006d32                __divsf3
+                0x0000450a        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
+                0x0000450a                __fixsfsi
  .text.avr-libc.fplib
-                0x00006d36       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(divsf3x.o)
-                0x00006d4c                __divsf3x
-                0x00006d50                __divsf3_pse
+                0x00004514       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
+                0x00004514                __fixunssfsi
  .text.avr-libc.fplib
-                0x00006e02        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixsfsi.o)
-                0x00006e02                __fixsfsi
+                0x0000456c       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(floatsisf.o)
+                0x0000456c                __floatunsisf
+                0x00004570                __floatsisf
  .text.avr-libc.fplib
-                0x00006e0c       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
-                0x00006e0c                __fixunssfsi
+                0x000045e6       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
+                0x000045e6                __fp_cmp
  .text.avr-libc.fplib
-                0x00006e64       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(floatsisf.o)
-                0x00006e64                __floatunsisf
-                0x00006e68                __floatsisf
+                0x0000462e        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_inf.o)
+                0x0000462e                __fp_inf
  .text.avr-libc.fplib
-                0x00006ede       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_cmp.o)
-                0x00006ede                __fp_cmp
+                0x0000463a        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_nan.o)
+                0x0000463a                __fp_nan
  .text.avr-libc.fplib
-                0x00006f26        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_inf.o)
-                0x00006f26                __fp_inf
+                0x00004640        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
+                0x00004640                __fp_pscA
  .text.avr-libc.fplib
-                0x00006f32        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_nan.o)
-                0x00006f32                __fp_nan
+                0x0000464e        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
+                0x0000464e                __fp_pscB
  .text.avr-libc.fplib
-                0x00006f38        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscA.o)
-                0x00006f38                __fp_pscA
+                0x0000465c       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_round.o)
+                0x0000465c                __fp_round
  .text.avr-libc.fplib
-                0x00006f46        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_pscB.o)
-                0x00006f46                __fp_pscB
+                0x0000467e       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_split3.o)
+                0x0000467e                __fp_split3
+                0x0000468e                __fp_splitA
  .text.avr-libc.fplib
-                0x00006f54       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_round.o)
-                0x00006f54                __fp_round
+                0x000046c2        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_zero.o)
+                0x000046c2                __fp_zero
+                0x000046c4                __fp_szero
  .text.avr-libc.fplib
-                0x00006f76       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_split3.o)
-                0x00006f76                __fp_split3
-                0x00006f86                __fp_splitA
+                0x000046d0        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(gesf2.o)
+                0x000046d0                __gesf2
+                0x000046d0                __gtsf2
  .text.avr-libc.fplib
-                0x00006fba        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(fp_zero.o)
-                0x00006fba                __fp_zero
-                0x00006fbc                __fp_szero
+                0x000046d8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3.o)
+                0x000046d8                __mulsf3
  .text.avr-libc.fplib
-                0x00006fc8        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(gesf2.o)
-                0x00006fc8                __gesf2
-                0x00006fc8                __gtsf2
- .text.avr-libc.fplib
-                0x00006fd0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3.o)
-                0x00006fd0                __mulsf3
- .text.avr-libc.fplib
-                0x00006fd4       0xc2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
-                0x00006fe8                __mulsf3x
-                0x00006fec                __mulsf3_pse
+                0x000046dc       0xc2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
+                0x000046f0                __mulsf3x
+                0x000046f4                __mulsf3_pse
  .text.libgcc.mul
-                0x00007096       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_mulsi3.o)
-                0x00007096                __mulsi3
+                0x0000479e       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_mulsi3.o)
+                0x0000479e                __mulsi3
  .text.libgcc.div
-                0x000070b4       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodsi4.o)
-                0x000070b4                __udivmodsi4
+                0x000047bc       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_udivmodsi4.o)
+                0x000047bc                __udivmodsi4
  .text.libgcc.div
-                0x000070f8       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodsi4.o)
-                0x000070f8                __divmodsi4
+                0x00004800       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_divmodsi4.o)
+                0x00004800                __divmodsi4
  .text.libgcc.div
-                0x00007120       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_negsi2.o)
-                0x00007120                __negsi2
- .text.libgcc   0x00007130       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_tablejump2.o)
-                0x00007130                __tablejump2__
+                0x00004828       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_negsi2.o)
+                0x00004828                __negsi2
+ .text.libgcc   0x00004838       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_tablejump2.o)
+                0x00004838                __tablejump2__
  .text.libgcc.mul
-                0x00007140       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_muluhisi3.o)
-                0x00007140                __muluhisi3
+                0x00004848       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_muluhisi3.o)
+                0x00004848                __muluhisi3
  .text.libgcc.mul
-                0x00007154       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_umulhisi3.o)
-                0x00007154                __umulhisi3
+                0x0000485c       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_umulhisi3.o)
+                0x0000485c                __umulhisi3
  .text.avr-libc
-                0x00007172       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(memcpy.o)
-                0x00007172                memcpy
-                0x00007184                . = ALIGN (0x2)
+                0x0000487a       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa.o)
+                0x0000487a                __itoa
+                0x0000487a                itoa
+ .text.avr-libc
+                0x0000488e       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(itoa_ncheck.o)
+                0x0000488e                __itoa_ncheck
+ .text.avr-libc
+                0x000048a2       0x32 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(utoa_ncheck.o)
+                0x000048a2                __utoa_ncheck
+                0x000048a4                __utoa_common
+ .text.avr-libc
+                0x000048d4       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr6\libc.a(strrev.o)
+                0x000048d4                strrev
+ .text.avr-libc
+                0x000048f4       0x20 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_block.o)
+                0x000048f4                eeprom_read_block
+                0x000048f8                eeprom_read_blraw
+ .text.avr-libc
+                0x00004914       0x10 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_byte.o)
+                0x00004914                eeprom_read_byte
+ .text.avr-libc
+                0x00004924        0xa C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_dword.o)
+                0x00004924                eeprom_read_float
+                0x00004924                eeprom_read_dword
+ .text.avr-libc
+                0x0000492e        0xa C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eerd_word.o)
+                0x0000492e                eeprom_read_word
+ .text.avr-libc
+                0x00004938       0x1c C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_byte.o)
+                0x00004938                eeprom_write_byte
+                0x0000493a                eeprom_write_r18
+ .text.avr-libc
+                0x00004954        0xa C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_dword.o)
+                0x00004954                eeprom_write_dword
+                0x00004954                eeprom_write_float
+ .text.avr-libc
+                0x0000495e        0x6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega2560/avr6\libatmega2560.a(eewr_word.o)
+                0x0000495e                eeprom_write_word
+                0x00004964                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00007184        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
-                0x00007184                _exit
-                0x00007184                exit
+ .fini9         0x00004964        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
+                0x00004964                _exit
+                0x00004964                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1328,11 +1349,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00007184        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
+ .fini0         0x00004964        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
  *(.fini0)
-                0x00007188                _etext = .
+                0x00004968                _etext = .
 
-.data           0x00800200      0x132 load address 0x00007188
+.data           0x00800200      0x638 load address 0x00004968
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -1343,102 +1364,155 @@ END GROUP
                 0x00800204        0x1 temperature_control.o
                 0x00800204                autotuneIndex
  *(.rodata)
- .rodata        0x00800205      0x11d RFID_RC522.o
  *(.rodata*)
- .rodata.FILAMENT_KEY
-                0x00800322       0x10 RFID_RC522.o
-                0x00800322                FILAMENT_KEY
+ .rodata.__c.2156
+                0x00800205       0x13 modbus.o
+ .rodata.__c.2160
+                0x00800218       0x12 modbus.o
+ .rodata.temptable_1
+                0x0080022a       0x70 temperature_control.o
+                0x0080022a                temptable_1
+ .rodata.temptable_2
+                0x0080029a       0x54 temperature_control.o
+                0x0080029a                temptable_2
+ .rodata.temptable_3
+                0x008002ee       0x70 temperature_control.o
+                0x008002ee                temptable_3
+ .rodata.temptable_4
+                0x0080035e       0x50 temperature_control.o
+                0x0080035e                temptable_4
+ .rodata.temptable_8
+                0x008003ae       0x88 temperature_control.o
+                0x008003ae                temptable_8
+ .rodata.temptable_9
+                0x00800436      0x10c temperature_control.o
+                0x00800436                temptable_9
+ .rodata.temptable_10
+                0x00800542       0x50 temperature_control.o
+                0x00800542                temptable_10
+ .rodata.temptable_11
+                0x00800592       0x7c temperature_control.o
+                0x00800592                temptable_11
+ .rodata.temptable_12
+                0x0080060e       0x7c temperature_control.o
+                0x0080060e                temptable_12
+ .rodata.temptable_13
+                0x0080068a       0x4c temperature_control.o
+                0x0080068a                temptable_13
+ .rodata.temptable_14
+                0x008006d6       0xb8 temperature_control.o
+                0x008006d6                temptable_14
+ .rodata.temptables
+                0x0080078e       0x1c temperature_control.o
+                0x0080078e                temptables
+ .rodata.temptables_num
+                0x008007aa        0xe temperature_control.o
+                0x008007aa                temptables_num
+ .rodata.__c.1835
+                0x008007b8       0x37 tensometer.o
+ .rodata.__c.1839
+                0x008007ef        0x9 tensometer.o
+ .rodata.__c.1850
+                0x008007f8       0x1d tensometer.o
+ .rodata.__c.1853
+                0x00800815        0x9 tensometer.o
+ .rodata.__c.1865
+                0x0080081e       0x19 tensometer.o
  *(.gnu.linkonce.d*)
-                0x00800332                . = ALIGN (0x2)
-                0x00800332                _edata = .
-                0x00800332                PROVIDE (__data_end, .)
+                0x00800838                . = ALIGN (0x2)
+ *fill*         0x00800837        0x1 
+                0x00800838                _edata = .
+                0x00800838                PROVIDE (__data_end, .)
 
-.bss            0x00800332      0x40c
-                0x00800332                PROVIDE (__bss_start, .)
+.bss            0x00800838      0x3f6
+                0x00800838                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.millis    0x00800332        0x4 hardware.o
-                0x00800332                millis
+ .bss.driver_speed
+                0x00800838        0x4 Drivers.o
+                0x00800838                driver_speed
+ .bss.driver0_enabled
+                0x0080083c        0x1 Drivers.o
+                0x0080083c                driver0_enabled
+ .bss.driver1_enabled
+                0x0080083d        0x1 Drivers.o
+                0x0080083d                driver1_enabled
+ .bss.filament_drivers_event_callback
+                0x0080083e        0x2 Drivers.o
+ .bss.millis    0x00800840        0x4 hardware.o
+                0x00800840                millis
  .bss.Door_move_timer
-                0x00800336        0x2 hardware.o
-                0x00800336                Door_move_timer
+                0x00800844        0x2 hardware.o
+                0x00800844                Door_move_timer
  .bss.Door_delay_timer
-                0x00800338        0x2 hardware.o
-                0x00800338                Door_delay_timer
+                0x00800846        0x2 hardware.o
+                0x00800846                Door_delay_timer
  .bss.Filament_measure_timer
-                0x0080033a        0x2 hardware.o
-                0x0080033a                Filament_measure_timer
- .bss.door_status
-                0x0080033c        0x1 hardware.o
-                0x0080033c                door_status
+                0x00800848        0x2 hardware.o
+                0x00800848                Filament_measure_timer
  .bss.osAnalogInputPos
-                0x0080033d        0x1 hardware.o
-                0x0080033d                osAnalogInputPos
- .bss.pwm_count_heater.1739
-                0x0080033e        0x1 hardware.o
- .bss.pwm_pos_set.1740
-                0x0080033f        0x6 hardware.o
- .bss.pwm_count_cooler.1738
-                0x00800345        0x1 hardware.o
- .bss.pwm_cooler_pos_set.1741
-                0x00800346        0x2 hardware.o
+                0x0080084a        0x1 hardware.o
+                0x0080084a                osAnalogInputPos
+ .bss.driver0_delay.1751
+                0x0080084b        0x4 hardware.o
+ .bss.driver0_step.1749
+                0x0080084f        0x1 hardware.o
+ .bss.driver1_delay.1752
+                0x00800850        0x4 hardware.o
+ .bss.driver1_step.1750
+                0x00800854        0x1 hardware.o
+ .bss.block_modbus_transmission
+                0x00800855        0x1 mkuart.o
+                0x00800855                block_modbus_transmission
  .bss.uart_rx_str_event_callback
-                0x00800348        0x2 mkuart.o
- .bss.autotune  0x0080034a        0x1 modbus.o
-                0x0080034a                autotune
- .bss.chip_id   0x0080034b        0x1 RFID_RC522.o
-                0x0080034b                chip_id
- .bss.rfid_event_callback
-                0x0080034c        0x2 RFID_RC522.o
- .bss.PIDTune_status
-                0x0080034e        0x2 temperature_control.o
-                0x0080034e                PIDTune_status
- .bss.temperature_event_callback
-                0x00800350        0x2 temperature_control.o
- .bss.input_mux.1644
-                0x00800352        0x1 tensometer.o
+                0x00800856        0x2 mkuart.o
+ .bss.autotune  0x00800858        0x1 modbus.o
+                0x00800858                autotune
+ .bss.calibration
+                0x00800859        0x1 tensometer.o
+                0x00800859                calibration
+ .bss.calibrating_tensometer
+                0x0080085a        0x1 tensometer.o
+                0x0080085a                calibrating_tensometer
+ .bss.tensometer_event_callback
+                0x0080085b        0x2 tensometer.o
+ .bss.input_mux.1878
+                0x0080085d        0x1 tensometer.o
  *(COMMON)
- COMMON         0x00800353        0x7 Configuration.o
-                0x00800353                pwm_pos
- COMMON         0x0080035a       0x23 hardware.o
-                0x0080035a                osAnalogInputCounter
-                0x00800361                osAnalogInputValues
-                0x0080036f                osAnalogInputBuildup
- COMMON         0x0080037d       0xd7 mkuart.o
-                0x0080037d                UART_TxHead
-                0x0080037e                new_line
-                0x0080037f                PrzetworzonaRamka
-                0x00800391                UART_TxTail
-                0x00800392                UART_TxBuf
-                0x00800412                UART_RxHead
-                0x00800413                UART_RxTail
-                0x00800414                UART_RxBuf
- COMMON         0x00800454       0x40 modbus.o
-                0x00800454                bufor
- COMMON         0x00800494       0x2d RFID_RC522.o
-                0x00800494                uid
-                0x008004a0                ID
-                0x008004a1                _chipSelectPin
-                0x008004a2                uid1
-                0x008004ae                uid0
-                0x008004ba                key
-                0x008004c0                _resetPowerDownPin
- COMMON         0x008004c1      0x25f temperature_control.o
-                0x008004c1                tempController
-                0x0080068f                fan
-                0x00800695                temptable_generic1
-                0x00800719                autotunepidtable
- COMMON         0x00800720       0x1e tensometer.o
-                0x00800720                tensometer
-                0x0080073e                PROVIDE (__bss_end, .)
-                0x00007188                __data_load_start = LOADADDR (.data)
-                0x000072ba                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080085e        0x7 Configuration.o
+                0x0080085e                pwm_pos
+ COMMON         0x00800865       0x25 hardware.o
+                0x00800865                modbus_transmission_blocade_timer
+                0x00800867                osAnalogInputCounter
+                0x0080086e                osAnalogInputValues
+                0x0080087c                osAnalogInputBuildup
+ COMMON         0x0080088a       0xd7 mkuart.o
+                0x0080088a                UART_TxHead
+                0x0080088b                new_line
+                0x0080088c                PrzetworzonaRamka
+                0x0080089e                UART_TxTail
+                0x0080089f                UART_TxBuf
+                0x0080091f                UART_RxHead
+                0x00800920                UART_RxTail
+                0x00800921                UART_RxBuf
+ COMMON         0x00800961       0x40 modbus.o
+                0x00800961                bufor
+ COMMON         0x008009a1      0x25f temperature_control.o
+                0x008009a1                tempController
+                0x00800b6f                fan
+                0x00800b75                temptable_generic1
+                0x00800bf9                autotunepidtable
+ COMMON         0x00800c00       0x2e tensometer.o
+                0x00800c00                tensometer
+                0x00800c2e                PROVIDE (__bss_end, .)
+                0x00004968                __data_load_start = LOADADDR (.data)
+                0x00004fa0                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080073e        0x0
+.noinit         0x00800c2e        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x0080073e                _end = .
+                0x00800c2e                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -1482,12 +1556,12 @@ END GROUP
  *(.comment)
  .comment       0x00000000       0x30 Configuration.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 Drivers.o
+ .comment       0x00000030       0x31 Eeprom.o
  .comment       0x00000030       0x31 hardware.o
  .comment       0x00000030       0x31 main.o
  .comment       0x00000030       0x31 mkuart.o
  .comment       0x00000030       0x31 modbus.o
- .comment       0x00000030       0x31 RFID_RC522.o
- .comment       0x00000030       0x31 spi.o
  .comment       0x00000030       0x31 temperature_control.o
  .comment       0x00000030       0x31 tensometer.o
 
@@ -1511,110 +1585,110 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x448
+.debug_aranges  0x00000000      0x360
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 Configuration.o
  .debug_aranges
-                0x00000020       0x58 hardware.o
+                0x00000020       0x50 Drivers.o
  .debug_aranges
-                0x00000078       0x20 main.o
+                0x00000070       0x98 Eeprom.o
  .debug_aranges
-                0x00000098       0x90 mkuart.o
+                0x00000108       0x58 hardware.o
  .debug_aranges
-                0x00000128       0x78 modbus.o
+                0x00000160       0x20 main.o
  .debug_aranges
-                0x000001a0      0x1d8 RFID_RC522.o
+                0x00000180       0x90 mkuart.o
  .debug_aranges
-                0x00000378       0x28 spi.o
+                0x00000210       0x80 modbus.o
  .debug_aranges
-                0x000003a0       0x70 temperature_control.o
+                0x00000290       0x70 temperature_control.o
  .debug_aranges
-                0x00000410       0x38 tensometer.o
+                0x00000300       0x60 tensometer.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x4b61
+.debug_info     0x00000000     0x3c1b
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000       0xda Configuration.o
- .debug_info    0x000000da      0x4df hardware.o
- .debug_info    0x000005b9      0x180 main.o
- .debug_info    0x00000739      0x643 mkuart.o
- .debug_info    0x00000d7c      0x7e3 modbus.o
- .debug_info    0x0000155f     0x1c23 RFID_RC522.o
- .debug_info    0x00003182       0xab spi.o
- .debug_info    0x0000322d      0xff8 temperature_control.o
- .debug_info    0x00004225      0x93c tensometer.o
+ .debug_info    0x00000000       0xcd Configuration.o
+ .debug_info    0x000000cd      0x1d9 Drivers.o
+ .debug_info    0x000002a6      0x604 Eeprom.o
+ .debug_info    0x000008aa      0x4ac hardware.o
+ .debug_info    0x00000d56      0x154 main.o
+ .debug_info    0x00000eaa      0x655 mkuart.o
+ .debug_info    0x000014ff      0x8da modbus.o
+ .debug_info    0x00001dd9     0x100c temperature_control.o
+ .debug_info    0x00002de5      0xe36 tensometer.o
 
-.debug_abbrev   0x00000000      0xecc
+.debug_abbrev   0x00000000      0xd34
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0x9b Configuration.o
- .debug_abbrev  0x0000009b      0x130 hardware.o
- .debug_abbrev  0x000001cb       0xfd main.o
- .debug_abbrev  0x000002c8      0x1df mkuart.o
- .debug_abbrev  0x000004a7      0x1dd modbus.o
- .debug_abbrev  0x00000684      0x3db RFID_RC522.o
- .debug_abbrev  0x00000a5f       0x78 spi.o
- .debug_abbrev  0x00000ad7      0x258 temperature_control.o
- .debug_abbrev  0x00000d2f      0x19d tensometer.o
+ .debug_abbrev  0x00000000       0x8a Configuration.o
+ .debug_abbrev  0x0000008a       0xd9 Drivers.o
+ .debug_abbrev  0x00000163      0x193 Eeprom.o
+ .debug_abbrev  0x000002f6      0x110 hardware.o
+ .debug_abbrev  0x00000406       0xcb main.o
+ .debug_abbrev  0x000004d1      0x1df mkuart.o
+ .debug_abbrev  0x000006b0      0x218 modbus.o
+ .debug_abbrev  0x000008c8      0x258 temperature_control.o
+ .debug_abbrev  0x00000b20      0x214 tensometer.o
 
-.debug_line     0x00000000     0x4457
+.debug_line     0x00000000     0x2e02
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000       0xfb Configuration.o
- .debug_line    0x000000fb      0x467 hardware.o
- .debug_line    0x00000562      0x12d main.o
- .debug_line    0x0000068f      0x523 mkuart.o
- .debug_line    0x00000bb2      0xd30 modbus.o
- .debug_line    0x000018e2     0x1891 RFID_RC522.o
- .debug_line    0x00003173       0xec spi.o
- .debug_line    0x0000325f      0xad6 temperature_control.o
- .debug_line    0x00003d35      0x722 tensometer.o
+ .debug_line    0x00000000       0xf3 Configuration.o
+ .debug_line    0x000000f3      0x220 Drivers.o
+ .debug_line    0x00000313      0x4db Eeprom.o
+ .debug_line    0x000007ee      0x36a hardware.o
+ .debug_line    0x00000b58      0x131 main.o
+ .debug_line    0x00000c89      0x541 mkuart.o
+ .debug_line    0x000011ca      0x70d modbus.o
+ .debug_line    0x000018d7      0xad6 temperature_control.o
+ .debug_line    0x000023ad      0xa55 tensometer.o
 
-.debug_frame    0x00000000     0x1238
+.debug_frame    0x00000000      0xd8c
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 Configuration.o
- .debug_frame   0x00000034      0x190 hardware.o
- .debug_frame   0x000001c4       0x34 main.o
- .debug_frame   0x000001f8      0x280 mkuart.o
- .debug_frame   0x00000478      0x1c4 modbus.o
- .debug_frame   0x0000063c      0x860 RFID_RC522.o
- .debug_frame   0x00000e9c       0x54 spi.o
- .debug_frame   0x00000ef0      0x29c temperature_control.o
- .debug_frame   0x0000118c       0xac tensometer.o
+ .debug_frame   0x00000034       0xf4 Drivers.o
+ .debug_frame   0x00000128      0x214 Eeprom.o
+ .debug_frame   0x0000033c      0x198 hardware.o
+ .debug_frame   0x000004d4       0x34 main.o
+ .debug_frame   0x00000508      0x280 mkuart.o
+ .debug_frame   0x00000788      0x1dc modbus.o
+ .debug_frame   0x00000964      0x29c temperature_control.o
+ .debug_frame   0x00000c00      0x18c tensometer.o
 
-.debug_str      0x00000000     0x19c0
+.debug_str      0x00000000      0xfe1
  *(.debug_str)
- .debug_str     0x00000000      0x185 Configuration.o
-                                0x1d1 (size before relaxing)
- .debug_str     0x00000185      0x2e3 hardware.o
-                                0x4ae (size before relaxing)
- .debug_str     0x00000468       0x75 main.o
-                                0x246 (size before relaxing)
- .debug_str     0x000004dd      0x20f mkuart.o
-                                0x3d2 (size before relaxing)
- .debug_str     0x000006ec      0x257 modbus.o
-                                0x5cf (size before relaxing)
- .debug_str     0x00000943      0xd19 RFID_RC522.o
-                                0xf8d (size before relaxing)
- .debug_str     0x0000165c       0x21 spi.o
-                                0x1a9 (size before relaxing)
- .debug_str     0x0000167d      0x2c8 temperature_control.o
-                                0x6ec (size before relaxing)
- .debug_str     0x00001945       0x7b tensometer.o
-                                0x2ee (size before relaxing)
+ .debug_str     0x00000000      0x17c Configuration.o
+                                0x1c8 (size before relaxing)
+ .debug_str     0x0000017c       0xf0 Drivers.o
+                                0x2a3 (size before relaxing)
+ .debug_str     0x0000026c      0x339 Eeprom.o
+                                0x531 (size before relaxing)
+ .debug_str     0x000005a5      0x188 hardware.o
+                                0x4d7 (size before relaxing)
+ .debug_str     0x0000072d       0x3f main.o
+                                0x210 (size before relaxing)
+ .debug_str     0x0000076c      0x229 mkuart.o
+                                0x3ec (size before relaxing)
+ .debug_str     0x00000995      0x203 modbus.o
+                                0x673 (size before relaxing)
+ .debug_str     0x00000b98      0x2da temperature_control.o
+                                0x6fd (size before relaxing)
+ .debug_str     0x00000e72      0x16f tensometer.o
+                                0x488 (size before relaxing)
 
-.debug_loc      0x00000000     0x2721
+.debug_loc      0x00000000     0x1c50
  *(.debug_loc)
  .debug_loc     0x00000000       0x3b Configuration.o
- .debug_loc     0x0000003b      0x337 hardware.o
- .debug_loc     0x00000372       0x3b main.o
- .debug_loc     0x000003ad      0x55e mkuart.o
- .debug_loc     0x0000090b      0x3c4 modbus.o
- .debug_loc     0x00000ccf     0x1282 RFID_RC522.o
- .debug_loc     0x00001f51       0x83 spi.o
- .debug_loc     0x00001fd4      0x5fa temperature_control.o
- .debug_loc     0x000025ce      0x153 tensometer.o
+ .debug_loc     0x0000003b      0x1d1 Drivers.o
+ .debug_loc     0x0000020c      0x43f Eeprom.o
+ .debug_loc     0x0000064b      0x351 hardware.o
+ .debug_loc     0x0000099c       0x3b main.o
+ .debug_loc     0x000009d7      0x55e mkuart.o
+ .debug_loc     0x00000f35      0x3e5 modbus.o
+ .debug_loc     0x0000131a      0x5fa temperature_control.o
+ .debug_loc     0x00001914      0x33c tensometer.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1634,17 +1708,17 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x3b8
+.debug_ranges   0x00000000      0x2d0
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 Configuration.o
- .debug_ranges  0x00000010       0x48 hardware.o
- .debug_ranges  0x00000058       0x10 main.o
- .debug_ranges  0x00000068       0x80 mkuart.o
- .debug_ranges  0x000000e8       0x68 modbus.o
- .debug_ranges  0x00000150      0x1c8 RFID_RC522.o
- .debug_ranges  0x00000318       0x18 spi.o
- .debug_ranges  0x00000330       0x60 temperature_control.o
- .debug_ranges  0x00000390       0x28 tensometer.o
+ .debug_ranges  0x00000010       0x40 Drivers.o
+ .debug_ranges  0x00000050       0x88 Eeprom.o
+ .debug_ranges  0x000000d8       0x48 hardware.o
+ .debug_ranges  0x00000120       0x10 main.o
+ .debug_ranges  0x00000130       0x80 mkuart.o
+ .debug_ranges  0x000001b0       0x70 modbus.o
+ .debug_ranges  0x00000220       0x60 temperature_control.o
+ .debug_ranges  0x00000280       0x50 tensometer.o
 
 .debug_macro
  *(.debug_macro)

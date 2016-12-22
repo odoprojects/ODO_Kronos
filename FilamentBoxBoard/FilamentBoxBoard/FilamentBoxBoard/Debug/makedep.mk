@@ -4,6 +4,8 @@
 
 Configuration.c
 
+Drivers.c
+
 Eeprom.c
 
 hardware.c

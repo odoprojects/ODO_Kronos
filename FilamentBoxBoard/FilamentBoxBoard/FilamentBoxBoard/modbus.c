@@ -39,6 +39,18 @@ void delay_transmision(uint16_t delay)
 		while (t_time>millis);
 }
 
+uint8_t check_modbus_blocade(){
+	modbus_transmission_blocade_timer = MODBUS_BLOCADE_TRANSMISSION_TIMEOUT_MS;
+	
+	while(block_modbus_transmission){
+		if (modbus_transmission_blocade_timer==0){
+			return 0;
+		}
+	}
+	
+	return 1;
+}
+
 void mod_send_ascii(char c){
 	char first = c/16;
 	char sec = c - (16 * first);
@@ -51,6 +63,7 @@ void mod_send_ascii(char c){
 
 void modbus_puts(char *s)		// wysy³a ³añcuch z pamiêci RAM na UART
 {
+	check_modbus_blocade();
 	register char c;
 	uart_putc(':');
 	for (uint8_t i=0; i<s[0]; i++){
@@ -64,6 +77,7 @@ void modbus_puts(char *s)		// wysy³a ³añcuch z pamiêci RAM na UART
 
 void modbus_puts_s(char *s)		// wysy³a ³añcuch z pamiêci RAM na UART
 {
+	check_modbus_blocade();
 	register char c;
 	uart_putc(':');
 	uart_putc(';');
@@ -75,6 +89,7 @@ void modbus_puts_s(char *s)		// wysy³a ³añcuch z pamiêci RAM na UART
 
 void modbus_puts_var_int(char *s, uint16_t data)		// wysy³a ³añcuch z pamiêci RAM na UART
 {
+	check_modbus_blocade();
 	register char c;
 	uart_putc(':');
 	uart_putc(';');
@@ -87,6 +102,7 @@ void modbus_puts_var_int(char *s, uint16_t data)		// wysy³a ³añcuch z pamiêci RA
 
 void modbus_puts_var_float(char *s, float data, uint8_t digits)		// wysy³a ³añcuch z pamiêci RAM na UART
 {
+	check_modbus_blocade();
 	register char c;
 	uart_putc(':');
 	uart_putc(';');
@@ -107,6 +123,13 @@ int8_t mod_write_single_register(char *data){
 		case MODBUS_RESET_ADR:
 			disableAllHeater();		
 		break;
+		case MODBUS_ALIVE_ADR:
+			modbus_puts_s(PSTR("Filament Box Alive"));
+		break;
+		case MODBUS_EEPROM_SAVE:
+			storeDataIntoEEPROM();
+			modbus_puts_s(PSTR("AUX: EEprom saved"));
+		break;	
 		case MODBUS_EXT0_SET_TEMP_ADR:
 			setTargetTemperature(&tempController[EXT0],write_value);
 		break;
@@ -119,7 +142,8 @@ int8_t mod_write_single_register(char *data){
 			setTargetTemperature(&tempController[BED2],write_value);
 			setTargetTemperature(&tempController[BED3],write_value);
 		break;
-		case MODBUS_DOOR_STATUS_ADR:
+		
+		/*case MODBUS_DOOR_STATUS_ADR:
 			if (write_value & DOOR_OPEN_MASK)
 			{
 				door_status &= ~DOOR_CLOSE_OPEN_MASK;
@@ -196,10 +220,10 @@ int8_t mod_write_single_register(char *data){
 				tempController[BED3].heatManager = write_value;
 			break;
 			case MODBUS_BED_R_W_PID_P_ADR:
-				tempController[BED0].pidIGain = (float)write_value/100.0;
-				tempController[BED1].pidIGain = (float)write_value/100.0;
-				tempController[BED2].pidIGain = (float)write_value/100.0;
-				tempController[BED3].pidIGain = (float)write_value/100.0;
+				tempController[BED0].pidPGain = (float)write_value/100.0;
+				tempController[BED1].pidPGain = (float)write_value/100.0;
+				tempController[BED2].pidPGain = (float)write_value/100.0;
+				tempController[BED3].pidPGain = (float)write_value/100.0;
 			break;
 			case MODBUS_BED_R_W_PID_I_ADR:
 				tempController[BED0].pidIGain = (float)write_value/100.0;
@@ -356,13 +380,43 @@ int8_t mod_write_single_register(char *data){
 			break;
 			case MODBUS_BED3_R_W_PID_MAX_ADR:
 				tempController[BED3].pidMax = write_value;
-			break;
-			case MODBUS_TENS_0_SET_FILAMENT_WEIGHT_R_W_ADR:
-				tensometer[0].setFilamentWeight=write_value;
-			break;
-			case MODBUS_TENS_1_SET_FILAMENT_WEIGHT_R_W_ADR:
-				tensometer[1].setFilamentWeight=write_value;		
-			break;	
+			break;*/
+		///////// TENSOMETER_0 //////////
+		case MODBUS_TENS_0_FILAMENT_WEIGHT_R_W_ADR:
+			tensometer[TENSOMETER_0].filamentWeight = write_value;
+		break;
+		case MODBUS_TENS_0_ROLL_WEIGHT_R_W_ADR:
+			tensometer[TENSOMETER_0].rollWeight = write_value;
+		break;
+		case MODBUS_TENS_0_CALIBRATION_CONSTANT_R_W_ADR:
+			tensometer[TENSOMETER_0].constantCalibrationValue = write_value;
+		break;
+		case MODBUS_TENS_0_MASS_NO_LOAD_GRAM_R_W_ADR:
+			tensometer[TENSOMETER_0].zeroScaleMass = write_value;
+		break;
+		case MODBUS_TENS_0_CALIBRATION_MASS_GRAM_R_W_ADR:
+			tensometer[TENSOMETER_0].calibatrionMass = write_value;
+			calibration = 1;
+			calibrating_tensometer = TENSOMETER_0;
+		break;
+		///////// TENSOMETER_1 //////////
+		case MODBUS_TENS_1_FILAMENT_WEIGHT_R_W_ADR:
+			tensometer[TENSOMETER_1].filamentWeight = write_value;
+		break;
+		case MODBUS_TENS_1_ROLL_WEIGHT_R_W_ADR:
+			tensometer[TENSOMETER_1].rollWeight = write_value;
+		break;
+		case MODBUS_TENS_1_CALIBRATION_CONSTANT_R_W_ADR:
+			tensometer[TENSOMETER_1].constantCalibrationValue = write_value;
+		break;
+		case MODBUS_TENS_1_MASS_NO_LOAD_GRAM_R_W_ADR:
+			tensometer[TENSOMETER_1].zeroScaleMass = write_value;
+		break;
+		case MODBUS_TENS_1_CALIBRATION_MASS_GRAM_R_W_ADR:
+			tensometer[TENSOMETER_1].calibatrionMass = write_value;
+			calibration = 1;
+			calibrating_tensometer = TENSOMETER_1;
+		break;
 	}
 	modbus_puts(data);
 	return 1;
@@ -449,46 +503,46 @@ int8_t mod_read_input_register(char *data){
 	for (uint8_t i=0; i<number_of_registers; i++)
 	{
 		switch(first_register+i){
-			case MODBUS_EXT0_READ_TEMP_ADR:
-				//get_int16_t_data(0x0101, &data_counter, data);
-				get_int16_t_data(tempController[EXT0].currentTemperature, &data_counter, data);			
+			/*case MODBUS_EXT0_READ_TEMP_ADR:
+				get_int16_t_data(150, &data_counter, data);
+				//get_int16_t_data(tempController[EXT0].currentTemperature, &data_counter, data);			
 			break;
 			case MODBUS_EXT0_READ_TEMPC_ADR:
-				//get_int16_t_data(0x0202, &data_counter, data);
-				get_int16_t_data((uint16_t)(tempController[EXT0].currentTemperatureC*100), &data_counter, data);
+				get_int16_t_data(1550, &data_counter, data);
+				//get_int16_t_data((uint16_t)(tempController[EXT0].currentTemperatureC*100), &data_counter, data);
 			break;	
 			case MODBUS_EXT1_READ_TEMP_ADR:
-				//get_int16_t_data(0x0303, &data_counter, data);
-				get_int16_t_data(tempController[EXT1].currentTemperature, &data_counter, data);
+				get_int16_t_data(160, &data_counter, data);
+				//get_int16_t_data(tempController[EXT1].currentTemperature, &data_counter, data);
 			break;
 			case MODBUS_EXT1_READ_TEMPC_ADR:
-				//get_int16_t_data(0x0404, &data_counter, data);
-				get_int16_t_data((uint16_t)(tempController[EXT1].currentTemperatureC*100), &data_counter, data);
+				get_int16_t_data(1650, &data_counter, data);
+				//get_int16_t_data((uint16_t)(tempController[EXT1].currentTemperatureC*100), &data_counter, data);
 			break;	
 			case MODBUS_BED_READ_TEMP_ADR:
 				tmp = ((tempController[BED0].currentTemperature+tempController[BED1].currentTemperature+tempController[BED2].currentTemperature+tempController[BED3].currentTemperature)/4);
-				//get_int16_t_data(0x0505, &data_counter, data);	
-				get_int16_t_data(tmp, &data_counter, data);			
+				get_int16_t_data(170, &data_counter, data);	
+				//get_int16_t_data(tmp, &data_counter, data);			
 			break;
 			case MODBUS_BED_READ_TEMPC_ADR:
 				tmpf = (((tempController[BED0].currentTemperatureC+tempController[BED1].currentTemperatureC+tempController[BED2].currentTemperatureC+tempController[BED3].currentTemperatureC)/4)*100);
-				//get_int16_t_data(0x0606, &data_counter, data);
-				get_int16_t_data((uint16_t)tmpf, &data_counter, data);			
+				get_int16_t_data(1750, &data_counter, data);
+				//get_int16_t_data((uint16_t)tmpf, &data_counter, data);			
 			break;							
 			case MODBUS_BED0_READ_TEMP_ADR:
-				get_int16_t_data((uint16_t)tempController[BED0].currentTemperatureC*100, &data_counter, data);			
+				get_int16_t_data((uint16_t)(tempController[BED0].currentTemperatureC*100), &data_counter, data);			
 			break;
 			case MODBUS_BED1_READ_TEMP_ADR:
-				get_int16_t_data((uint16_t)tempController[BED1].currentTemperatureC*100, &data_counter, data);		
+				get_int16_t_data((uint16_t)(tempController[BED1].currentTemperatureC*100), &data_counter, data);		
 			break;
 			case MODBUS_BED2_READ_TEMP_ADR:
-				get_int16_t_data((uint16_t)tempController[BED2].currentTemperatureC*100, &data_counter, data);	
+				get_int16_t_data((uint16_t)(tempController[BED2].currentTemperatureC*100), &data_counter, data);	
 			break;
 			case MODBUS_BED3_READ_TEMP_ADR:
-				get_int16_t_data((uint16_t)tempController[BED3].currentTemperatureC*100, &data_counter, data);
+				get_int16_t_data((uint16_t)(tempController[BED3].currentTemperatureC*100), &data_counter, data);
 			break;
 			case MODBUS_CHAMBER0_READ_TEMP_ADR:
-				get_int16_t_data((uint16_t)tempController[CHAMB0].currentTemperatureC*100, &data_counter, data);	
+				get_int16_t_data((uint16_t)(tempController[CHAMB0].currentTemperatureC*100), &data_counter, data);	
 			break;	
 			case MODBUS_AUTOTUNE_PID_STATUS:
 				data_counter++;
@@ -503,13 +557,13 @@ int8_t mod_read_input_register(char *data){
 			get_int16_t_data((uint16_t)tempController[EXT0].heatManager, &data_counter, data);
 			break;
 			case MODBUS_EXT0_R_W_PID_P_ADR:
-			get_int16_t_data((uint16_t)tempController[EXT0].pidPGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[EXT0].pidPGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_EXT0_R_W_PID_I_ADR:
-			get_int16_t_data((uint16_t)tempController[EXT0].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[EXT0].pidIGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_EXT0_R_W_PID_D_ADR:
-			get_int16_t_data((uint16_t)tempController[EXT0].pidDGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[EXT0].pidDGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_EXT0_R_W_DRIVE_MAX_ADR:
 			get_int16_t_data((uint16_t)tempController[EXT0].pidDriveMax, &data_counter, data);
@@ -528,13 +582,13 @@ int8_t mod_read_input_register(char *data){
 			get_int16_t_data((uint16_t)tempController[EXT1].heatManager, &data_counter, data);
 			break;
 			case MODBUS_EXT1_R_W_PID_P_ADR:
-			get_int16_t_data((uint16_t)tempController[EXT1].pidPGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[EXT1].pidPGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_EXT1_R_W_PID_I_ADR:
-			get_int16_t_data((uint16_t)tempController[EXT1].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[EXT1].pidIGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_EXT1_R_W_PID_D_ADR:
-			get_int16_t_data((uint16_t)tempController[EXT1].pidDGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[EXT1].pidDGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_EXT1_R_W_DRIVE_MAX_ADR:
 			get_int16_t_data((uint16_t)tempController[EXT1].pidDriveMax, &data_counter, data);
@@ -559,19 +613,19 @@ int8_t mod_read_input_register(char *data){
 			//get_int16_t_data((uint16_t)tempController[BED3].heatManager, &data_counter, data);
 			break;
 			case MODBUS_BED_R_W_PID_P_ADR:
-			get_int16_t_data((uint16_t)tempController[BED0].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED0].pidPGain*100.0), &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED1].pidIGain*100.0, &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED2].pidIGain*100.0, &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED3].pidIGain*100.0, &data_counter, data);
 			break;
 			case MODBUS_BED_R_W_PID_I_ADR:
-			get_int16_t_data((uint16_t)tempController[BED0].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED0].pidIGain*100.0), &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED1].pidIGain*100.0, &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED2].pidIGain*100.0, &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED3].pidIGain*100.0, &data_counter, data);
 			break;
 			case MODBUS_BED_R_W_PID_D_ADR:
-			get_int16_t_data((uint16_t)tempController[BED0].pidDGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED0].pidDGain*100.0), &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED1].pidDGain*100.0, &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED2].pidDGain*100.0, &data_counter, data);
 			//get_int16_t_data((uint16_t)tempController[BED3].pidDGain*100.0, &data_counter, data);
@@ -602,13 +656,13 @@ int8_t mod_read_input_register(char *data){
 			get_int16_t_data(tempController[CHAMB0].heatManager, &data_counter, data);
 			break;
 			case MODBUS_CHAMBER0_R_W_PID_P_ADR:
-			get_int16_t_data(tempController[CHAMB0].pidPGain, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[CHAMB0].pidPGain*100), &data_counter, data);
 			break;
 			case MODBUS_CHAMBER0_R_W_PID_I_ADR:
-			get_int16_t_data(tempController[CHAMB0].pidIGain, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[CHAMB0].pidIGain*100), &data_counter, data);
 			break;
 			case MODBUS_CHAMBER0_R_W_PID_D_ADR:
-			get_int16_t_data(tempController[CHAMB0].pidDGain, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[CHAMB0].pidDGain*100), &data_counter, data);
 			break;
 			case MODBUS_CHAMBER0_R_W_DRIVE_MAX_ADR:
 			get_int16_t_data(tempController[CHAMB0].pidDriveMax, &data_counter, data);
@@ -628,13 +682,13 @@ int8_t mod_read_input_register(char *data){
 			get_int16_t_data((uint16_t)tempController[BED0].heatManager, &data_counter, data);
 			break;
 			case MODBUS_BED0_R_W_PID_P_ADR:
-			get_int16_t_data((uint16_t)tempController[BED0].pidPGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED0].pidPGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED0_R_W_PID_I_ADR:
-			get_int16_t_data((uint16_t)tempController[BED0].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED0].pidIGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED0_R_W_PID_D_ADR:
-			get_int16_t_data((uint16_t)tempController[BED0].pidDGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED0].pidDGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED0_R_W_DRIVE_MAX_ADR:
 			get_int16_t_data((uint16_t)tempController[BED0].pidDriveMax, &data_counter, data);
@@ -653,13 +707,13 @@ int8_t mod_read_input_register(char *data){
 			get_int16_t_data((uint16_t)tempController[BED1].heatManager, &data_counter, data);
 			break;
 			case MODBUS_BED1_R_W_PID_P_ADR:
-			get_int16_t_data((uint16_t)tempController[BED1].pidPGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED1].pidPGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED1_R_W_PID_I_ADR:
-			get_int16_t_data((uint16_t)tempController[BED1].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED1].pidIGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED1_R_W_PID_D_ADR:
-			get_int16_t_data((uint16_t)tempController[BED1].pidDGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED1].pidDGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED1_R_W_DRIVE_MAX_ADR:
 			get_int16_t_data((uint16_t)tempController[BED1].pidDriveMax, &data_counter, data);
@@ -678,13 +732,13 @@ int8_t mod_read_input_register(char *data){
 			get_int16_t_data((uint16_t)tempController[BED2].heatManager, &data_counter, data);
 			break;
 			case MODBUS_BED2_R_W_PID_P_ADR:
-			get_int16_t_data((uint16_t)tempController[BED2].pidPGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED2].pidPGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED2_R_W_PID_I_ADR:
-			get_int16_t_data((uint16_t)tempController[BED2].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED2].pidIGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED2_R_W_PID_D_ADR:
-			get_int16_t_data((uint16_t)tempController[BED2].pidDGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED2].pidDGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED2_R_W_DRIVE_MAX_ADR:
 			get_int16_t_data((uint16_t)tempController[BED2].pidDriveMax, &data_counter, data);
@@ -704,13 +758,13 @@ int8_t mod_read_input_register(char *data){
 			get_int16_t_data((uint16_t)tempController[BED3].heatManager, &data_counter, data);
 			break;
 			case MODBUS_BED3_R_W_PID_P_ADR:
-			get_int16_t_data((uint16_t)tempController[BED3].pidPGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED3].pidPGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED3_R_W_PID_I_ADR:
-			get_int16_t_data((uint16_t)tempController[BED3].pidIGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED3].pidIGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED3_R_W_PID_D_ADR:
-			get_int16_t_data((uint16_t)tempController[BED3].pidDGain*100.0, &data_counter, data);
+			get_int16_t_data((uint16_t)(tempController[BED3].pidDGain*100.0), &data_counter, data);
 			break;
 			case MODBUS_BED3_R_W_DRIVE_MAX_ADR:
 			get_int16_t_data((uint16_t)tempController[BED3].pidDriveMax, &data_counter, data);
@@ -720,33 +774,51 @@ int8_t mod_read_input_register(char *data){
 			break;
 			case MODBUS_BED3_R_W_PID_MAX_ADR:
 			get_int16_t_data((uint16_t)tempController[BED3].pidMax, &data_counter, data);
-			break;
+			break;*/
 			///////// TENSOMETER_0 //////////
 			case MODBUS_TENS_0_RAW_VALUE_WEIGHT_R_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].RAW_Value, &data_counter, data);
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].RAW_Value, &data_counter, data);
 			break;
-			case MODBUS_TENS_0_WEIGHT_R_W_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].weight, &data_counter, data);
+			case MODBUS_TENS_0_WEIGHT_GRAM_R_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].weight, &data_counter, data);
 			break;
-			case MODBUS_TENS_0_FILAMENT_WEIGHT_R_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].filamentWeight, &data_counter, data);
+			case MODBUS_TENS_0_FILAMENT_WEIGHT_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].filamentWeight, &data_counter, data);
 			break;
-			case MODBUS_TENS_0_ROLL_WEIGHT_R_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].rollWeight, &data_counter, data);
+			case MODBUS_TENS_0_ROLL_WEIGHT_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].rollWeight, &data_counter, data);
+			break;
+			case MODBUS_TENS_0_CALIBRATION_CONSTANT_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].constantCalibrationValue, &data_counter, data);
+			break;
+			case MODBUS_TENS_0_MASS_NO_LOAD_GRAM_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].zeroScaleMass, &data_counter, data);
+			break;
+			case MODBUS_TENS_0_CALIBRATION_MASS_GRAM_R_W_ADR:
+			get_int16_t_data((uint16_t)tensometer[TENSOMETER_0].calibatrionMass, &data_counter, data);
 			break;
 			///////// TENSOMETER_1 //////////
 			case MODBUS_TENS_1_RAW_VALUE_WEIGHT_R_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].RAW_Value, &data_counter, data);
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].RAW_Value, &data_counter, data);
 			break;
-			case MODBUS_TENS_1_WEIGHT_R_W_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].weight, &data_counter, data);
+			case MODBUS_TENS_1_WEIGHT_GRAM_R_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].weight, &data_counter, data);
 			break;
-			case MODBUS_TENS_1_FILAMENT_WEIGHT_R_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].filamentWeight, &data_counter, data);
+			case MODBUS_TENS_1_FILAMENT_WEIGHT_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].filamentWeight, &data_counter, data);
 			break;
-			case MODBUS_TENS_1_ROLL_WEIGHT_R_ADR:
-			get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].rollWeight, &data_counter, data);
-			break;		
+			case MODBUS_TENS_1_ROLL_WEIGHT_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].rollWeight, &data_counter, data);
+			break;
+			case MODBUS_TENS_1_CALIBRATION_CONSTANT_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].constantCalibrationValue, &data_counter, data);
+			break;
+			case MODBUS_TENS_1_MASS_NO_LOAD_GRAM_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].zeroScaleMass, &data_counter, data);
+			break;
+			case MODBUS_TENS_1_CALIBRATION_MASS_GRAM_R_W_ADR:
+				get_int16_t_data((uint16_t)tensometer[TENSOMETER_1].calibatrionMass, &data_counter, data);
+			break;
 		}
 	}
 	data[0] = data_counter+4; //4 - stala liczba - 1 bajt adres slave-a, 1 bajt funkcja, 1 bajt liczba danych oraz 1 bajt LRC
@@ -1012,6 +1084,7 @@ void parse_uart_data( char *pBuf ) {
 	{
 		if (pBuf[pBuf[0]] == calculate_LRC(pBuf, pBuf[0]))
 		{
+			uint16_t tmp = pBuf[FUNCT_POS];
 			switch(pBuf[FUNCT_POS]){
 				case READ_COILS:
 					//mod_read_coils(pBuf[FUNCT_POS], data);
