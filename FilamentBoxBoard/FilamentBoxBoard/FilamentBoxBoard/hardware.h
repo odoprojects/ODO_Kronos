@@ -115,8 +115,8 @@ extern volatile uint32_t millis;
 extern volatile uint16_t Door_move_timer;
 extern volatile uint16_t Door_delay_timer;
 extern volatile uint16_t modbus_transmission_blocade_timer;
-extern volatile uint16_t Filament_measure_timer;
 
+extern volatile uint16_t filament_driver_timer;
 extern uint8_t door_status;
 extern uint8_t door_setup;
 

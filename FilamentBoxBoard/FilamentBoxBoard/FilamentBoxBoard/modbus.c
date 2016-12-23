@@ -390,9 +390,11 @@ int8_t mod_write_single_register(char *data){
 		break;
 		case MODBUS_TENS_0_CALIBRATION_CONSTANT_R_W_ADR:
 			tensometer[TENSOMETER_0].constantCalibrationValue = write_value;
+			storeDataIntoEEPROM();
 		break;
 		case MODBUS_TENS_0_MASS_NO_LOAD_GRAM_R_W_ADR:
 			tensometer[TENSOMETER_0].zeroScaleMass = write_value;
+			storeDataIntoEEPROM();
 		break;
 		case MODBUS_TENS_0_CALIBRATION_MASS_GRAM_R_W_ADR:
 			tensometer[TENSOMETER_0].calibatrionMass = write_value;
@@ -408,15 +410,59 @@ int8_t mod_write_single_register(char *data){
 		break;
 		case MODBUS_TENS_1_CALIBRATION_CONSTANT_R_W_ADR:
 			tensometer[TENSOMETER_1].constantCalibrationValue = write_value;
+			storeDataIntoEEPROM();
 		break;
 		case MODBUS_TENS_1_MASS_NO_LOAD_GRAM_R_W_ADR:
 			tensometer[TENSOMETER_1].zeroScaleMass = write_value;
+			storeDataIntoEEPROM();
 		break;
 		case MODBUS_TENS_1_CALIBRATION_MASS_GRAM_R_W_ADR:
 			tensometer[TENSOMETER_1].calibatrionMass = write_value;
 			calibration = 1;
 			calibrating_tensometer = TENSOMETER_1;
 		break;
+		///////// FILAMENT_DRIVER_0 //////////
+		case MODBUS_DRIVER_0_STATUS_R_W_ADR:
+			if (write_value & IDLE_DRIVER_STATUS)
+			{
+				filament_driver_0_status &= ~FILAMENT_DRIVER_STATUS;
+				filament_driver_0_status |= IDLE_DRIVER_STATUS;
+			}
+			else if(write_value & PRINTING_DRIVER_STATUS)
+			{
+				filament_driver_0_status &= ~FILAMENT_DRIVER_STATUS;
+				filament_driver_0_status |= PRINTING_DRIVER_STATUS;
+			}
+			else if(write_value & PULL_OUT_DRIVER_STATUS)
+			{
+				filament_driver_0_status &= ~FILAMENT_DRIVER_STATUS;
+				filament_driver_0_status |= PULL_OUT_DRIVER_STATUS;
+			}
+			break;
+		case MODBUS_DRIVER_0_SPEED_R_W_ADR:
+
+			break;
+		///////// FILAMENT_DRIVER_1 //////////
+		case MODBUS_DRIVER_1_STATUS_R_W_ADR:
+			if (write_value & IDLE_DRIVER_STATUS)
+			{
+				filament_driver_1_status &= ~FILAMENT_DRIVER_STATUS;
+				filament_driver_1_status |= IDLE_DRIVER_STATUS;
+			}
+			else if(write_value & PRINTING_DRIVER_STATUS)
+			{
+				filament_driver_1_status &= ~FILAMENT_DRIVER_STATUS;
+				filament_driver_1_status |= PRINTING_DRIVER_STATUS;
+			}
+			else if(write_value & PULL_OUT_DRIVER_STATUS)
+			{
+				filament_driver_1_status &= ~FILAMENT_DRIVER_STATUS;
+				filament_driver_1_status |= PULL_OUT_DRIVER_STATUS;
+			}
+			break;
+		case MODBUS_DRIVER_1_SPEED_R_W_ADR:
+
+			break;
 	}
 	modbus_puts(data);
 	return 1;

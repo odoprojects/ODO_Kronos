@@ -18,10 +18,18 @@ volatile uint32_t millis = 0;
 
 volatile uint16_t Door_move_timer = 0;
 volatile uint16_t Door_delay_timer = 0;
-volatile uint16_t Filament_measure_timer = 0;
 volatile uint16_t modbus_transmission_blocade_timer;
+volatile uint16_t filament_driver_0_timer = 0;
+volatile uint16_t filament_driver_1_timer = 0;
 uint8_t door_status = 0; 
 uint8_t door_setup = 0;
+
+volatile uint8_t step_tick0 = 1;
+volatile uint8_t step_tick1 = 1;
+
+volatile uint8_t step0 = 0;
+volatile uint8_t step1 = 0;
+
 //*************************************************************************
 //******************  I/O *************************************************
 //*************************************************************************
@@ -29,7 +37,7 @@ uint8_t door_setup = 0;
 
 void Pin_init(){
 	
-/*
+
 	PIN_OUT(EXT0_PWM_PIN);
 	EXT0_PWM_PIN_LOW;
 	PIN_OUT(EXT1_PWM_PIN);
@@ -63,7 +71,7 @@ void Pin_init(){
 	
 	PIN_OUT(LED0_PIN);
 	LED0_PIN_HIGH;
-*/
+
 }
 
 void set_default_pins(){
@@ -143,56 +151,75 @@ ISR(TIMER1_COMPA_vect){
 	if (n) Door_move_timer = --n;
 	n = Door_delay_timer;		
 	if (n) Door_delay_timer = --n;
-	n = Filament_measure_timer;
-	if (n) Filament_measure_timer = --n;
+	n = filament_driver_0_timer;
+	if (n) filament_driver_0_timer = --n;
+	n = filament_driver_1_timer;
+	if (n) filament_driver_1_timer = --n;
 	n = modbus_transmission_blocade_timer;
 	if (n) modbus_transmission_blocade_timer = --n;
 }
 
-
-
 ISR(STEPPER_MOTOR_TIMER_VECTOR){
-	static uint8_t driver0_step = 0;
-	static uint8_t driver1_step = 0;
-	static uint32_t driver0_delay = 0;	
-	static uint32_t driver1_delay = 0;
+	static uint8_t incr=0;
+	uint8_t steps_needed = 0;	
 	
-	
-	if (driver0_enabled)
+	if (!(incr++%step_tick0))
 	{
-		if (!driver0_delay)
+		if (DRIVER0_IF_DIR_LOW)
 		{
-			if (driver0_step%2){
-				DRIVER0_STEP_PIN_HIGH;
-				driver0_delay = DRIVER_COSNTANT_DELAY;
-			}else{
-				DRIVER0_STEP_PIN_LOW;
-				driver0_delay = driver_speed;
+			if (FILAMENT_ENDSTOP_0_E_IF_NOT_REACH)
+			{
+				steps_needed |=STEPS0_NEEDED_MASK;				
 			}
-			driver0_step++;
-		}else{
-			driver0_delay--;
+			
+		}else
+		{
+			if (FILAMENT_ENDSTOP_0_P_IF_NOT_REACH)
+			{
+				steps_needed |=STEPS0_NEEDED_MASK;
+			}
+		} 
+	}
+	
+	if (!(incr++%step_tick1))
+	{
+		if (DRIVER1_IF_DIR_LOW)
+		{
+			if (FILAMENT_ENDSTOP_1_E_IF_NOT_REACH)
+			{
+				steps_needed |=STEPS1_NEEDED_MASK;
+			}
+				
+		}else
+		{
+			if (FILAMENT_ENDSTOP_1_P_IF_NOT_REACH)
+			{
+				steps_needed |=STEPS1_NEEDED_MASK;
+			}
 		}
 	}
 	
-	if(driver1_enabled){
-		if (!driver1_delay)
-		{
-			if (driver1_step%2){
-				DRIVER1_STEP_PIN_HIGH;
-				driver1_delay = DRIVER_COSNTANT_DELAY;
-			}else{
-				DRIVER1_STEP_PIN_LOW;
-				driver1_delay = driver_speed;
-			}
-			driver1_step++;
-		}else{
-			driver1_delay--;
-		}
-	}
-	
+	if (steps_needed)
+	{
 		
-	
+		if (steps_needed && STEPS0_NEEDED_MASK)
+		{
+			DRIVER0_ENABLE;
+			DRIVER0_STEP_PIN_HIGH;
+			step0 = 1;
+			
+		}
+		if (steps_needed && STEPS1_NEEDED_MASK)
+		{
+			DRIVER1_ENABLE
+			DRIVER1_STEP_PIN_HIGH;
+			step1 = 1;
+			
+		}
+		_delay_us(DRIVER_HIGH_DELAY_US);
+		DRIVER0_STEP_PIN_LOW;
+		DRIVER1_STEP_PIN_LOW;
+	}
 }
 
 

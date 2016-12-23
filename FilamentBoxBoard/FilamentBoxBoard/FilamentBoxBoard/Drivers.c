@@ -4,8 +4,9 @@
 
 uint8_t filament_driver_status = 0;
 volatile uint32_t driver_speed = 0;
-volatile uint8_t driver0_enabled = 0;
-volatile uint8_t driver1_enabled = 0;
+
+
+
 
 static void (*filament_drivers_event_callback)();
 
@@ -20,56 +21,8 @@ void FILAMENT_DRIVERS_EVENT() {
 	}
 }
 
-void disable_driver(uint8_t driver){
-	switch(driver){
-		case DRIVER_0:{
-			DRIVER0_ENABLE_PIN_LOW;
-			driver0_enabled = 0;
-			break;
-		}
-		case DRIVER_1:{
-			DRIVER1_ENABLE_PIN_LOW;
-			driver1_enabled = 0;
-			break;
-		}
-	}
-}
 
-void enable_driver(uint8_t driver){
-	switch(driver){
-		case DRIVER_0:{
-			DRIVER0_ENABLE_PIN_HIGH;
-			driver0_enabled = 1;
-			break;
-		}
-		case DRIVER_1:{
-			DRIVER1_ENABLE_PIN_HIGH;
-			driver1_enabled = 1;
-			break;
-		}
-	}
-}
 
-void set_dir_driver(uint8_t driver ,uint8_t dir){
-	switch(driver){
-		case DRIVER_0:{
-			if(dir == DIR_0){		
-				DRIVER0_DIR_PIN_LOW;
-			}else if(dir == DIR_1){
-				DRIVER0_DIR_PIN_HIGH;
-			}
-			break;
-		}
-		case DRIVER_1:{
-			if(dir == DIR_0){
-				DRIVER1_DIR_PIN_LOW;
-			}else if(dir == DIR_1){
-				DRIVER1_DIR_PIN_HIGH;
-			}
-			break;
-		}
-	}
-}
 
 void initializeDrivers() {
 	PIN_OUT(DRIVER0_STEP_PIN);
@@ -82,16 +35,66 @@ void initializeDrivers() {
 
 	DRIVER0_STEP_PIN_LOW;
 	DRIVER0_DIR_PIN_LOW;
-	DRIVER0_ENABLE_PIN_LOW;
+	DRIVER0_DISABLE;
 	
 	DRIVER1_STEP_PIN_LOW;
 	DRIVER1_DIR_PIN_LOW;
-	DRIVER1_ENABLE_PIN_LOW;
+	DRIVER1_DISABLE;
 	
+	PIN_IN(FILAMENT_ENDSTOP_0_E_PIN);
+	PIN_IN(FILAMENT_ENDSTOP_0_P_PIN);
+	PIN_IN(FILAMENT_ENDSTOP_1_E_PIN);
+	PIN_IN(FILAMENT_ENDSTOP_1_P_PIN);
+	
+	FILAMENT_ENDSTOP_0_E_PIN_LOW;
+	FILAMENT_ENDSTOP_0_P_PIN_LOW;
+	FILAMENT_ENDSTOP_1_E_PIN_LOW;
+	FILAMENT_ENDSTOP_1_P_PIN_LOW;
 	driver_speed = DRIVER_COSNTANT_DELAY;
 }
 
+
 void manageFilamentDrivers(){
 	
+	if (step0)
+	{
+		filament_driver_0_timer = DRIVER_TIMEOUT;
+		step0 = 0;
+	}
+	if (step1)
+	{
+		filament_driver_1_timer = DRIVER_TIMEOUT;
+		step1 = 0;
+	}
+	if (!filament_driver_0_timer)
+	{
+		filament_driver_0_status &= ~FILAMENT_DRIVER_STATUS;
+		filament_driver_0_status |= IDLE_DRIVER_STATUS;
+	}
+	if (!filament_driver_1_timer)
+	{
+		filament_driver_1_status &= ~FILAMENT_DRIVER_STATUS;
+		filament_driver_1_status |= IDLE_DRIVER_STATUS;
+	}
+	
+	if(filament_driver_0_status && IDLE_DRIVER_STATUS){
+		DRIVER0_DISABLE;
+	}else if(filament_driver_0_status && PRINTING_DRIVER_STATUS){
+		DRIVER0_ENABLE;
+		DRIVER0_DIR_PIN_LOW;
+	}else if(filament_driver_0_status && PULL_OUT_DRIVER_STATUS){
+		DRIVER0_ENABLE;
+		DRIVER0_DIR_PIN_HIGH;
+	}
+	
+	if(filament_driver_1_status && IDLE_DRIVER_STATUS){
+		DRIVER1_DISABLE;
+	}else if(filament_driver_1_status && PRINTING_DRIVER_STATUS){
+		DRIVER1_ENABLE;
+		DRIVER1_DIR_PIN_LOW;
+	}else if(filament_driver_1_status && PULL_OUT_DRIVER_STATUS){
+		DRIVER1_ENABLE;
+		DRIVER1_DIR_PIN_HIGH;
+	}
 }
 
